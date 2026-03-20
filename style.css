@@ -83,8 +83,17 @@
   left: 0;
   width: 100%;
   z-index: 1000;
-  transition: all 0.3s ease;
-  background: transparent;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.7) 30%,
+    rgba(255, 255, 255, 0.3) 60%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+  backdrop-filter: blur(24px) saturate(1.8);
+  -webkit-backdrop-filter: blur(24px) saturate(1.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 #navbar .nav-inner {
@@ -106,31 +115,40 @@
 
 .nav-brand {
   display: flex;
-  align-items: baseline;
-  font-family: var(--font-serif);
+  align-items: center;
   text-decoration: none;
-  gap: 0;
 }
 
-.nav-brand-name {
-  font-size: 1.2rem;
-  color: var(--color-navy-950);
-  letter-spacing: 0.01em;
+.nav-logo-img {
+  height: 36px;
+  width: auto;
 }
 
+@media (min-width: 768px) {
+  .nav-logo-img {
+    height: 42px;
+  }
+}
+
+/* Legacy text brand (hidden, replaced by logo) */
+.nav-brand-name,
 .nav-brand-amp {
-  font-size: 0.9rem;
-  color: var(--color-gold-500);
-  margin: 0 0.2rem;
+  display: none;
 }
 
-/* Scrolled state — glass effect */
+/* Scrolled state — liquid glass */
 #navbar.navbar-scrolled {
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(20px) saturate(1.6);
-  -webkit-backdrop-filter: blur(20px) saturate(1.6);
-  box-shadow: 0 1px 24px rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(255, 255, 255, 0.78) 30%,
+    rgba(255, 255, 255, 0.4) 60%,
+    rgba(255, 255, 255, 0.15) 100%
+  );
+  backdrop-filter: blur(32px) saturate(2);
+  -webkit-backdrop-filter: blur(32px) saturate(2);
+  box-shadow: 0 1px 32px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* Desktop nav links */
