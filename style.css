@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --color-navy-950: #09090B;
-  --color-navy-900: #0F1419;
+  --color-navy-950: #0A1628;
+  --color-navy-900: #0D1F3C;
+  --color-blue-dark: #1B365D;
   --color-navy-800: #1A1F2E;
   --color-navy-700: #252B3B;
   --color-navy-600: #374151;
@@ -41,7 +42,7 @@
     -moz-osx-font-smoothing: grayscale;
     overscroll-behavior: none;
     min-height: 100vh;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 }
 
@@ -83,6 +84,7 @@
   left: 0;
   width: 100%;
   z-index: 1000;
+  isolation: isolate;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   background: linear-gradient(
     to right,
