@@ -1120,3 +1120,87 @@ html.lenis body {
     transform: none !important;
   }
 }
+
+/* ================================
+   TEAM CAROUSEL (infinite scroll)
+   ================================ */
+.team-carousel-section {
+  overflow: hidden;
+  padding: 2rem 0;
+}
+
+.team-carousel-track {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+}
+
+.team-carousel-track.scroll-left {
+  animation: scrollLeft 30s linear infinite;
+}
+
+.team-carousel-track.scroll-right {
+  animation: scrollRight 30s linear infinite;
+}
+
+.team-carousel-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scrollLeft {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes scrollRight {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.team-member-card {
+  flex-shrink: 0;
+  width: 140px;
+  text-align: center;
+}
+
+.team-member-card img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top;
+  border: 3px solid rgba(201, 168, 76, 0.2);
+  transition: all 0.3s ease;
+}
+
+.team-member-card:hover img {
+  border-color: rgba(201, 168, 76, 0.6);
+  transform: scale(1.05);
+}
+
+.team-member-card .team-name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+  margin-top: 0.5rem;
+}
+
+.team-member-card .team-role {
+  font-size: 0.65rem;
+  color: var(--color-navy-400);
+}
+
+@media (min-width: 768px) {
+  .team-member-card {
+    width: 160px;
+  }
+  
+  .team-member-card img {
+    width: 140px;
+    height: 140px;
+  }
+  
+  .team-member-card .team-name {
+    font-size: 0.8rem;
+  }
+}

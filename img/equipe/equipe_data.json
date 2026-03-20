@@ -1,0 +1,310 @@
+[
+  {
+    "name": "Amanda dos Santos",
+    "role": "Assistente",
+    "department": "Aquisição",
+    "team": "Vendas",
+    "photo": null
+  },
+  {
+    "name": "Ana Beatriz",
+    "role": "Estagiário",
+    "department": "Juridico",
+    "team": "Núcleo de Atenção ao Cliente",
+    "photo": "ana-beatriz.webp"
+  },
+  {
+    "name": "Ana Beatriz da Silva",
+    "role": "Estagiário",
+    "department": "Juridico",
+    "team": "Núcleo de Atenção ao Cliente",
+    "photo": "ana-beatriz-da-silva.webp"
+  },
+  {
+    "name": "Bernardo Lindenmeyer",
+    "role": "Diretor",
+    "department": "Aquisição",
+    "team": "",
+    "photo": "bernardo-lindenmeyer.webp"
+  },
+  {
+    "name": "Bianca Rodrigues",
+    "role": "Estagiário",
+    "department": "Juridico",
+    "team": "Célula B",
+    "photo": "bianca-rodrigues.webp"
+  },
+  {
+    "name": "Brenda Alhandra",
+    "role": "Estagiário",
+    "department": "Juridico",
+    "team": "Núcleo de Atenção ao Cliente",
+    "photo": "brenda-alhandra.webp"
+  },
+  {
+    "name": "Camila de Oliveira",
+    "role": "Estagiário",
+    "department": "Juridico",
+    "team": "Núcleo de Atenção ao Cliente",
+    "photo": "camila-de-oliveira.webp"
+  },
+  {
+    "name": "Dalicia Robert",
+    "role": "Estagiário",
+    "department": "Juridico",
+    "team": "Célula B",
+    "photo": "dalicia-robert.webp"
+  },
+  {
+    "name": "Denise Alves",
+    "role": "Assistente",
+    "department": "Juridico",
+    "team": "Núcleo de Atenção ao Cliente",
+    "photo": "denise-alves.webp"
+  },
+  {
+    "name": "Eduardo Belmiro",
+    "role": "Analista",
+    "department": "Aquisição",
+    "team": "Vendas",
+    "photo": "eduardo-belmiro.webp"
+  },
+  {
+    "name": "Francieli Ribeiro",
+    "role": "Gerente",
+    "department": "Aquisição",
+    "team": "Vendas",
+    "photo": "francieli-ribeiro.webp"
+  },
+  {
+    "name": "Gabriel Eduardo",
+    "role": "Coordenador",
+    "department": "Juridico",
+    "team": "Auditoria",
+    "photo": "gabriel-eduardo.webp"
+  },
+  {
+    "name": "Gabriel Gomes",
+    "role": "Estagiário",
+    "department": "Juridico",
+    "team": "Núcleo de Atenção ao Cliente",
+    "photo": "gabriel-gomes.webp"
+  },
+  {
+    "name": "Gabriella Teixeira",
+    "role": "Estagiário",
+    "department": "Juridico",
+    "team": "",
+    "photo": "gabriella-teixeira.webp"
+  },
+  {
+    "name": "Gabriely Marques",
+    "role": "Estagiário",
+    "department": "Juridico",
+    "team": "Auditoria",
+    "photo": "gabriely-marques.webp"
+  },
+  {
+    "name": "Giovanna Alves",
+    "role": "Estagiário",
+    "department": "Juridico",
+    "team": "Núcleo de Atenção ao Cliente",
+    "photo": "giovanna-alves.webp"
+  },
+  {
+    "name": "Janaina Santos",
+    "role": "Assistente",
+    "department": "Aquisição",
+    "team": "Vendas",
+    "photo": "janaina-santos.webp"
+  },
+  {
+    "name": "Jayne Feitosa",
+    "role": "Assistente",
+    "department": "Aquisição",
+    "team": "Vendas",
+    "photo": "jayne-feitosa.webp"
+  },
+  {
+    "name": "Jeniffer Rocha",
+    "role": "Coordenador",
+    "department": "Juridico",
+    "team": "Núcleo de Atenção ao Cliente",
+    "photo": "jeniffer-rocha.webp"
+  },
+  {
+    "name": "Josiane Cristina",
+    "role": "Coordenador",
+    "department": "Juridico",
+    "team": "Célula B",
+    "photo": "josiane-cristina.webp"
+  },
+  {
+    "name": "João Gabriel",
+    "role": "Estagiário",
+    "department": "Juridico",
+    "team": "Núcleo de Atenção ao Cliente",
+    "photo": "joao-gabriel.webp"
+  },
+  {
+    "name": "João Pedro",
+    "role": "Estagiário",
+    "department": "Juridico",
+    "team": "Núcleo de Atenção ao Cliente",
+    "photo": "joao-pedro.webp"
+  },
+  {
+    "name": "Julia Fernanda",
+    "role": "Analista",
+    "department": "Aquisição",
+    "team": "Vendas",
+    "photo": "julia-fernanda.webp"
+  },
+  {
+    "name": "Jéssica Cândido",
+    "role": "Analista",
+    "department": "Aquisição",
+    "team": "Vendas",
+    "photo": null
+  },
+  {
+    "name": "Ketina Rodrigues",
+    "role": "Estagiário",
+    "department": "Juridico",
+    "team": "",
+    "photo": "ketina-rodrigues.webp"
+  },
+  {
+    "name": "Luana Gomes",
+    "role": "Analista",
+    "department": "Aquisição",
+    "team": "Vendas",
+    "photo": "luana-gomes.webp"
+  },
+  {
+    "name": "Luci Helena",
+    "role": "",
+    "department": "Juridico",
+    "team": "",
+    "photo": "luci-helena.webp"
+  },
+  {
+    "name": "Marcus Vinícius",
+    "role": "Analista",
+    "department": "Aquisição",
+    "team": "Vendas",
+    "photo": null
+  },
+  {
+    "name": "Maria Rafaele",
+    "role": "Assistente",
+    "department": "Juridico",
+    "team": "Célula B",
+    "photo": "maria-rafaele.webp"
+  },
+  {
+    "name": "Maria Vitória",
+    "role": "Estagiário",
+    "department": "Juridico",
+    "team": "Núcleo de Atenção ao Cliente",
+    "photo": "maria-vitoria.webp"
+  },
+  {
+    "name": "Melissa Ribeiro",
+    "role": "Estagiário",
+    "department": "Juridico",
+    "team": "Auditoria",
+    "photo": "melissa-ribeiro.webp"
+  },
+  {
+    "name": "Nathalia Aparecida",
+    "role": "Assistente",
+    "department": "Juridico",
+    "team": "Núcleo de Atenção ao Cliente",
+    "photo": "nathalia-aparecida.webp"
+  },
+  {
+    "name": "Nathália de Oliveira",
+    "role": "Assistente",
+    "department": "Aquisição",
+    "team": "Vendas",
+    "photo": "nathalia-de-oliveira.webp"
+  },
+  {
+    "name": "Nicolas Amaral",
+    "role": "Estagiário",
+    "department": "Planejamento",
+    "team": "Financeiro",
+    "photo": "nicolas-amaral.webp"
+  },
+  {
+    "name": "Nivarnia Kessia",
+    "role": "Analista",
+    "department": "Aquisição",
+    "team": "Vendas",
+    "photo": "nivarnia-kessia.webp"
+  },
+  {
+    "name": "Pedro Sanches",
+    "role": "Estagiário",
+    "department": "Juridico",
+    "team": "",
+    "photo": "pedro-sanches.webp"
+  },
+  {
+    "name": "Raissa Diovanna",
+    "role": "Assistente",
+    "department": "Juridico",
+    "team": "",
+    "photo": "raissa-diovanna.webp"
+  },
+  {
+    "name": "Raiza Sena",
+    "role": "Assistente",
+    "department": "Juridico",
+    "team": "Núcleo de Atenção ao Cliente",
+    "photo": "raiza-sena.webp"
+  },
+  {
+    "name": "Renato Luiz",
+    "role": "Estagiário",
+    "department": "Juridico",
+    "team": "Auditoria",
+    "photo": "renato-luiz.webp"
+  },
+  {
+    "name": "Sabrina Yekaterina",
+    "role": "Assistente",
+    "department": "Aquisição",
+    "team": "Vendas",
+    "photo": "sabrina-yekaterina.webp"
+  },
+  {
+    "name": "Sarah Beatriz",
+    "role": "Estagiário",
+    "department": "Juridico",
+    "team": "",
+    "photo": "sarah-beatriz.webp"
+  },
+  {
+    "name": "Silvany Soares",
+    "role": "Analista",
+    "department": "Planejamento",
+    "team": "Recursos Humanos",
+    "photo": "silvany-soares.webp"
+  },
+  {
+    "name": "Thiago Almeida",
+    "role": "Analista",
+    "department": "Aquisição",
+    "team": "Vendas",
+    "photo": null
+  },
+  {
+    "name": "Victoria Sabará",
+    "role": "Estagiário",
+    "department": "Aquisição",
+    "team": "Vendas",
+    "photo": "victoria-sabara.webp"
+  }
+]
