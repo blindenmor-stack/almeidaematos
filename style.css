@@ -1127,20 +1127,43 @@ html.lenis body {
 .team-carousel-section {
   overflow: hidden;
   padding: 2rem 0;
+  position: relative;
+}
+
+/* Fade nas bordas esquerda e direita */
+.team-carousel-section::before,
+.team-carousel-section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.team-carousel-section::before {
+  left: 0;
+  background: linear-gradient(to right, var(--color-navy-950, #0A1628) 0%, transparent 100%);
+}
+
+.team-carousel-section::after {
+  right: 0;
+  background: linear-gradient(to left, var(--color-navy-950, #0A1628) 0%, transparent 100%);
 }
 
 .team-carousel-track {
   display: flex;
-  gap: 1rem;
+  gap: 1.25rem;
   width: max-content;
 }
 
 .team-carousel-track.scroll-left {
-  animation: scrollLeft 30s linear infinite;
+  animation: scrollLeft 60s linear infinite;
 }
 
 .team-carousel-track.scroll-right {
-  animation: scrollRight 30s linear infinite;
+  animation: scrollRight 60s linear infinite;
 }
 
 .team-carousel-track:hover {
@@ -1159,45 +1182,52 @@ html.lenis body {
 
 .team-member-card {
   flex-shrink: 0;
-  width: 140px;
+  width: 130px;
   text-align: center;
 }
 
 .team-member-card img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
+  width: 110px;
+  height: 110px;
+  border-radius: 16px;
   object-fit: cover;
   object-position: top;
-  border: 3px solid rgba(201, 168, 76, 0.2);
-  transition: all 0.3s ease;
+  border: 2px solid rgba(201, 168, 76, 0.15);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .team-member-card:hover img {
-  border-color: rgba(201, 168, 76, 0.6);
-  transform: scale(1.05);
+  border-color: rgba(201, 168, 76, 0.5);
+  transform: scale(1.06);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 .team-member-card .team-name {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 600;
   color: white;
   margin-top: 0.5rem;
 }
 
 .team-member-card .team-role {
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   color: var(--color-navy-400);
 }
 
 @media (min-width: 768px) {
-  .team-member-card {
-    width: 160px;
+  .team-carousel-section::before,
+  .team-carousel-section::after {
+    width: 120px;
   }
-  
+
+  .team-member-card {
+    width: 150px;
+  }
+
   .team-member-card img {
-    width: 140px;
-    height: 140px;
+    width: 130px;
+    height: 130px;
+    border-radius: 20px;
   }
   
   .team-member-card .team-name {
