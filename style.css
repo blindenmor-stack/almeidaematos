@@ -1147,11 +1147,11 @@ html.lenis body {
 }
 
 .team-carousel-track.scroll-left {
-  animation: scrollLeft 60s linear infinite;
+  animation: scrollLeft 90s linear infinite;
 }
 
 .team-carousel-track.scroll-right {
-  animation: scrollRight 60s linear infinite;
+  animation: scrollRight 90s linear infinite;
 }
 
 .team-carousel-track:hover {
@@ -1195,6 +1195,7 @@ html.lenis body {
   font-weight: 600;
   color: white;
   margin-top: 0.5rem;
+  display: none; /* temporariamente oculto pra validação */
 }
 
 .team-member-card .team-role {
