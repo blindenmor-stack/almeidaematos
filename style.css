@@ -986,8 +986,8 @@
    FOOTER
    ================================ */
 .footer-section {
-  background: linear-gradient(180deg, #0D1F3C 0%, #071225 100%);
-  border-top: 1px solid rgba(201, 168, 76, 0.12);
+  background: linear-gradient(180deg, #F5F0E8 0%, #EDE7DB 100%);
+  border-top: 1px solid rgba(201, 168, 76, 0.15);
   padding-bottom: 5rem;
 }
 
@@ -1003,9 +1003,12 @@
 }
 
 .footer-logo {
-  height: 48px;
+  height: 40px;
   width: auto;
-  filter: brightness(1.8) contrast(0.9);
+  filter: none;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 8px 14px;
+  border-radius: 10px;
 }
 
 /* Legacy text brand — hidden */
