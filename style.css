@@ -1182,7 +1182,7 @@ html.lenis body {
   height: 110px;
   border-radius: 16px;
   object-fit: cover;
-  object-position: top;
+  object-position: center 15%;
   border: 2px solid rgba(201, 168, 76, 0.15);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
