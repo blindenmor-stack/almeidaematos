@@ -229,10 +229,30 @@ async function initPostPage() {
         return;
     }
 
-    const post = posts.find(p => p.slug === slug);
-    if (!post) {
+    const postMeta = posts.find(p => p.slug === slug);
+    if (!postMeta) {
         renderPostNotFound();
         return;
+    }
+
+    // Buscar conteúdo completo do post individual
+    let post = postMeta;
+    try {
+        const postPath = `./blog/posts/${slug}.json`;
+        const resp = await fetch(postPath);
+        if (resp.ok) {
+            const fullPost = await resp.json();
+            post = { ...postMeta, ...fullPost };
+        }
+    } catch (e) {
+        console.warn('Could not fetch full post content, using metadata only');
+    }
+
+    // Fallback: autor e readTime
+    if (!post.author) post.author = 'Equipe Almeida & Matos';
+    if (!post.readTime) {
+        const wordCount = (post.content || '').replace(/<[^>]+>/g, '').split(/\s+/).length;
+        post.readTime = Math.max(1, Math.ceil(wordCount / 200)) + ' min';
     }
 
     // Update page meta
@@ -323,9 +343,9 @@ function renderRelatedPosts(posts, currentPost) {
 }
 
 function renderPostNotFound() {
-    document.getElementById('page-title').textContent = 'Artigo nao encontrado | Almeida & Matos';
+    document.getElementById('page-title').textContent = 'Artigo não encontrado | Almeida & Matos';
     const titleEl = document.getElementById('post-title');
-    if (titleEl) titleEl.textContent = 'Artigo nao encontrado';
+    if (titleEl) titleEl.textContent = 'Artigo não encontrado';
     const categoryEl = document.getElementById('post-category');
     if (categoryEl) categoryEl.style.display = 'none';
     const metaEl = document.getElementById('post-meta');
@@ -337,8 +357,8 @@ function renderPostNotFound() {
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 mx-auto mb-4 text-navy-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <p class="text-lg font-semibold text-navy-600 mb-2">Este artigo nao foi encontrado</p>
-                <p class="text-navy-400 mb-6">O artigo que voce procura pode ter sido removido ou o link esta incorreto.</p>
+                <p class="text-lg font-semibold text-navy-600 mb-2">Este artigo não foi encontrado</p>
+                <p class="text-navy-400 mb-6">O artigo que você procura pode ter sido removido ou o link está incorreto.</p>
                 <a href="/blog/" class="inline-flex items-center gap-2 px-5 py-2.5 bg-gold-500 text-white font-semibold rounded-full hover:bg-gold-600 transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -349,7 +369,7 @@ function renderPostNotFound() {
         `;
     }
     const breadcrumbTitle = document.getElementById('breadcrumb-title');
-    if (breadcrumbTitle) breadcrumbTitle.textContent = 'Nao encontrado';
+    if (breadcrumbTitle) breadcrumbTitle.textContent = 'Não encontrado';
 }
 
 function injectStructuredData(post) {
