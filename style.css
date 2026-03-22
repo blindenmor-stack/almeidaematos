@@ -986,8 +986,8 @@
    FOOTER
    ================================ */
 .footer-section {
-  background: linear-gradient(180deg, var(--color-navy-950) 0%, #050508 100%);
-  border-top: 1px solid rgba(201, 168, 76, 0.08);
+  background: linear-gradient(180deg, #0D1F3C 0%, #071225 100%);
+  border-top: 1px solid rgba(201, 168, 76, 0.12);
   padding-bottom: 5rem;
 }
 
@@ -999,19 +999,19 @@
 
 .footer-brand {
   display: flex;
-  align-items: baseline;
-  font-family: var(--font-serif);
+  align-items: center;
 }
 
-.footer-brand-name {
-  font-size: 1.35rem;
-  color: white;
+.footer-logo {
+  height: 48px;
+  width: auto;
+  filter: brightness(1.8) contrast(0.9);
 }
 
+/* Legacy text brand — hidden */
+.footer-brand-name,
 .footer-brand-amp {
-  font-size: 1rem;
-  color: var(--color-gold-500);
-  margin: 0 0.2rem;
+  display: none;
 }
 
 /* ================================
