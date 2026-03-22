@@ -172,3 +172,48 @@ function closeMobileMenu() {
     if (toggle) toggle.classList.remove('open');
     lenis.start();
 }
+
+// ================================
+// Blog Preview (Homepage)
+// ================================
+async function loadBlogPreview() {
+    const container = document.getElementById('homepage-blog-posts');
+    if (!container) return;
+
+    try {
+        const resp = await fetch('/blog/posts/posts-data.json');
+        if (!resp.ok) return;
+        const posts = await resp.json();
+
+        // Pegar os 3 mais recentes
+        posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+        const recent = posts.slice(0, 3);
+
+        container.innerHTML = recent.map(post => {
+            const date = new Date(post.date + 'T12:00:00');
+            const dateStr = date.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
+
+            return `
+                <a href="/${post.slug}/" class="block bg-white rounded-2xl border border-navy-100 overflow-hidden hover:shadow-lg hover:border-gold-400/30 transition-all group">
+                    <div class="p-5">
+                        <span class="text-xs font-semibold text-gold-600 uppercase tracking-wider">${post.category}</span>
+                        <h3 class="text-navy-950 font-serif text-lg font-bold mt-2 mb-2 leading-snug group-hover:text-gold-600 transition-colors">${post.title}</h3>
+                        <p class="text-navy-500 text-sm leading-relaxed line-clamp-2">${post.excerpt?.substring(0, 120)}...</p>
+                        <div class="flex items-center gap-3 mt-4 text-xs text-navy-400">
+                            <span>${dateStr}</span>
+                            <span>·</span>
+                            <span>${post.readTime || '5 min'} de leitura</span>
+                        </div>
+                    </div>
+                </a>
+            `;
+        }).join('');
+    } catch (e) {
+        console.warn('Blog preview not available:', e);
+    }
+}
+
+// Inicializar quando DOM estiver pronto
+if (document.getElementById('homepage-blog-posts')) {
+    loadBlogPreview();
+}
