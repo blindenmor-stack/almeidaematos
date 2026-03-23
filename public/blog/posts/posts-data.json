@@ -1,13 +1,73 @@
 [
   {
+    "title": "Restituição de IR pago indevidamente por doença grave: retroativos e prazos",
+    "slug": "restituicao-de-ir-pago-indevidamente-por-doenca-grave-retroativos-e-prazos",
+    "date": "2025-08-21",
+    "excerpt": "Resposta objetiva: é possível recuperar o imposto de renda recolhido sobre proventos que deveriam estar isentos por doença grave, inclusive quando o diagnóst...",
+    "category": "Benefícios INSS",
+    "categorySlug": "beneficios-inss",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "13 min"
+  },
+  {
+    "title": "Laudo médico para isenção do Imposto de Renda: onde conseguir, prazo de validade e informações essenciais",
+    "slug": "laudo-medico-para-isencao-do-imposto-de-renda-onde-conseguir-prazo-de-validade-e-informacoes-essenciais",
+    "date": "2025-08-20",
+    "excerpt": "Sim, o laudo médico é o documento central para obter a isenção do Imposto de Renda (IR) em casos de doenças graves. Ele serve como prova material de que o co...",
+    "category": "Benefícios INSS",
+    "categorySlug": "beneficios-inss",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "7 min"
+  },
+  {
+    "title": "Contribuições em atraso para MEI e autônomo: quando compensa e como regularizar",
+    "slug": "contribuicoes-em-atraso-para-mei-e-autonomo-quando-compensa-e-como-regularizar",
+    "date": "2025-08-18",
+    "excerpt": "Quem é Microempreendedor Individual (MEI) ou autônomo e deixou de pagar as contribuições ao INSS por um tempo pode se perguntar se vale a pena regularizar os...",
+    "category": "Benefícios INSS",
+    "categorySlug": "beneficios-inss",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "9 min"
+  },
+  {
     "title": "Lista de CIDs que mais geram concessão de auxílio-acidente",
     "slug": "lista-de-cids-que-mais-geram-concessao-de-auxilio-acidente",
     "date": "2025-07-20",
     "excerpt": "O auxílio-acidente é um benefício previdenciário concedido ao segurado do INSS que, após sofrer um acidente de qualquer natureza — seja do trabalho ou não —, apresenta sequela definitiva que reduz sua",
     "category": "Auxílio Acidente",
+    "categorySlug": "uncategorized",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "Como calcular o valor do auxílio-acidente em 2025",
+    "slug": "como-calcular-o-valor-do-auxilio-acidente-em-2025",
+    "date": "2025-07-20",
+    "excerpt": "O auxílio-acidente é um benefício de natureza indenizatória pago pelo Instituto Nacional do Seguro Social (INSS) ao trabalhador segurado que sofreu um aciden...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "6 min"
+  },
+  {
+    "title": "Quando a CAT é obrigatória e quem deve emitir",
+    "slug": "quando-a-cat-e-obrigatoria-e-quem-deve-emitir",
+    "date": "2025-07-20",
+    "excerpt": "A Comunicação de Acidente de Trabalho (CAT) é um documento essencial para o reconhecimento de direitos trabalhistas e previdenciários em casos de acidentes e...",
+    "category": "Auxílio Acidente",
     "categorySlug": "auxilio-acidente",
     "author": "Equipe Almeida & Matos",
     "readTime": "8 min"
+  },
+  {
+    "title": "CAT e Nexo Técnico Epidemiológico (NTEP): entenda a relação",
+    "slug": "cat-e-nexo-tecnico-epidemiologico-ntep-entenda-a-relacao",
+    "date": "2025-07-20",
+    "excerpt": "A Comunicação de Acidente de Trabalho (CAT) é um documento oficial utilizado para informar ao Instituto Nacional do Seguro Social (INSS) a ocorrência de acid...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "9 min"
   },
   {
     "title": "Perito do INSS mudou meu CID: posso recorrer?",
@@ -15,9 +75,89 @@
     "date": "2025-07-19",
     "excerpt": "Quando um trabalhador passa por uma perícia médica no INSS e descobre que o perito mudou o CID (Código Internacional de Doenças) originalmente atestado por seu médico particular, muitas dúvidas surgem",
     "category": "Auxílio Acidente",
+    "categorySlug": "uncategorized",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "Tabela de indenização por perda de membros",
+    "slug": "tabela-de-indenizacao-por-perda-de-membros",
+    "date": "2025-07-05",
+    "excerpt": "Uma tabela de indenização por perda de membros é um instrumento essencial para balizar e padronizar os valores compensatórios devidos a indivíduos que sofrer...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "18 min"
+  },
+  {
+    "title": "Necessidade de perícia acidente de trânsito",
+    "slug": "necessidade-de-pericia-acidente-de-transito",
+    "date": "2025-07-02",
+    "excerpt": "A perícia em acidente de trânsito é indispensável sempre que as partes envolvidas ou o próprio Estado necessitam de prova técnica para identificar a dinâmica...",
+    "category": "Seguro Coletivo",
+    "categorySlug": "seguro-coletivo",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "8 min"
+  },
+  {
+    "title": "Processo por acidente de trabalho demora quanto tempo? Veja o que influencia na decisão",
+    "slug": "processo-por-acidente-de-trabalho-demora-quanto-tempo-veja-o-que-influencia-na-decisao",
+    "date": "2025-06-26",
+    "excerpt": "Quando um trabalhador sofre um acidente de trabalho e decide buscar judicialmente seus direitos, uma das dúvidas mais comuns é sobre quanto tempo o processo ...",
+    "category": "Auxílio Acidente",
     "categorySlug": "auxilio-acidente",
     "author": "Equipe Almeida & Matos",
     "readTime": "7 min"
+  },
+  {
+    "title": "Pensão por morte de servidor público: diferenças e regras específicas",
+    "slug": "pensao-por-morte-de-servidor-publico-diferencas-e-regras-especificas-2",
+    "date": "2025-06-26",
+    "excerpt": "A pensão por morte de servidor público segue um regime jurídico diferente daquele aplicado aos segurados do Regime Geral de Previdência Social (RGPS), admini...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "7 min"
+  },
+  {
+    "title": "Cego de um olho tem direito a auxílio-doença?",
+    "slug": "cego-de-um-olho-tem-direito-a-auxilio-doenca",
+    "date": "2025-06-04",
+    "excerpt": "Sim, uma pessoa cega de um olho pode ter direito ao auxílio-doença pago pelo INSS, desde que comprove que a perda de visão parcial causa incapacidade temporá...",
+    "category": "Benefícios INSS",
+    "categorySlug": "beneficios-inss",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "9 min"
+  },
+  {
+    "title": "Problema no joelho aposenta?",
+    "slug": "problema-no-joelho-aposenta",
+    "date": "2025-06-04",
+    "excerpt": "Sim, problemas no joelho podem dar direito à aposentadoria antecipada, principalmente se a limitação for significativa e o trabalhador já contar com uma long...",
+    "category": "Benefícios INSS",
+    "categorySlug": "beneficios-inss",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "8 min"
+  },
+  {
+    "title": "Quem tem benefício BPC pode comprar veículo PCD?",
+    "slug": "quem-tem-beneficio-bpc-pode-comprar-veiculo-pcd",
+    "date": "2025-05-29",
+    "excerpt": "Sim, quem recebe o Benefício de Prestação Continuada (BPC/LOAS) pode comprar veículo com isenção para PCD, desde que seja a própria pessoa com deficiência qu...",
+    "category": "BPC LOAS",
+    "categorySlug": "bpc-loas",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "10 min"
+  },
+  {
+    "title": "Qual a diferença entre B91 e B94",
+    "slug": "qual-a-diferenca-entre-b91-e-b94",
+    "date": "2025-05-27",
+    "excerpt": "A diferença crucial entre o B91 e o B94, no contexto do Instituto Nacional do Seguro Social (INSS), reside na sua natureza e finalidade: o B91 (Auxílio-Doenç...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "29 min"
   },
   {
     "title": "Como saber se tenho direito a benefícios do governo",
@@ -27,7 +167,37 @@
     "category": "Uncategorized",
     "categorySlug": "uncategorized",
     "author": "Equipe Almeida & Matos",
-    "readTime": "30 min"
+    "readTime": "5 min"
+  },
+  {
+    "title": "Qual o valor da indenização por sequela?",
+    "slug": "qual-o-valor-da-indenizacao-por-sequela",
+    "date": "2025-05-27",
+    "excerpt": "O valor da indenização por sequela, no contexto do Instituto Nacional do Seguro Social (INSS), refere-se especificamente ao Auxílio-Acidente. Este benefício ...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "23 min"
+  },
+  {
+    "title": "Código B94 INSS Significado",
+    "slug": "codigo-b94-inss",
+    "date": "2025-05-27",
+    "excerpt": "O B94, no contexto do INSS, é o código que designa o Auxílio-Acidente de origem acidentária. Este benefício crucial do sistema previdenciário brasileiro é co...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "43 min"
+  },
+  {
+    "title": "O que é incapacidade laborativa",
+    "slug": "o-que-e-incapacidade-laborativa",
+    "date": "2025-05-26",
+    "excerpt": "A incapacidade laborativa é a condição em que uma pessoa, por motivos físicos, mentais ou emocionais, perde parcial ou totalmente a capacidade de exercer ati...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "9 min"
   },
   {
     "title": "O que fazer quando o perito judicial nega a incapacidade",
@@ -35,9 +205,19 @@
     "date": "2025-05-26",
     "excerpt": "Quando o perito judicial conclui que não há incapacidade, o processo judicial que busca um benefício por invalidez, auxílio-doença ou aposentadoria por incapacidade permanente pode ser seriamente prej",
     "category": "Auxílio Acidente",
-    "categorySlug": "auxilio-acidente",
+    "categorySlug": "uncategorized",
     "author": "Equipe Almeida & Matos",
-    "readTime": "9 min"
+    "readTime": "5 min"
+  },
+  {
+    "title": "Como Receber a Pensão por Morte se o Falecido Era Autônomo ou MEI",
+    "slug": "como-receber-a-pensao-por-morte-se-o-falecido-era-autonomo-ou-mei",
+    "date": "2025-05-20",
+    "excerpt": "A pensão por morte é um benefício previdenciário concedido aos dependentes de um segurado do INSS que faleceu, com o objetivo de garantir o sustento da famíl...",
+    "category": "Aposentadoria Especial",
+    "categorySlug": "aposentadoria-especial",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "7 min"
   },
   {
     "title": "Direitos de trabalhadores com doenças autoimunes: o que eles precisam saber",
@@ -45,9 +225,79 @@
     "date": "2025-05-19",
     "excerpt": "As doenças autoimunes afetam uma parcela significativa da população e são uma das condições de saúde que mais podem impactar a capacidade laboral de um trabalhador. Essas doenças ocorrem quando o sist",
     "category": "Aposentadoria Especial",
-    "categorySlug": "aposentadoria-especial",
+    "categorySlug": "uncategorized",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "Quanto tempo após a perícia o INSS paga o auxílio-doença",
+    "slug": "quanto-tempo-apos-a-pericia-o-inss-paga-o-auxilio-doenca",
+    "date": "2025-05-17",
+    "excerpt": "Após a realização da perícia médica, o INSS geralmente tem até 45 dias para efetuar o pagamento do auxílio-doença, desde que o benefício seja concedido. Esse...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
     "author": "Equipe Almeida & Matos",
     "readTime": "6 min"
+  },
+  {
+    "title": "Auxílio-acidente tem décimo terceiro?",
+    "slug": "auxilio-acidente-tem-decimo-terceiro",
+    "date": "2025-05-17",
+    "excerpt": "até a véspera da aposentadoria ou até a data do óbito do segurado, se ele não se aposentar. Isso porque, ao se aposentar, o trabalhador perde automaticamente...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "7 min"
+  },
+  {
+    "title": "Qual o valor mínimo que o INSS paga de auxílio-doença",
+    "slug": "qual-o-valor-minimo-que-o-inss-paga-de-auxilio-doenca",
+    "date": "2025-05-17",
+    "excerpt": "o valor mínimo que o INSS paga de auxílio-doença em 2025 é de R$ 1.518,00, correspondente ao salário mínimo nacional vigente. Esse valor é garantido por lei ...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "7 min"
+  },
+  {
+    "title": "Auxílio-doença e prorrogação",
+    "slug": "auxilio-doenca-e-prorrogacao",
+    "date": "2025-05-17",
+    "excerpt": "Sim, é possível pedir a prorrogação do auxílio-doença quando a pessoa que está recebendo o benefício continua incapacitada para o trabalho no fim do prazo co...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "8 min"
+  },
+  {
+    "title": "Acidente de trabalho sem carteira assinada",
+    "slug": "acidente-de-trabalho-sem-carteira-assinada",
+    "date": "2025-05-17",
+    "excerpt": "É possível ter direitos reconhecidos mesmo em caso de acidente de trabalho sem carteira assinada. A informalidade não retira do trabalhador sua condição de s...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "8 min"
+  },
+  {
+    "title": "CAT acidente de trabalho: o que é, como funciona e tudo o que você precisa saber",
+    "slug": "cat-acidente-de-trabalho-o-que-e-como-funciona-e-tudo-o-que-voce-precisa-saber",
+    "date": "2025-05-17",
+    "excerpt": "A CAT, sigla para Comunicação de Acidente de Trabalho, é um documento oficial usado para registrar formalmente um acidente ocorrido no ambiente de trabalho o...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "9 min"
+  },
+  {
+    "title": "Estabilidade no emprego após auxílio-doença segundo a CLT",
+    "slug": "estabilidade-no-emprego-apos-auxilio-doenca-segundo-a-clt",
+    "date": "2025-05-17",
+    "excerpt": "O trabalhador que recebe auxílio-doença pode ter direito à estabilidade no emprego após seu retorno, dependendo do tipo de afastamento e das circunstâncias q...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "9 min"
   },
   {
     "title": "Auxílio-acidente tem aumento?",
@@ -55,9 +305,9 @@
     "date": "2025-05-17",
     "excerpt": "Sim, o auxílio-acidente tem aumento. Esse benefício previdenciário é reajustado anualmente para preservar o poder de compra do segurado. O valor do reajuste é calculado com base na variação da inflaçã",
     "category": "Auxílio Acidente",
-    "categorySlug": "auxilio-acidente",
+    "categorySlug": "uncategorized",
     "author": "Equipe Almeida & Matos",
-    "readTime": "7 min"
+    "readTime": "5 min"
   },
   {
     "title": "Sequelas de fratura de tíbia e fíbula",
@@ -65,9 +315,9 @@
     "date": "2025-05-09",
     "excerpt": "As fraturas na tíbia e na fíbula são consideradas graves, especialmente quando envolvem desvio, necessidade de cirurgia ou comprometimento da mobilidade. Mesmo com tratamento adequado, muitos paciente",
     "category": "Auxílio Acidente",
-    "categorySlug": "auxilio-acidente",
+    "categorySlug": "uncategorized",
     "author": "Equipe Almeida & Matos",
-    "readTime": "8 min"
+    "readTime": "5 min"
   },
   {
     "title": "Valor de indenização por sequela permanente",
@@ -75,9 +325,39 @@
     "date": "2025-05-09",
     "excerpt": "O trabalhador registrado que sofre um acidente de trabalho ou desenvolve uma doença ocupacional com consequências permanentes tem direito a uma série de garantias previstas em lei. Entre elas está a p",
     "category": "Auxílio Acidente",
+    "categorySlug": "uncategorized",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "Sequelas permanentes após fratura no tornozelo",
+    "slug": "sequelas-permanentes-apos-fratura-no-tornozelo",
+    "date": "2025-05-09",
+    "excerpt": "A fratura no tornozelo é uma lesão grave que pode gerar consequências permanentes, especialmente quando associada a complicações como má consolidação, artros...",
+    "category": "Auxílio Acidente",
     "categorySlug": "auxilio-acidente",
     "author": "Equipe Almeida & Matos",
-    "readTime": "7 min"
+    "readTime": "9 min"
+  },
+  {
+    "title": "Sequelas após pneumonia: quando o trabalhador pode ter direito ao auxílio-acidente do INSS",
+    "slug": "sequelas-apos-pneumonia-quando-o-trabalhador-pode-ter-direito-ao-auxilio-acidente-do-inss",
+    "date": "2025-05-09",
+    "excerpt": "A pneumonia é uma infecção pulmonar que, em muitos casos, pode ser tratada de forma eficaz com antibióticos e repouso. No entanto, há situações em que a pneu...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "9 min"
+  },
+  {
+    "title": "Como provar a dependência econômica para solicitar pensão por morte",
+    "slug": "como-provar-a-dependencia-economica-para-solicitar-pensao-por-morte",
+    "date": "2025-04-20",
+    "excerpt": "A pensão por morte é um benefício previdenciário destinado aos dependentes de um segurado do INSS (Instituto Nacional do Seguro Social) que vem a falecer. Es...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "6 min"
   },
   {
     "title": "Se o INSS negar o auxílio-doença, quem paga?",
@@ -85,9 +365,9 @@
     "date": "2025-04-13",
     "excerpt": "Quando o trabalhador se depara com uma situação de incapacidade temporária para o trabalho, é natural buscar o auxílio-doença junto ao INSS. Trata-se de um benefício previdenciário destinado a amparar",
     "category": "Auxílio Acidente",
-    "categorySlug": "auxilio-acidente",
+    "categorySlug": "uncategorized",
     "author": "Equipe Almeida & Matos",
-    "readTime": "10 min"
+    "readTime": "5 min"
   },
   {
     "title": "Como calcular retroativo de auxílio-acidente",
@@ -95,9 +375,9 @@
     "date": "2025-04-03",
     "excerpt": "O cálculo do retroativo de auxílio-acidente é uma etapa fundamental para garantir que o segurado receba todos os valores devidos desde a data em que adquiriu o direito ao benefício até o momento em qu",
     "category": "Auxílio Acidente",
-    "categorySlug": "auxilio-acidente",
+    "categorySlug": "uncategorized",
     "author": "Equipe Almeida & Matos",
-    "readTime": "9 min"
+    "readTime": "5 min"
   },
   {
     "title": "Quanto tempo demora um processo de auxílio-acidente",
@@ -105,15 +385,125 @@
     "date": "2025-04-03",
     "excerpt": "O tempo que um processo de auxílio-acidente pode levar varia bastante, dependendo de diversos fatores como a complexidade do caso, a necessidade de perícias médicas, a atuação do INSS, a via escolhida",
     "category": "Auxílio Acidente",
+    "categorySlug": "uncategorized",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "Danos morais por acidente de trânsito: Quando é cabível e como calcular",
+    "slug": "danos-morais-por-acidente-de-transito-quando-e-cabivel-e-como-calcular",
+    "date": "2025-03-28",
+    "excerpt": "Os danos morais são uma forma de compensação concedida a uma pessoa que sofre algum tipo de sofrimento psicológico, emocional ou psicológico devido a uma açã...",
+    "category": "Auxílio Acidente",
     "categorySlug": "auxilio-acidente",
     "author": "Equipe Almeida & Matos",
-    "readTime": "9 min"
+    "readTime": "6 min"
+  },
+  {
+    "title": "Como provar a culpa em um acidente de trânsito: Testemunhas, vídeos e perícias",
+    "slug": "como-provar-a-culpa-em-um-acidente-de-transito-testemunhas-videos-e-pericias",
+    "date": "2025-03-28",
+    "excerpt": "Em casos de acidente de trânsito, uma das questões mais importantes é determinar quem é o responsável pelo ocorrido. Isso é fundamental não apenas para o pag...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "6 min"
+  },
+  {
+    "title": "A responsabilidade civil no acidente de trânsito: Quem paga os danos?",
+    "slug": "a-responsabilidade-civil-no-acidente-de-transito-quem-paga-os-danos",
+    "date": "2025-03-28",
+    "excerpt": "Os acidentes de trânsito são eventos inesperados e frequentemente traumáticos que podem resultar em danos materiais e pessoais significativos. Quando uma pes...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "6 min"
+  },
+  {
+    "title": "Qual o montante da multa por não emitir a CAT?",
+    "slug": "qual-o-montante-da-multa-por-nao-emitir-a-cat",
+    "date": "2025-02-07",
+    "excerpt": "A Comunicação de Acidente de Trabalho, conhecida como CAT, é um registro essencial que formaliza a ocorrência de incidentes e enfermidades no ambiente labora...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "4 min"
+  },
+  {
+    "title": "O que fazer depois da CAT?",
+    "slug": "o-que-fazer-depois-da-cat",
+    "date": "2025-02-06",
+    "excerpt": "Após a emissão da Comunicação de Acidente de Trabalho, conhecida como CAT, diversas providências devem ser adotadas para garantir que os direitos do empregad...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "4 min"
+  },
+  {
+    "title": "Por que as empresas não gostam de emitir a CAT?",
+    "slug": "por-que-as-empresas-nao-gostam-de-emitir-a-cat",
+    "date": "2025-02-06",
+    "excerpt": "A Comunicação de Acidente de Trabalho, ou CAT, é um documento legal indispensável que formaliza a ocorrência de acidentes ou doenças ocupacionais, permitindo...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "4 min"
+  },
+  {
+    "title": "Quem arca com as despesas em caso de acidente de trabalho?",
+    "slug": "quem-arca-com-as-despesas-em-caso-de-acidente-de-trabalho",
+    "date": "2025-02-04",
+    "excerpt": "Quando ocorre um acidente no ambiente laboral, surgem diversas questões de ordem jurídica e administrativa, dentre as quais se destaca a responsabilidade pel...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "Quem abre o CAT: a empresa ou o funcionário?",
+    "slug": "quem-abre-o-cat-a-empresa-ou-o-funcionario",
+    "date": "2025-02-04",
+    "excerpt": "A Comunicação de Acidente de Trabalho, conhecida como CAT, é um instrumento jurídico essencial no contexto da proteção social no Brasil. Esse registro formal...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "4 min"
   },
   {
     "title": "Retocolite Ulcerativa e o Direito à Aposentadoria: Aspectos Jurídicos",
     "slug": "retocolite-ulcerativa-e-o-direito-a-aposentadoria-aspectos-juridicos",
     "date": "2025-01-12",
     "excerpt": "A retocolite ulcerativa é uma doença inflamatória intestinal crônica que afeta o cólon e o reto, causando inflamação e úlceras nas paredes do intestino. A doença é caracterizada por sintomas como dor ",
+    "category": "Aposentadoria Especial",
+    "categorySlug": "uncategorized",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "Enfisema Pulmonar e Aposentadoria: Direitos Previdenciários e Benefícios",
+    "slug": "enfisema-pulmonar-e-aposentadoria-direitos-previdenciarios-e-beneficios",
+    "date": "2025-01-12",
+    "excerpt": "O enfisema pulmonar é uma doença crônica do pulmão que faz parte do grupo das Doenças Pulmonares Obstrutivas Crônicas (DPOC). Essa condição é caracterizada p...",
+    "category": "Aposentadoria Especial",
+    "categorySlug": "aposentadoria-especial",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "7 min"
+  },
+  {
+    "title": "Benefícios para Portadores de Artrose: Direitos e Procedimentos Legais",
+    "slug": "beneficios-para-portadores-de-artrose-direitos-e-procedimentos-legais",
+    "date": "2025-01-08",
+    "excerpt": "A artrose é uma condição crônica que afeta as articulações, caracterizada pela degeneração da cartilagem que as reveste, levando a dores, rigidez e perda de ...",
+    "category": "Aposentadoria Especial",
+    "categorySlug": "aposentadoria-especial",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "6 min"
+  },
+  {
+    "title": "CID M22.4 e Aposentadoria: Como a Condição Afeta os Direitos Previdenciários",
+    "slug": "cid-m22-4-e-aposentadoria-como-a-condicao-afeta-os-direitos-previdenciarios",
+    "date": "2025-01-08",
+    "excerpt": "A artrose do quadril é uma das condições ortopédicas mais comuns que afeta a mobilidade das pessoas, principalmente na terceira idade. O código CID M22.4 ref...",
     "category": "Aposentadoria Especial",
     "categorySlug": "aposentadoria-especial",
     "author": "Equipe Almeida & Matos",
@@ -125,6 +515,16 @@
     "date": "2025-01-08",
     "excerpt": "O CID M51.1 é um código utilizado pela Organização Mundial da Saúde (OMS) para identificar um diagnóstico específico relacionado à dor na região lombar, associada à radiculopatia. A radiculopatia é um",
     "category": "Aposentadoria Especial",
+    "categorySlug": "uncategorized",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "CID Diverticulite e Aposentadoria por Invalidez: O que você precisa saber",
+    "slug": "cid-diverticulite-e-aposentadoria-por-invalidez-o-que-voce-precisa-saber",
+    "date": "2025-01-08",
+    "excerpt": "A diverticulite é uma condição que afeta o trato gastrointestinal, especificamente os divertículos, que são pequenas bolsas que se formam na parede do intest...",
+    "category": "Aposentadoria Especial",
     "categorySlug": "aposentadoria-especial",
     "author": "Equipe Almeida & Matos",
     "readTime": "7 min"
@@ -135,9 +535,9 @@
     "date": "2025-01-08",
     "excerpt": "O esporão do calcâneo é uma condição bastante comum que afeta muitas pessoas, especialmente aquelas com mais idade ou que praticam atividades físicas de impacto repetitivo. Caracteriza-se por um cresc",
     "category": "Aposentadoria Especial",
-    "categorySlug": "aposentadoria-especial",
+    "categorySlug": "uncategorized",
     "author": "Equipe Almeida & Matos",
-    "readTime": "6 min"
+    "readTime": "5 min"
   },
   {
     "title": "Trombose e o trabalho: direitos trabalhistas e as implicações para quem sofre com a condição",
@@ -145,9 +545,59 @@
     "date": "2025-01-07",
     "excerpt": "A trombose é uma condição médica caracterizada pela formação de coágulos sanguíneos em veias ou artérias, o que pode causar sérios problemas de saúde. Quando um coágulo se forma em uma veia profunda, ",
     "category": "Aposentadoria Especial",
+    "categorySlug": "uncategorized",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "Quem tem escoliose pode se aposentar? Entenda os direitos e possibilidades de aposentadoria",
+    "slug": "quem-tem-escoliose-pode-se-aposentar-entenda-os-direitos-e-possibilidades-de-aposentadoria",
+    "date": "2025-01-06",
+    "excerpt": "A escoliose é uma condição médica caracterizada pela curvatura anormal da coluna vertebral, podendo se manifestar de forma leve ou grave. Embora muitas pesso...",
+    "category": "Aposentadoria Especial",
     "categorySlug": "aposentadoria-especial",
     "author": "Equipe Almeida & Matos",
-    "readTime": "6 min"
+    "readTime": "7 min"
+  },
+  {
+    "title": "Síncope vasovagal e aposentadoria: é possível se aposentar com essa condição?",
+    "slug": "sincope-vasovagal-e-aposentadoria-e-possivel-se-aposentar-com-essa-condicao",
+    "date": "2025-01-06",
+    "excerpt": "A síncope vasovagal é uma condição médica caracterizada pela perda temporária de consciência, geralmente causada por uma queda na pressão arterial ou diminui...",
+    "category": "Uncategorized",
+    "categorySlug": "uncategorized",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "7 min"
+  },
+  {
+    "title": "Dor neuropática CID: possibilidade de aposentadoria por invalidez",
+    "slug": "dor-neuropatica-cid-possibilidade-de-aposentadoria-por-invalidez",
+    "date": "2025-01-06",
+    "excerpt": "A dor neuropática é um tipo de dor crônica que resulta de lesões ou disfunções no sistema nervoso. Essa condição pode ser debilitante, afetando a qualidade d...",
+    "category": "Aposentadoria Especial",
+    "categorySlug": "aposentadoria-especial",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "7 min"
+  },
+  {
+    "title": "Crianças com TDAH têm direito a auxílio? Compreenda os benefícios disponíveis",
+    "slug": "criancas-com-tdah-tem-direito-a-auxilio-compreenda-os-beneficios-disponiveis",
+    "date": "2025-01-04",
+    "excerpt": "O Transtorno de Déficit de Atenção e Hiperatividade (TDAH) é uma condição neuropsiquiátrica comum na infância, caracterizada por sintomas de desatenção, impu...",
+    "category": "Uncategorized",
+    "categorySlug": "uncategorized",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "7 min"
+  },
+  {
+    "title": "CID M79.7 e aposentadoria: O que você precisa saber",
+    "slug": "cid-m79-7-e-aposentadoria-o-que-voce-precisa-saber",
+    "date": "2025-01-04",
+    "excerpt": "O Código Internacional de Doenças (CID) é um sistema amplamente utilizado para classificar doenças e condições de saúde. Cada número da CID refere-se a uma d...",
+    "category": "Uncategorized",
+    "categorySlug": "uncategorized",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "7 min"
   },
   {
     "title": "Placa e Pino de Fixação: Como Acessar Benefícios Previdenciários",
@@ -160,14 +610,84 @@
     "readTime": "5 min"
   },
   {
+    "title": "Tremor Essencial: O Que Você Precisa Saber Sobre Seus Direitos",
+    "slug": "tremor-essencial-o-que-voce-precisa-saber-sobre-seus-direitos",
+    "date": "2025-01-04",
+    "excerpt": "O tremor essencial é uma condição neurológica que provoca tremores involuntários, geralmente nas mãos, mas também pode afetar a cabeça, a voz e outras partes...",
+    "category": "Uncategorized",
+    "categorySlug": "uncategorized",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "Cancelamento de contratos por falhas no serviço: o que o consumidor precisa saber",
+    "slug": "cancelamento-de-contratos-por-falhas-no-servico-o-que-o-consumidor-precisa-saber",
+    "date": "2024-12-15",
+    "excerpt": "A possibilidade de cancelar um contrato por falhas no serviço é um direito fundamental garantido pelo Código de Defesa do Consumidor (CDC). Quando o forneced...",
+    "category": "Uncategorized",
+    "categorySlug": "uncategorized",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "Indenização por perda de capacidade laborativa após acidente",
+    "slug": "indenizacao-por-perda-de-capacidade-laborativa-apos-acidente",
+    "date": "2024-10-27",
+    "excerpt": "A perda de capacidade laborativa é uma condição que afeta diretamente a vida profissional e econômica de uma pessoa. Quando essa perda ocorre em decorrência ...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "7 min"
+  },
+  {
+    "title": "Cervicalgia (CID M54.2) e aposentadoria: tudo o que você precisa saber",
+    "slug": "cervicalgia-cid-m54-2-e-aposentadoria-tudo-o-que-voce-precisa-saber",
+    "date": "2024-09-21",
+    "excerpt": "A cervicalgia, classificada pelo CID M54.2, é um termo médico usado para descrever dor no pescoço, uma condição que afeta milhões de pessoas em todo o mundo....",
+    "category": "Aposentadoria Especial",
+    "categorySlug": "aposentadoria-especial",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "8 min"
+  },
+  {
+    "title": "CID F41.0 e os direitos à aposentadoria: um guia completo",
+    "slug": "cid-f41-0-e-os-direitos-a-aposentadoria-um-guia-completo",
+    "date": "2024-09-21",
+    "excerpt": "O Código Internacional de Doenças (CID) F41.0 refere-se ao Transtorno de Ansiedade Generalizada (TAG), uma condição mental caracterizada por ansiedade e preo...",
+    "category": "BPC LOAS",
+    "categorySlug": "bpc-loas",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "6 min"
+  },
+  {
+    "title": "Espondilite anquilosante e os direitos em 2024: um guia completo",
+    "slug": "espondilite-anquilosante-e-os-direitos-em-2024-um-guia-completo",
+    "date": "2024-09-21",
+    "excerpt": "A espondilite anquilosante (EA) é uma doença inflamatória crônica que afeta principalmente a coluna vertebral e as articulações sacroilíacas, causando dor, r...",
+    "category": "Aposentadoria Especial",
+    "categorySlug": "aposentadoria-especial",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "6 min"
+  },
+  {
     "title": "Discopatia degenerativa: tudo o que você precisa saber sobre o CID e os direitos previdenciários",
     "slug": "discopatia-degenerativa-tudo-o-que-voce-precisa-saber-sobre-o-cid-e-os-direitos-previdenciarios",
     "date": "2024-09-21",
     "excerpt": "A discopatia degenerativa é uma condição que afeta os discos intervertebrais, levando ao desgaste progressivo da coluna vertebral. Essa condição, classificada pelo Código Internacional de Doenças (CID",
     "category": "Aposentadoria Especial",
+    "categorySlug": "uncategorized",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "Fratura no tornozelo e aposentadoria por invalidez: o que você precisa saber",
+    "slug": "fratura-no-tornozelo-e-aposentadoria-por-invalidez-o-que-voce-precisa-saber",
+    "date": "2024-09-21",
+    "excerpt": "Fraturas no tornozelo são lesões sérias que podem impactar profundamente a mobilidade e a qualidade de vida de uma pessoa, dependendo da gravidade. Em alguns...",
+    "category": "Aposentadoria Especial",
     "categorySlug": "aposentadoria-especial",
     "author": "Equipe Almeida & Matos",
-    "readTime": "7 min"
+    "readTime": "6 min"
   },
   {
     "title": "Transtorno misto ansioso e depressivo (CID F41.2) e o direito ao afastamento: tudo o que você precisa saber",
@@ -175,19 +695,79 @@
     "date": "2024-09-21",
     "excerpt": "O CID F41.2 é o código da Classificação Internacional de Doenças que se refere ao transtorno misto ansioso e depressivo, uma condição psicológica que combina sintomas de ansiedade e depressão de forma",
     "category": "Aposentadoria Especial",
+    "categorySlug": "uncategorized",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "Tudo sobre o CID M54.5 e a aposentadoria por lombalgia",
+    "slug": "tudo-sobre-o-cid-m54-5-e-a-aposentadoria-por-lombalgia",
+    "date": "2024-09-20",
+    "excerpt": "O CID M54.5 é a classificação utilizada pela Classificação Internacional de Doenças (CID-10) para identificar a lombalgia, que é a dor na região lombar da co...",
+    "category": "Aposentadoria Especial",
     "categorySlug": "aposentadoria-especial",
     "author": "Equipe Almeida & Matos",
     "readTime": "7 min"
   },
   {
-    "title": "Transtorno misto ansioso e depressivo (CID F41.2) e o direito ao afastamento: tudo o que você precisa saber",
-    "slug": "transtorno-misto-ansioso-e-depressivo-cid-f41-2-e-o-direito-ao-afastamento-tudo-o-que-voce-precisa-saber",
-    "date": "2024-09-21",
-    "excerpt": "O CID F41.2 é o código da Classificação Internacional de Doenças que se refere ao transtorno misto ansioso e depressivo, uma condição psicológica que combina sintomas de ansiedade e depressão de forma",
+    "title": "Tudo sobre o CID M17: artrose do joelho",
+    "slug": "tudo-sobre-o-cid-m17-artrose-do-joelho",
+    "date": "2024-09-20",
+    "excerpt": "O CID M17 é a classificação utilizada pela Classificação Internacional de Doenças (CID-10) para a artrose do joelho, também conhecida como osteoartrite do jo...",
     "category": "Aposentadoria Especial",
     "categorySlug": "aposentadoria-especial",
     "author": "Equipe Almeida & Matos",
     "readTime": "7 min"
+  },
+  {
+    "title": "Tudo sobre o CID F41.1 e o afastamento por transtorno de ansiedade generalizada",
+    "slug": "tudo-sobre-o-cid-f41-1-e-o-afastamento-por-transtorno-de-ansiedade-generalizada",
+    "date": "2024-09-20",
+    "excerpt": "O CID F41.1 é a classificação utilizada pela Classificação Internacional de Doenças (CID-10) para descrever o transtorno de ansiedade generalizada (TAG). Est...",
+    "category": "Aposentadoria Especial",
+    "categorySlug": "aposentadoria-especial",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "6 min"
+  },
+  {
+    "title": "Discopatia degenerativa: o que é, sintomas e benefícios previdenciários",
+    "slug": "discopatia-degenerativa-o-que-e-sintomas-e-beneficios-previdenciarios",
+    "date": "2024-09-19",
+    "excerpt": "A discopatia degenerativa é uma condição que afeta os discos intervertebrais da coluna vertebral, responsáveis por amortecer o impacto entre as vértebras e p...",
+    "category": "Aposentadoria Especial",
+    "categorySlug": "aposentadoria-especial",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "7 min"
+  },
+  {
+    "title": "Benefícios para portadores de artrose: guia completo",
+    "slug": "beneficios-para-portadores-de-artrose-guia-completo",
+    "date": "2024-09-19",
+    "excerpt": "A artrose, também conhecida como osteoartrite, é uma doença degenerativa que afeta as articulações, causando dor, rigidez e inflamação. À medida que a cartil...",
+    "category": "Aposentadoria Especial",
+    "categorySlug": "aposentadoria-especial",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "7 min"
+  },
+  {
+    "title": "CID F20: esquizofrenia e direitos previdenciários",
+    "slug": "cid-f20-esquizofrenia-e-direitos-previdenciarios",
+    "date": "2024-09-19",
+    "excerpt": "O CID F20 é o código da esquizofrenia, uma doença mental crônica e grave que afeta a maneira como a pessoa pensa, sente e se comporta. A esquizofrenia é cara...",
+    "category": "Aposentadoria Especial",
+    "categorySlug": "aposentadoria-especial",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "8 min"
+  },
+  {
+    "title": "BPC: quanto tempo demora para receber após a aprovação",
+    "slug": "bpc-quanto-tempo-demora-para-receber-apos-a-aprovacao",
+    "date": "2024-09-19",
+    "excerpt": "O Benefício de Prestação Continuada (BPC), regulamentado pela Lei Orgânica da Assistência Social (LOAS), é um auxílio destinado a garantir um salário mínimo ...",
+    "category": "BPC LOAS",
+    "categorySlug": "bpc-loas",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "6 min"
   },
   {
     "title": "CID F32.2: episódio depressivo grave sem sintomas psicóticos e direitos previdenciários",
@@ -195,9 +775,19 @@
     "date": "2024-09-19",
     "excerpt": "O CID F32.2 refere-se a um episódio depressivo grave sem sintomas psicóticos, uma das formas mais severas de depressão que pode comprometer significativamente a vida pessoal, social e profissional do ",
     "category": "Aposentadoria Especial",
+    "categorySlug": "uncategorized",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "CID M51: discopatias intervertebrais e os direitos previdenciários",
+    "slug": "cid-m51-discopatias-intervertebrais-e-os-direitos-previdenciarios",
+    "date": "2024-09-19",
+    "excerpt": "O CID M51 é o código da Classificação Internacional de Doenças (CID-10) que se refere às discopatias intervertebrais, condições que afetam os discos interver...",
+    "category": "Aposentadoria Especial",
     "categorySlug": "aposentadoria-especial",
     "author": "Equipe Almeida & Matos",
-    "readTime": "7 min"
+    "readTime": "8 min"
   },
   {
     "title": "CID F41.2: transtorno misto de ansiedade e depressão e direitos previdenciários",
@@ -205,17 +795,7 @@
     "date": "2024-09-19",
     "excerpt": "O CID F41.2 refere-se ao transtorno misto de ansiedade e depressão, uma condição em que sintomas de ansiedade e depressão coexistem de maneira significativa, mas nenhum dos dois predomina ao ponto de ",
     "category": "Aposentadoria Especial",
-    "categorySlug": "aposentadoria-especial",
-    "author": "Equipe Almeida & Matos",
-    "readTime": "8 min"
-  },
-  {
-    "title": "Artrose isenção imposto de renda",
-    "slug": "artrose-isencao-imposto-de-renda",
-    "date": "2024-08-25",
-    "excerpt": "A artrose, também conhecida como osteoartrite, é uma doença crônica degenerativa que afeta as articulações, causando dor, rigidez e limitação dos movimentos. É uma condição que impacta significativame",
-    "category": "Imposto de renda",
-    "categorySlug": "imposto-de-renda",
+    "categorySlug": "uncategorized",
     "author": "Equipe Almeida & Matos",
     "readTime": "5 min"
   },
@@ -225,9 +805,99 @@
     "date": "2024-08-25",
     "excerpt": "A fibromialgia é uma síndrome crônica caracterizada por dores generalizadas, fadiga, distúrbios do sono, problemas de memória e alterações de humor. Essa condição afeta milhões de pessoas em todo o mu",
     "category": "Imposto de renda",
+    "categorySlug": "uncategorized",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "Artrose isenção imposto de renda",
+    "slug": "artrose-isencao-imposto-de-renda",
+    "date": "2024-08-25",
+    "excerpt": "A artrose, também conhecida como osteoartrite, é uma doença crônica degenerativa que afeta as articulações, causando dor, rigidez e limitação dos movimentos. É uma condição que impacta significativame",
+    "category": "Imposto de renda",
+    "categorySlug": "uncategorized",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "Isenção imposto de renda para servidores públicos",
+    "slug": "isencao-imposto-de-renda-para-servidores-publicos",
+    "date": "2024-08-24",
+    "excerpt": "Servidores públicos desempenham um papel essencial no funcionamento do governo e na prestação de serviços à sociedade. Dado o compromisso e a dedicação exigi...",
+    "category": "Imposto de renda",
     "categorySlug": "imposto-de-renda",
     "author": "Equipe Almeida & Matos",
     "readTime": "6 min"
+  },
+  {
+    "title": "Isenção imposto de renda para militares reformados ou da reserva",
+    "slug": "isencao-imposto-de-renda-para-militares-reformados-ou-da-reserva",
+    "date": "2024-08-24",
+    "excerpt": "Os militares reformados ou da reserva, que dedicaram anos de serviço à nação, têm direito a uma série de benefícios após a aposentadoria. Um desses benefício...",
+    "category": "Imposto de renda",
+    "categorySlug": "imposto-de-renda",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "6 min"
+  },
+  {
+    "title": "O que é rcf no seguro? Um guia completo e detalhado",
+    "slug": "o-que-e-rcf-no-seguro-um-guia-completo-e-detalhado",
+    "date": "2024-08-24",
+    "excerpt": "O Seguro de Responsabilidade Civil Facultativa de Veículos, popularmente conhecido como Seguro RCF, é uma das modalidades mais importantes dentro do universo...",
+    "category": "Seguro RCF",
+    "categorySlug": "seguro-rcf",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "7 min"
+  },
+  {
+    "title": "Como Analisar o PPP para Aposentadoria Especial: Um Guia Completo e Exclusivo",
+    "slug": "como-analisar-o-ppp-para-aposentadoria-especial-um-guia-completo-e-exclusivo",
+    "date": "2024-07-29",
+    "excerpt": "O Perfil Profissiográfico Previdenciário (PPP) é um documento essencial para a concessão da aposentadoria especial. Ele detalha as condições de trabalho de u...",
+    "category": "Aposentadoria Especial",
+    "categorySlug": "aposentadoria-especial",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "Como calcular o retroativo do bpc loas",
+    "slug": "como-calcular-o-retroativo-do-bpc-loas",
+    "date": "2024-07-28",
+    "excerpt": "O Benefício de Prestação Continuada (BPC), regulamentado pela Lei Orgânica da Assistência Social (LOAS), oferece uma assistência financeira crucial a idosos ...",
+    "category": "BPC LOAS",
+    "categorySlug": "bpc-loas",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "BPC LOAS: quem tem direito?",
+    "slug": "bpc-loas-quem-tem-direito",
+    "date": "2024-07-28",
+    "excerpt": "O Benefício de Prestação Continuada (BPC), estabelecido pela Lei Orgânica da Assistência Social (LOAS), é um dos mais importantes programas de assistência so...",
+    "category": "BPC LOAS",
+    "categorySlug": "bpc-loas",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "6 min"
+  },
+  {
+    "title": "Não atende ao critério de deficiência para acesso ao bpc-loas",
+    "slug": "nao-atende-ao-criterio-de-deficiencia-para-acesso-ao-bpc-loas",
+    "date": "2024-07-28",
+    "excerpt": "O Benefício de Prestação Continuada (BPC), conforme definido pela Lei Orgânica da Assistência Social (LOAS), é uma assistência destinada a idosos e pessoas c...",
+    "category": "BPC LOAS",
+    "categorySlug": "bpc-loas",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "Boletim de ocorrência trânsito com vítima",
+    "slug": "boletim-de-ocorrencia-transito-com-vitima",
+    "date": "2024-06-28",
+    "excerpt": "O Boletim de Ocorrência (BO) é um documento essencial em casos de acidentes de trânsito com vítimas, pois formaliza o registro do incidente e é crucial para ...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
   },
   {
     "title": "Prazo para fazer boletim de ocorrência de trânsito com vítima",
@@ -235,19 +905,189 @@
     "date": "2024-06-28",
     "excerpt": "Os acidentes de trânsito com vítimas, sejam elas feridas ou fatais, são eventos traumáticos que exigem uma série de procedimentos legais e administrativos para garantir a correta apuração dos fatos e ",
     "category": "Auxílio Acidente",
-    "categorySlug": "auxilio-acidente",
+    "categorySlug": "uncategorized",
     "author": "Equipe Almeida & Matos",
-    "readTime": "4 min"
+    "readTime": "5 min"
   },
   {
-    "title": "Bursite pode afastar do trabalho: direitos dos trabalhadores",
-    "slug": "bursite-pode-afastar-do-trabalho-direitos-dos-trabalhadores",
-    "date": "2023-09-22",
-    "excerpt": "A bursite é uma condição médica que envolve inflamação das bursas, pequenas bolsas cheias de líquido localizadas entre os ossos, tendões e músculos, que ajudam a reduzir o atrito durante o movimento d",
+    "title": "Qual ação descaracteriza a omissão de socorro?",
+    "slug": "qual-acao-descaracteriza-a-omissao-de-socorro",
+    "date": "2024-06-27",
+    "excerpt": "A omissão de socorro é um delito definido no Código Penal Brasileiro, que ocorre quando uma pessoa deixa de prestar assistência a alguém em perigo, mesmo pod...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "Omissão de socorro no trabalho e auxílio acidente: um guia completo",
+    "slug": "omissao-de-socorro-no-trabalho-e-auxilio-acidente-um-guia-completo",
+    "date": "2024-06-26",
+    "excerpt": "A omissão de socorro é uma questão grave em qualquer contexto, mas assume uma dimensão ainda mais crítica no ambiente de trabalho. Neste artigo, vamos explor...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "8 min"
+  },
+  {
+    "title": "Culpa exclusiva da vítima acidente de trânsito: o que você precisa saber",
+    "slug": "culpa-exclusiva-da-vitima-acidente-de-transito-o-que-voce-precisa-saber",
+    "date": "2024-06-24",
+    "excerpt": "Quando se trata de acidentes de trânsito, a determinação de culpa pode recair exclusivamente sobre a vítima em certos casos. Neste artigo, exploraremos o con...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "CID: queda da própria altura",
+    "slug": "cid-queda-da-propria-altura",
+    "date": "2024-04-28",
+    "excerpt": "A CID queda da própria altura é crucial para prevenir acidentes próximos ao solo, decorrentes de falta de segurança ou atenção. Portanto, é fundamental que t...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "3 min"
+  },
+  {
+    "title": "Acidente de Trânsito com Danos: Competência Jurisdicional para Julgamento e Reparação",
+    "slug": "acidente-de-transito-com-danos-competencia-jurisdicional-para-julgamento-e-reparacao",
+    "date": "2024-04-25",
+    "excerpt": "Os acidentes de trânsito são eventos comuns em diversas partes do mundo, acarretando não apenas danos materiais, mas também lesões físicas e emocionais para ...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "Direitos do Trabalhador Demitido com Menos de Um Ano de Serviço: Entenda seus Direitos e Garantias Legais",
+    "slug": "direitos-do-trabalhador-demitido-com-menos-de-um-ano-de-servico-entenda-seus-direitos-e-garantias-legais",
+    "date": "2024-03-24",
+    "excerpt": "A demissão de um trabalhador com menos de um ano de serviço pode ser uma situação difícil e preocupante, especialmente quando se considera a estabilidade fin...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "Habitualidade no Direito do Trabalho: Entendendo o Conceito e suas Implicações",
+    "slug": "habitualidade-no-direito-do-trabalho-entendendo-o-conceito-e-suas-implicacoes",
+    "date": "2024-03-24",
+    "excerpt": "No âmbito do Direito do Trabalho, a habitualidade refere-se à regularidade e continuidade de determinada atividade laboral realizada pelo trabalhador. Neste ...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "Direito dos Filhos à Indenização Trabalhista do Pai: Uma Análise Abrangente",
+    "slug": "direito-dos-filhos-a-indenizacao-trabalhista-do-pai-uma-analise-abrangente",
+    "date": "2024-03-24",
+    "excerpt": "O Direito Trabalhista abarca uma gama diversificada de questões, incluindo os direitos dos trabalhadores e suas famílias. Uma questão frequentemente levantad...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "O Artigo 195 da Constituição Federal e seu Impacto no Direito Previdenciário Brasileiro",
+    "slug": "o-artigo-195-da-constituicao-federal-e-seu-impacto-no-direito-previdenciario-brasileiro",
+    "date": "2024-02-11",
+    "excerpt": "O Artigo 195 da Constituição Federal de 1988 é uma das bases do sistema previdenciário brasileiro, estabelecendo as diretrizes para a seguridade social no pa...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "Aposentadoria Especial (Art. 57 da Lei 8.213/91): Benefícios em Espécie e Direito Previdenciário",
+    "slug": "aposentadoria-especial-art-57-da-lei-8-213-91-beneficios-em-especie-e-direito-previdenciario",
+    "date": "2024-02-11",
+    "excerpt": "A aposentadoria especial é um benefício previdenciário de extrema importância, concedido aos trabalhadores que exercem atividades consideradas insalubres ou ...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "3 min"
+  },
+  {
+    "title": "Quem recebe auxílio-acidente pode abrir MEI?",
+    "slug": "quem-recebe-auxilio-acidente-pode-abrir-mei",
+    "date": "2024-02-08",
+    "excerpt": "O auxílio-acidente é um benefício previdenciário concedido pelo Instituto Nacional do Seguro Social (INSS) aos segurados que sofreram um acidente que resulto...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "Acidente de trabalho pessoa jurídica",
+    "slug": "acidente-de-trabalho-pessoa-juridica",
+    "date": "2024-02-04",
+    "excerpt": "O trabalho como Pessoa Jurídica (PJ) oferece uma abordagem flexível e autônoma para profissionais em diversos setores. No entanto, esses trabalhadores podem ...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "Contestação pela Empresa após Acidente de Trabalho: Aspectos Legais e Implicações",
+    "slug": "contestacao-pela-empresa-apos-acidente-de-trabalho-aspectos-legais-e-implicacoes",
+    "date": "2024-02-03",
+    "excerpt": "A ocorrência de um acidente de trabalho pode desencadear uma série de desdobramentos tanto para o trabalhador quanto para a empresa. Neste artigo, explorarem...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "6 min"
+  },
+  {
+    "title": "A Concessão de Atestado Médico Durante o Aviso Prévio: Aspectos Jurídicos e Implicações para Trabalhadores e Empregadores",
+    "slug": "a-concessao-de-atestado-medico-durante-o-aviso-previo-aspectos-juridicos-e-implicacoes-para-trabalhadores-e-empregadores",
+    "date": "2023-12-30",
+    "excerpt": "O aviso prévio é um componente essencial das relações trabalhistas, servindo como um mecanismo para informar antecipadamente a intenção de rescindir um contr...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "6 min"
+  },
+  {
+    "title": "Quando o Perito Sugere Aposentadoria por Invalidez: Um Guia Abrangente sobre o Processo e Implicações",
+    "slug": "quando-o-perito-sugere-aposentadoria-por-invalidez-um-guia-abrangente-sobre-o-processo-e-implicacoes",
+    "date": "2023-12-29",
+    "excerpt": "A aposentadoria por invalidez é um benefício previdenciário concedido a trabalhadores que, em virtude de doença ou acidente, encontram-se permanentemente inc...",
     "category": "Auxílio Acidente",
     "categorySlug": "auxilio-acidente",
     "author": "Equipe Almeida & Matos",
     "readTime": "7 min"
+  },
+  {
+    "title": "Criança Tem Direito ao DPVAT e Auxílio Acidente: Garantindo Proteção Integral",
+    "slug": "crianca-tem-direito-ao-dpvat-e-auxilio-acidente-garantindo-protecao-integral-2",
+    "date": "2023-12-03",
+    "excerpt": "As crianças são vulneráveis ​​a diversos riscos, incluindo acidentes de trânsito. Quando envolvido em incidentes desse tipo, é crucial compreender os direito...",
+    "category": "Uncategorized",
+    "categorySlug": "uncategorized",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "6 min"
+  },
+  {
+    "title": "Auxílio cuidador INSS: Guia completo de como solicitar",
+    "slug": "auxilio-cuidador-inss-guia-completo-de-como-solicitar",
+    "date": "2023-11-25",
+    "excerpt": "O Auxílio Cuidador é um benefício concedido pelo Instituto Nacional do Seguro Social (INSS) para fornecer suporte financeiro a pessoas que se referem a cuida...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "6 min"
+  },
+  {
+    "title": "Epicondilite pode afastar do trabalho",
+    "slug": "epicondilite-pode-afastar-do-trabalho",
+    "date": "2023-09-22",
+    "excerpt": "A epicondilite é uma condição médica que afeta a região do cotovelo, caracterizada pela especificidade dos tendões que se ligam à parte externa do osso do an...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
   },
   {
     "title": "Epicondilite lateral é doença do trabalho",
@@ -255,9 +1095,109 @@
     "date": "2023-09-22",
     "excerpt": "A epicondilite lateral, frequentemente conhecida como “cotovelo de tenista”, é uma condição médica que afeta os tendões na região externa do cotovelo. Embora não seja uma doença exclusiva ",
     "category": "Auxílio Acidente",
+    "categorySlug": "uncategorized",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "Epicondilite é doença do trabalho",
+    "slug": "epicondilite-e-doenca-do-trabalho",
+    "date": "2023-09-22",
+    "excerpt": "A epicondilite, comumente conhecida como “cotovelo de tenista” ou “cotovelo de golfista”, é uma condição médica que afeta a região do cotovelo. Apesar de não...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "A doença epicondilite da incapacidade de trabalha",
+    "slug": "a-doenca-epicondilite-da-incapacidade-de-trabalha",
+    "date": "2023-09-22",
+    "excerpt": "A epicondilite, uma condição médica que afeta os tendões do cotovelo, é conhecida por ser uma fonte de dor e desconforto específico. Ela pode não apenas caus...",
+    "category": "Auxílio Acidente",
     "categorySlug": "auxilio-acidente",
     "author": "Equipe Almeida & Matos",
     "readTime": "8 min"
+  },
+  {
+    "title": "Bursite pode afastar do trabalho: direitos dos trabalhadores",
+    "slug": "bursite-pode-afastar-do-trabalho-direitos-dos-trabalhadores",
+    "date": "2023-09-22",
+    "excerpt": "A bursite é uma condição médica que envolve inflamação das bursas, pequenas bolsas cheias de líquido localizadas entre os ossos, tendões e músculos, que ajudam a reduzir o atrito durante o movimento d",
+    "category": "Auxílio Acidente",
+    "categorySlug": "uncategorized",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "Hérnia inguinal pode ser considerada doença do trabalho: hérnia Inguinal e sua relação com as doenças do trabalho",
+    "slug": "hernia-inguinal-pode-ser-considerada-doenca-do-trabalho-hernia-inguinal-e-sua-relacao-com-as-doencas-do-trabalho",
+    "date": "2023-09-07",
+    "excerpt": "A hérnia inguinal é uma condição médica que afeta uma parcela significativa da população e pode ter diversas causas, incluindo fatores genéticos e traumático...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "8 min"
+  },
+  {
+    "title": "Carta de Retorno ao Trabalho Após Afastamento por Doença: como escrever e o que incluir",
+    "slug": "carta-de-retorno-ao-trabalho-apos-afastamento-por-doenca-como-escrever-e-o-que-incluir",
+    "date": "2023-09-05",
+    "excerpt": "O retorno ao trabalho após um período de afastamento devido a uma doença pode ser um momento de transição desafiador tanto para o trabalhador quanto para o e...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "8 min"
+  },
+  {
+    "title": "Notificação de Acidente de Trabalho: um guia completo",
+    "slug": "notificacao-de-acidente-de-trabalho-um-guia-completo",
+    "date": "2023-09-04",
+    "excerpt": "A notificação de acidente de trabalho é um procedimento essencial no contexto da segurança e saúde ocupacional. Ela é fundamental para garantir que os trabal...",
+    "category": "Auxílio Acidente",
+    "categorySlug": "auxilio-acidente",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "9 min"
+  },
+  {
+    "title": "Consultar boletim de ocorrência pelo nome RJ",
+    "slug": "consultar-boletim-de-ocorrencia-pelo-nome-rj",
+    "date": "2023-08-14",
+    "excerpt": "Consultar um Boletim de Ocorrência (B.O.) é uma prática comum para aqueles que desejam verificar informações sobre incidentes registrados pelas autoridades p...",
+    "category": "Uncategorized",
+    "categorySlug": "uncategorized",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "6 min"
+  },
+  {
+    "title": "Como faço para pegar o laudo do IML",
+    "slug": "como-faco-para-pegar-o-laudo-do-iml",
+    "date": "2023-08-13",
+    "excerpt": "Quando ocorre um acidente de trânsito que resulta em lesões corporais ou morte, o seguro DPVAT (Danos Pessoais Causados ​​por Veículos Automotores de Via Ter...",
+    "category": "Uncategorized",
+    "categorySlug": "uncategorized",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "6 min"
+  },
+  {
+    "title": "Como consultar resultado de perícia pelo CPF",
+    "slug": "como-consultar-resultado-de-pericia-pelo-cpf",
+    "date": "2023-08-13",
+    "excerpt": "A consulta do resultado de auditoria através do Cadastro de Pessoa Física (CPF) é uma ferramenta essencial para indivíduos que aguardam a avaliação de sua si...",
+    "category": "Uncategorized",
+    "categorySlug": "uncategorized",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "7 min"
+  },
+  {
+    "title": "Consultar processo DPVAT pelo CPF",
+    "slug": "consultar-processo-dpvat-pelo-cpf",
+    "date": "2023-07-12",
+    "excerpt": "O DPVAT, ou Seguro de Danos Pessoais Causados ​​por Veículos Automotores de Via Terrestre, é um seguro obrigatório no Brasil que tem como objetivo indenizar ...",
+    "category": "Uncategorized",
+    "categorySlug": "uncategorized",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
   },
   {
     "title": "Contato",
@@ -265,9 +1205,9 @@
     "date": "2023-06-26",
     "excerpt": "ENTRE EM CONTATO entre em contato contato ENDEREÇO Alameda Rio Negro, 1030, Conjunto 1501, Alphaville, Barueri CEP 06454-000 ATENDIMENTO Segunda a sexta – 9h às 18h TELEFONE WhatsApp (11) 93004-",
     "category": "Geral",
-    "categorySlug": "geral",
+    "categorySlug": "uncategorized",
     "author": "Equipe Almeida & Matos",
-    "readTime": "1 min"
+    "readTime": "5 min"
   },
   {
     "title": "O Escritório",
@@ -275,15 +1215,25 @@
     "date": "2023-06-21",
     "excerpt": "O ESCRITÓRIO o escritório quem somos Somos um escritório de advocacia fundado em 2015 por dois advogados formados no renomado Mackenzie. Com modernidade e objetividade, nos comprometemos em entregar r",
     "category": "Geral",
-    "categorySlug": "geral",
+    "categorySlug": "uncategorized",
     "author": "Equipe Almeida & Matos",
-    "readTime": "2 min"
+    "readTime": "5 min"
   },
   {
     "title": "Você sabe qual o valor pago pelo DPVAT em caso de fratura?",
     "slug": "valor-pago-dpvat-fratura",
     "date": "2020-10-16",
     "excerpt": "Quem nunca se perguntou qual o valor pago pelo DPVAT em casos de fratura? Agora, além de saber quanto o DPVAT paga para quem sofre fraturas em acidentes de trânsito, você também vai saber como esse va",
+    "category": "Uncategorized",
+    "categorySlug": "uncategorized",
+    "author": "Equipe Almeida & Matos",
+    "readTime": "5 min"
+  },
+  {
+    "title": "Como consultar o seu pedido DPVAT",
+    "slug": "como-consultar-o-seu-pedido-dpvat",
+    "date": "2020-05-15",
+    "excerpt": "Você sabe como consultar o seu pedido DPVAT? É hora de aprender como realizar a consulta do seu seguro. Aprenda a pesquisar o andamento do seu pedido DPVAT: ...",
     "category": "Uncategorized",
     "categorySlug": "uncategorized",
     "author": "Equipe Almeida & Matos",
