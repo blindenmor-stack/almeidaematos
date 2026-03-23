@@ -4,5 +4,13 @@
       "source": "/:slug((?!blog|assets|img|api|_next|favicon|robots|sitemap).*)",
       "destination": "/blog-post.html"
     }
+  ],
+  "headers": [
+    {
+      "source": "/blog/posts/(.*).json",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400, s-maxage=86400" }
+      ]
+    }
   ]
 }

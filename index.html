@@ -7,22 +7,23 @@
     <title>Almeida & Matos | Especialistas em Direito Acidentário</title>
     <meta name="description"
         content="Sofreu um acidente ou tem uma doença do trabalho? Você pode ter até 5 direitos que não conhece. Especialistas em auxílio-acidente, indenização e seguros.">
+    <link rel="canonical" href="https://almeidaematos.com.br/">
 
     <!-- Open Graph (WhatsApp, Facebook, LinkedIn) -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Almeida & Matos | Especialistas em Direito Acidentário">
     <meta property="og:description" content="Sofreu um acidente ou tem uma doença do trabalho? Você pode ter até 5 direitos que não conhece.">
-    <meta property="og:image" content="https://almeidaematos.vercel.app/img/og-cover.jpg">
+    <meta property="og:image" content="https://almeidaematos.com.br/img/og-cover.jpg">
     <meta property="og:image:width" content="1500">
     <meta property="og:image:height" content="788">
-    <meta property="og:url" content="https://almeidaematos.com.br">
+    <meta property="og:url" content="https://almeidaematos.com.br/">
     <meta property="og:site_name" content="Almeida & Matos Advogados">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Almeida & Matos | Especialistas em Direito Acidentário">
     <meta name="twitter:description" content="Sofreu um acidente ou tem uma doença do trabalho? Você pode ter até 5 direitos que não conhece.">
-    <meta name="twitter:image" content="https://almeidaematos.vercel.app/img/og-cover.jpg">
+    <meta name="twitter:image" content="https://almeidaematos.com.br/img/og-cover.jpg">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="./img/favicon-32.png">
@@ -39,6 +40,30 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="./style.css">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LegalService",
+        "name": "Almeida & Matos Advogados",
+        "url": "https://almeidaematos.com.br",
+        "telephone": "+5511930044411",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Alameda Araguaia, 1142 - Bloco 3, 1º andar",
+            "addressLocality": "Barueri",
+            "addressRegion": "SP",
+            "postalCode": "06455-000",
+            "addressCountry": "BR"
+        },
+        "description": "Especialistas em direito acidentário, previdenciário e trabalhista. Mais de 11 anos de experiência.",
+        "foundingDate": "2015",
+        "areaServed": "BR",
+        "image": "https://almeidaematos.com.br/img/og-cover.jpg",
+        "logo": "https://almeidaematos.com.br/img/logo-am-oficial.webp"
+    }
+    </script>
 </head>
 
 <body class="bg-navy-950 text-navy-100 font-sans antialiased overflow-x-clip">
@@ -153,10 +178,10 @@
                     <!-- Título mobile (abaixo da foto) -->
                     <div class="hero-reveal text-center mt-4 mb-4">
                         <p class="text-sm font-semibold text-gold-500 uppercase tracking-wider mb-2">Defensores de direitos escondidos</p>
-                        <h1 class="font-serif heading-1 text-navy-950">
+                        <div class="font-serif heading-1 text-navy-950" aria-hidden="true">
                             Sofreu um acidente ou doença?<br>
                             <span class="text-gold-gradient">Você pode ter até 5 direitos</span> que não conhece.
-                        </h1>
+                        </div>
                     </div>
 
                     <!-- Subtítulo + CTAs mobile -->

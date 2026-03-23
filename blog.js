@@ -54,17 +54,8 @@ async function fetchPosts() {
 // LISTING PAGE
 // ================================
 function renderPostCard(post) {
-    const imageHTML = post.image
-        ? `<img src="${post.image}" alt="${post.title}" class="blog-card-image">`
-        : `<div class="blog-card-image-placeholder">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 opacity-30" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-            </svg>
-          </div>`;
-
     return `
         <a href="/${post.slug}/" class="blog-card" data-category="${post.categorySlug}">
-            ${imageHTML}
             <div class="blog-card-body">
                 <span class="blog-card-category">${post.category}</span>
                 <h2 class="blog-card-title">${post.title}</h2>
@@ -92,27 +83,38 @@ function renderCategoryFilter(posts) {
     const filterContainer = document.getElementById('category-filter');
     if (!filterContainer) return;
 
-    // Extract unique categories
-    const categories = [...new Set(posts.map(p => JSON.stringify({ name: p.category, slug: p.categorySlug })))]
-        .map(c => JSON.parse(c));
-
-    let html = `<button class="category-btn active" data-category="all">Todos</button>`;
-    categories.forEach(cat => {
-        html += `<button class="category-btn" data-category="${cat.slug}">${cat.name}</button>`;
+    // Extract unique categories (dedup by slug)
+    const seen = new Set();
+    const categories = [];
+    posts.forEach(p => {
+        if (!seen.has(p.categorySlug)) {
+            seen.add(p.categorySlug);
+            categories.push({ name: p.category, slug: p.categorySlug });
+        }
     });
+
+    // Sort alphabetically, put Uncategorized last
+    categories.sort((a, b) => {
+        if (a.slug === 'uncategorized') return 1;
+        if (b.slug === 'uncategorized') return -1;
+        return a.name.localeCompare(b.name, 'pt-BR');
+    });
+
+    // Render as a select dropdown (more compact)
+    let html = `
+        <select id="category-select" class="category-select">
+            <option value="all">Todas as categorias</option>
+            ${categories.map(cat => `<option value="${cat.slug}">${cat.name}</option>`).join('')}
+        </select>
+    `;
 
     filterContainer.innerHTML = html;
 
-    // Attach events
-    filterContainer.querySelectorAll('.category-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            filterContainer.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const category = btn.dataset.category;
-            window._blogCurrentCategory = category;
-            window._blogCurrentPage = 1;
-            renderPostsPage(posts);
-        });
+    // Attach event
+    document.getElementById('category-select').addEventListener('change', (e) => {
+        window._blogCurrentCategory = e.target.value;
+        window._blogCurrentPage = 1;
+        renderPostsPage(posts);
     });
 }
 
@@ -343,6 +345,12 @@ function renderRelatedPosts(posts, currentPost) {
 }
 
 function renderPostNotFound() {
+    // Sinalizar ao Google que esta página não deve ser indexada (evita soft 404)
+    const noindex = document.createElement('meta');
+    noindex.name = 'robots';
+    noindex.content = 'noindex';
+    document.head.appendChild(noindex);
+
     document.getElementById('page-title').textContent = 'Artigo não encontrado | Almeida & Matos';
     const titleEl = document.getElementById('post-title');
     if (titleEl) titleEl.textContent = 'Artigo não encontrado';
@@ -378,7 +386,9 @@ function injectStructuredData(post) {
         '@type': 'Article',
         'headline': post.title,
         'description': post.excerpt,
+        'image': `${SITE_URL}/img/og-cover.jpg`,
         'datePublished': post.date,
+        'dateModified': post.date,
         'author': {
             '@type': 'Organization',
             'name': 'Almeida & Matos Advogados',
@@ -388,6 +398,7 @@ function injectStructuredData(post) {
             '@type': 'Organization',
             'name': 'Almeida & Matos Advogados',
             'url': SITE_URL,
+            'logo': { '@type': 'ImageObject', 'url': `${SITE_URL}/img/logo-am-oficial.webp` },
         },
         'mainEntityOfPage': {
             '@type': 'WebPage',
