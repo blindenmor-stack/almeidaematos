@@ -39,8 +39,8 @@ function isPostPage() {
 // ================================
 async function fetchPosts() {
     try {
-        // Determine the correct path based on which page we're on
-        const basePath = isPostPage() ? './blog/posts/posts-data.json' : './posts/posts-data.json';
+        // Use absolute paths to avoid issues with slug-based URLs
+        const basePath = isPostPage() ? '/blog/posts/posts-data.json' : './posts/posts-data.json';
         const response = await fetch(basePath);
         if (!response.ok) throw new Error('Failed to fetch posts');
         return await response.json();
@@ -238,7 +238,7 @@ async function initPostPage() {
     // Buscar conteúdo completo do post individual
     let post = postMeta;
     try {
-        const postPath = `./blog/posts/${slug}.json`;
+        const postPath = `/blog/posts/${slug}.json`;
         const resp = await fetch(postPath);
         if (resp.ok) {
             const fullPost = await resp.json();
