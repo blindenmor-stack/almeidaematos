@@ -41,6 +41,13 @@
     <!-- CSS -->
     <link rel="stylesheet" href="./style.css">
 
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-PLGK39C3');</script>
+
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
@@ -67,6 +74,8 @@
 </head>
 
 <body class="bg-navy-950 text-navy-100 font-sans antialiased overflow-x-clip">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PLGK39C3" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <!-- ============================== -->
     <!-- NAVBAR -->
@@ -305,7 +314,7 @@
                         <p class="text-navy-400 text-xs md:text-sm mt-1">anos focados em acidentes</p>
                     </div>
                     <div class="counter-item">
-                        <span class="counter-number text-2xl md:text-3xl font-bold" data-target="3000">0</span>
+                        <span class="counter-number text-2xl md:text-3xl font-bold" data-target="10000">0</span>
                         <span class="text-gold-400 text-2xl md:text-3xl font-bold">+</span>
                         <p class="text-navy-400 text-xs md:text-sm mt-1">clientes atendidos</p>
                     </div>
@@ -1127,6 +1136,33 @@
 
     <!-- Scripts -->
     <script type="module" src="./main.js"></script>
+
+    <!-- DataLayer: tracking de cliques WhatsApp + CTAs -->
+    <script>
+    document.addEventListener('click', function(e) {
+        var link = e.target.closest('a[href*="wa.me"]');
+        if (link) {
+            var location = 'unknown';
+            if (link.classList.contains('whatsapp-float')) location = 'float';
+            else if (link.classList.contains('btn-whatsapp-sm')) location = 'navbar';
+            else if (link.closest('#hero')) location = 'hero';
+            else if (link.closest('footer') || link.closest('.footer-section')) location = 'footer';
+            else if (link.closest('.blog-cta-sidebar')) location = 'blog_sidebar';
+            else if (link.closest('.article-content') || link.closest('article')) location = 'blog_cta';
+            else if (link.closest('#mobile-nav')) location = 'mobile_menu';
+            else if (link.closest('.nav-mobile-controls')) location = 'mobile_navbar';
+            else location = 'page_cta';
+
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                event: 'click_whatsapp',
+                click_location: location,
+                page_path: window.location.pathname,
+                page_title: document.title
+            });
+        }
+    });
+    </script>
 </body>
 
 </html>

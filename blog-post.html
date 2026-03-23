@@ -32,9 +32,18 @@
     <!-- CSS -->
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./blog-styles.css">
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-PLGK39C3');</script>
 </head>
 
 <body class="bg-hero-bg text-navy-950 font-sans antialiased overflow-x-clip">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PLGK39C3" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <!-- ============================== -->
     <!-- NAVBAR -->
@@ -287,6 +296,26 @@
 
     <!-- Scripts -->
     <script type="module" src="./blog.js"></script>
+
+    <!-- DataLayer: tracking de cliques WhatsApp -->
+    <script>
+    document.addEventListener('click', function(e) {
+        var link = e.target.closest('a[href*="wa.me"]');
+        if (link) {
+            var location = 'unknown';
+            if (link.classList.contains('whatsapp-float')) location = 'float';
+            else if (link.classList.contains('btn-whatsapp-sm')) location = 'navbar';
+            else if (link.closest('footer') || link.closest('.footer-section')) location = 'footer';
+            else if (link.closest('.blog-cta-sidebar')) location = 'blog_sidebar';
+            else if (link.closest('article')) location = 'blog_cta';
+            else if (link.closest('#mobile-nav')) location = 'mobile_menu';
+            else if (link.closest('.nav-mobile-controls')) location = 'mobile_navbar';
+            else location = 'page_cta';
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({ event: 'click_whatsapp', click_location: location, page_path: window.location.pathname, page_title: document.title });
+        }
+    });
+    </script>
 </body>
 
 </html>
