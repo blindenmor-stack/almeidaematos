@@ -1,4 +1,18 @@
 {
+  "redirects": [
+    { "source": "/wp-admin/:path*", "destination": "/", "statusCode": 301 },
+    { "source": "/wp-login.php", "destination": "/", "statusCode": 301 },
+    { "source": "/wp-content/:path*", "destination": "/", "statusCode": 301 },
+    { "source": "/wp-includes/:path*", "destination": "/", "statusCode": 301 },
+    { "source": "/wp-json/:path*", "destination": "/", "statusCode": 301 },
+    { "source": "/feed/:path*", "destination": "/blog/", "statusCode": 301 },
+    { "source": "/feed", "destination": "/blog/", "statusCode": 301 },
+    { "source": "/category/:path*", "destination": "/blog/", "statusCode": 301 },
+    { "source": "/tag/:path*", "destination": "/blog/", "statusCode": 301 },
+    { "source": "/author/:path*", "destination": "/blog/", "statusCode": 301 },
+    { "source": "/page/:path*", "destination": "/blog/", "statusCode": 301 },
+    { "source": "/xmlrpc.php", "destination": "/", "statusCode": 301 }
+  ],
   "rewrites": [
     {
       "source": "/:slug((?!blog|assets|img|api|_next|favicon|robots|sitemap).*)",
