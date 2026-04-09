@@ -348,8 +348,11 @@ function renderPostNotFound() {
     // Sinalizar ao Google que esta página não deve ser indexada (evita soft 404)
     const noindex = document.createElement('meta');
     noindex.name = 'robots';
-    noindex.content = 'noindex';
+    noindex.content = 'noindex, nofollow';
     document.head.appendChild(noindex);
+
+    // Canonical aponta pra home pra evitar indexação de URL lixo
+    document.getElementById('page-canonical')?.setAttribute('href', 'https://almeidaematos.com.br/');
 
     document.getElementById('page-title').textContent = 'Artigo não encontrado | Almeida & Matos';
     const titleEl = document.getElementById('post-title');
