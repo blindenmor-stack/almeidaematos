@@ -5,215 +5,227 @@ import { initAnimations } from './animations.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ================================
-// 1. Smooth Scroll (Lenis)
-// ================================
-const lenis = new Lenis({
-    duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    direction: 'vertical',
-    gestureDirection: 'vertical',
-    smooth: true,
-    smoothTouch: false,
-    touchMultiplier: 2,
-});
+document.documentElement.classList.add('js');
 
-lenis.on('scroll', ScrollTrigger.update);
-gsap.ticker.add((time) => {
-    lenis.raf(time * 1000);
-});
-gsap.ticker.lagSmoothing(0, 0);
+const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isTouch = window.matchMedia('(hover: none)').matches;
 
 // ================================
-// 2. Page Load — dispatch loaderComplete
+// 1. Smooth Scroll (Lenis) — ticker único do GSAP
 // ================================
-document.addEventListener('DOMContentLoaded', () => {
-    initNavbar();
-    initFaqAccordion();
-    initSmoothAnchors();
-    initMobileMenu();
-    initAnimations();
-
-    // Fire after initAnimations so the loaderComplete listener is ready
-    document.dispatchEvent(new CustomEvent('loaderComplete'));
-
-    setTimeout(() => {
-        ScrollTrigger.refresh();
-    }, 200);
-});
-
-// ================================
-// 3. Navbar Scroll Effect
-// ================================
-function initNavbar() {
-    const navbar = document.getElementById('navbar');
-    if (!navbar) return;
-
-    ScrollTrigger.create({
-        start: 'top -50px',
-        end: 99999,
-        onUpdate: () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('navbar-scrolled');
-            } else {
-                navbar.classList.remove('navbar-scrolled');
-            }
-        }
-    });
+let lenis = null;
+if (!prefersReduced) {
+    lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
 }
 
 // ================================
-// 4. FAQ Accordion
+// 2. Preloader (1x por sessão)
 // ================================
-function initFaqAccordion() {
-    const faqButtons = document.querySelectorAll('.faq-question');
+const preloader = document.getElementById('preloader');
+const seenPreloader = sessionStorage.getItem('am_preloader');
 
-    faqButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const faqContent = button.nextElementSibling;
-            const icon = button.querySelector('.faq-icon');
-            const item = button.closest('.faq-item');
+function heroIntro() {
+    if (prefersReduced) return;
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    tl.to('[data-hero-line] , .hero__line > span', { y: 0, duration: 1.0, stagger: 0.1 }, 0.05)
+      .to('[data-hero-fade]', { opacity: 1, y: 0, duration: 0.8, stagger: 0.08 }, 0.4)
+      .to('[data-hero-visual]', { opacity: 1, y: 0, scale: 1, duration: 1.1, ease: 'power2.out' }, 0.3);
+}
 
-            if (item.classList.contains('active')) {
-                // Close this one
-                faqContent.style.maxHeight = null;
-                if (icon) icon.style.transform = 'rotate(0deg)';
-                item.classList.remove('active');
-            } else {
-                // Close all others
-                document.querySelectorAll('.faq-item').forEach(otherItem => {
-                    otherItem.classList.remove('active');
-                    const otherContent = otherItem.querySelector('.faq-answer');
-                    const otherIcon = otherItem.querySelector('.faq-icon');
-                    if (otherContent) otherContent.style.maxHeight = null;
-                    if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
-                });
+function hidePreloader() {
+    if (!preloader || preloader.dataset.done) return;
+    preloader.dataset.done = '1';
+    sessionStorage.setItem('am_preloader', '1');
+    if (prefersReduced) { preloader.remove(); return; }
+    gsap.timeline()
+        .to('.preloader__bar span', { width: '100%', duration: 0.4, ease: 'power1.inOut' })
+        .to(preloader, {
+            // sai com wipe diagonal (gramática da marca)
+            clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)',
+            duration: 0.8, ease: 'power4.inOut',
+            onComplete: () => { preloader.remove(); ScrollTrigger.refresh(); },
+        }, '+=0.05');
+    heroIntro();
+}
 
-                // Open clicked
-                faqContent.style.maxHeight = faqContent.scrollHeight + 'px';
-                if (icon) icon.style.transform = 'rotate(45deg)';
-                item.classList.add('active');
-            }
-
-            setTimeout(() => ScrollTrigger.refresh(), 400);
+if (preloader) {
+    if (seenPreloader || prefersReduced) {
+        // visitas seguintes: sem preloader, hero entra direto
+        preloader.remove();
+        if (!prefersReduced) heroIntro(); else revealAllInstant();
+    } else {
+        // desenha o símbolo (stroke) + barra
+        const marks = preloader.querySelectorAll('.preloader__mark path');
+        marks.forEach((p) => {
+            const len = p.getTotalLength();
+            p.style.strokeDasharray = len;
+            p.style.strokeDashoffset = len;
+            gsap.to(p, { strokeDashoffset: 0, duration: 1.1, ease: 'power2.inOut' });
         });
-    });
-}
-
-// ================================
-// 5. Smooth Scroll for Anchor Links
-// ================================
-function initSmoothAnchors() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', (e) => {
-            const href = anchor.getAttribute('href');
-            if (href === '#') return;
-            e.preventDefault();
-            const target = document.querySelector(href);
-            if (target) {
-                lenis.scrollTo(target, { offset: -80 });
-                // Close mobile menu if open
-                closeMobileMenu();
-            }
-        });
-    });
-}
-
-// ================================
-// 6. Mobile Menu
-// ================================
-let menuOpen = false;
-
-function initMobileMenu() {
-    const toggle = document.getElementById('menu-toggle');
-    const mobileNav = document.getElementById('mobile-nav');
-    if (!toggle || !mobileNav) return;
-
-    toggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (menuOpen) {
-            closeMobileMenu();
-        } else {
-            openMobileMenu();
-        }
-    });
-
-    // Close on link click inside mobile nav
-    mobileNav.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            closeMobileMenu();
-        });
-    });
-
-    // Close on clicking outside
-    document.addEventListener('click', (e) => {
-        if (menuOpen && !mobileNav.contains(e.target) && !toggle.contains(e.target)) {
-            closeMobileMenu();
-        }
-    });
-}
-
-function openMobileMenu() {
-    const mobileNav = document.getElementById('mobile-nav');
-    const toggle = document.getElementById('menu-toggle');
-    if (!mobileNav) return;
-    menuOpen = true;
-    mobileNav.classList.add('open');
-    if (toggle) toggle.classList.add('open');
-    lenis.stop();
-}
-
-function closeMobileMenu() {
-    const mobileNav = document.getElementById('mobile-nav');
-    const toggle = document.getElementById('menu-toggle');
-    if (!mobileNav) return;
-    menuOpen = false;
-    mobileNav.classList.remove('open');
-    if (toggle) toggle.classList.remove('open');
-    lenis.start();
-}
-
-// ================================
-// Blog Preview (Homepage)
-// ================================
-async function loadBlogPreview() {
-    const container = document.getElementById('homepage-blog-posts');
-    if (!container) return;
-
-    try {
-        const resp = await fetch('/blog/posts/posts-data.json');
-        if (!resp.ok) return;
-        const posts = await resp.json();
-
-        // Pegar os 3 mais recentes
-        posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-        const recent = posts.slice(0, 3);
-
-        container.innerHTML = recent.map(post => {
-            const date = new Date(post.date + 'T12:00:00');
-            const dateStr = date.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
-
-            return `
-                <a href="/${post.slug}/" class="block rounded-2xl overflow-hidden hover:shadow-lg transition-all group" style="background:#fff;border:1px solid #E2E0DA;">
-                    <div class="p-5">
-                        <span style="color:#1B365D;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em">${post.category}</span>
-                        <h3 class="font-serif group-hover:text-gold-600 transition-colors" style="color:#0A1628;font-size:1.05rem;font-weight:700;margin:0.5rem 0;line-height:1.3">${post.title}</h3>
-                        <p style="color:#5A6577;font-size:0.85rem;line-height:1.5">${post.excerpt?.substring(0, 120)}...</p>
-                        <div style="color:#8B95A5;font-size:0.75rem;margin-top:1rem;display:flex;align-items:center;gap:0.5rem">
-                            <span>${dateStr}</span>
-                            <span>·</span>
-                            <span>${post.readTime || '5 min'} de leitura</span>
-                        </div>
-                    </div>
-                </a>
-            `;
-        }).join('');
-    } catch (e) {
-        console.warn('Blog preview not available:', e);
+        gsap.set(preloader, { clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' });
+        gsap.to('.preloader__bar span', { width: '78%', duration: 0.7, ease: 'power2.out' });
+        window.addEventListener('load', hidePreloader);
+        setTimeout(hidePreloader, 2200); // fallback: nunca trava
     }
+} else {
+    heroIntro();
 }
 
-// Inicializar quando DOM estiver pronto
-if (document.getElementById('homepage-blog-posts')) {
-    loadBlogPreview();
+function revealAllInstant() {
+    document.querySelectorAll('[data-hero-fade], [data-hero-visual]').forEach((el) => {
+        el.style.opacity = 1; el.style.transform = 'none';
+    });
+    document.querySelectorAll('[data-hero-line], .hero__line > span').forEach((el) => {
+        el.style.transform = 'none';
+    });
 }
+
+// ================================
+// 3. Navbar — esconde ao descer, mostra ao subir
+// ================================
+const nav = document.getElementById('nav');
+let lastY = 0;
+function onScrollNav() {
+    const y = window.scrollY;
+    nav.classList.toggle('is-scrolled', y > 50);
+    nav.classList.toggle('is-hidden',
+        y > 480 && y > lastY && !document.body.classList.contains('menu-open'));
+    lastY = y;
+}
+if (nav) {
+    window.addEventListener('scroll', onScrollNav, { passive: true });
+    onScrollNav();
+}
+
+// ================================
+// 4. Menu mobile
+// ================================
+const burger = document.getElementById('navBurger');
+const mobileMenu = document.getElementById('mobileMenu');
+function closeMenu() {
+    document.body.classList.remove('menu-open');
+    burger?.setAttribute('aria-expanded', 'false');
+    mobileMenu?.setAttribute('aria-hidden', 'true');
+    if (lenis) lenis.start();
+}
+if (burger && mobileMenu) {
+    burger.addEventListener('click', () => {
+        const open = document.body.classList.toggle('menu-open');
+        burger.setAttribute('aria-expanded', String(open));
+        mobileMenu.setAttribute('aria-hidden', String(!open));
+        if (lenis) open ? lenis.stop() : lenis.start();
+    });
+    mobileMenu.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeMenu));
+}
+
+// ================================
+// 5. Âncoras suaves via Lenis
+// ================================
+document.querySelectorAll('a[href^="#"]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+        const id = a.getAttribute('href');
+        const target = id.length > 1 && document.querySelector(id);
+        if (!target) return;
+        e.preventDefault();
+        closeMenu();
+        if (lenis) lenis.scrollTo(target, { offset: -70, duration: 1.3 });
+        else target.scrollIntoView({ behavior: 'smooth' });
+    });
+});
+
+// ================================
+// 6. FAQ accordion (details animado)
+// ================================
+document.querySelectorAll('.faq__item').forEach((item) => {
+    const summary = item.querySelector('summary');
+    const answer = item.querySelector('.faq__answer');
+    if (!summary || !answer) return;
+    summary.addEventListener('click', (e) => {
+        if (prefersReduced) return; // comportamento nativo
+        e.preventDefault();
+        if (item.open) {
+            gsap.to(answer, {
+                height: 0, opacity: 0, duration: 0.32, ease: 'power2.inOut',
+                onComplete: () => { item.open = false; answer.style.height = ''; },
+            });
+        } else {
+            item.open = true;
+            gsap.fromTo(answer, { height: 0, opacity: 0 }, {
+                height: 'auto', opacity: 1, duration: 0.42, ease: 'power2.out',
+                onComplete: () => { answer.style.height = ''; },
+            });
+        }
+    });
+});
+
+// ================================
+// 7. Blog preview — posts estáticos + posts novos (Supabase via API)
+// ================================
+const blogGrid = document.getElementById('blogPreviewGrid');
+if (blogGrid) {
+    const staticPosts = fetch('/blog/posts/posts-data.json').then((r) => r.json()).catch(() => []);
+    const apiPosts = fetch('/api/blog/list?limit=3').then((r) => (r.ok ? r.json() : [])).catch(() => []);
+
+    Promise.all([staticPosts, apiPosts]).then(([a, b]) => {
+        const seen = new Set();
+        const posts = [...(Array.isArray(b) ? b : []), ...(Array.isArray(a) ? a : [])]
+            .filter((p) => p && p.slug && !seen.has(p.slug) && seen.add(p.slug))
+            .sort((x, y) => (y.date || '').localeCompare(x.date || ''))
+            .slice(0, 3);
+
+        blogGrid.innerHTML = posts.map((p) => `
+            <a class="card post-card" href="/${p.slug}/">
+                <span class="post-card__tag">${esc(p.category || 'Direitos')}</span>
+                <h3>${esc(p.title)}</h3>
+                <p style="font-size:0.92rem">${esc((p.excerpt || '').slice(0, 140))}${(p.excerpt || '').length > 140 ? '…' : ''}</p>
+                <span class="post-card__meta">${formatDate(p.date)} · ${esc(p.readTime || '5 min')}</span>
+            </a>`).join('');
+
+        if (!prefersReduced && blogGrid.children.length) {
+            gsap.from(blogGrid.children, {
+                opacity: 0, y: 30, stagger: 0.1, duration: 0.7, ease: 'power3.out',
+                scrollTrigger: { trigger: blogGrid, start: 'top 86%' },
+            });
+        }
+    }).catch(() => { blogGrid.closest('section')?.remove(); });
+}
+
+function esc(s) {
+    return String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+function formatDate(iso) {
+    if (!iso) return '';
+    try {
+        return new Date(iso + 'T12:00:00').toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
+    } catch { return iso; }
+}
+
+// ================================
+// 8. Tracking WhatsApp (GTM dataLayer) — mantido da v1
+// ================================
+window.dataLayer = window.dataLayer || [];
+document.addEventListener('click', (e) => {
+    const link = e.target.closest('a[href*="wa.me"]');
+    if (!link) return;
+    let location = 'page';
+    if (link.closest('#whatsFab')) location = 'float';
+    else if (link.closest('.nav')) location = 'navbar';
+    else if (link.closest('.hero')) location = 'hero';
+    else if (link.closest('.footer')) location = 'footer';
+    else if (link.closest('.mobile-menu')) location = 'mobile_menu';
+    else if (link.closest('.cta-final')) location = 'page_cta';
+    window.dataLayer.push({
+        event: 'click_whatsapp',
+        click_location: location,
+        page_path: window.location.pathname,
+        page_title: document.title,
+    });
+});
+
+// ================================
+// 9. Animações on-scroll
+// ================================
+initAnimations({ prefersReduced, isTouch });
