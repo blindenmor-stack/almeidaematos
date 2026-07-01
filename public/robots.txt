@@ -1,5 +1,45 @@
+# Almeida & Matos Advogados — almeidaematos.com.br
+# Bots de busca tradicionais e de IA são bem-vindos (exceto rotas privadas).
+
 User-agent: *
 Allow: /
 Disallow: /api/
+Disallow: /admin/
+
+# --- Crawlers de busca com IA (citação) ---
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /admin/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /admin/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin/
+
+User-agent: Claude-SearchBot
+Allow: /
+Disallow: /admin/
+
+User-agent: Claude-User
+Allow: /
+Disallow: /admin/
+
+# --- Crawlers de treinamento (permitidos: marca conhecida pelos modelos = mais citação) ---
+User-agent: GPTBot
+Allow: /
+Disallow: /admin/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin/
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
 
 Sitemap: https://almeidaematos.com.br/sitemap.xml

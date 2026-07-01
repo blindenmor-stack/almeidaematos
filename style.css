@@ -372,6 +372,93 @@ h2.display { font-size: clamp(1.9rem, 4.2vw, 3.1rem); }
 .hero__marquee:hover .marquee__track { animation-play-state: paused; }
 
 /* ============================================================
+   PÁGINAS INTERNAS (benefícios)
+   ============================================================ */
+.hero--page { min-height: auto; }
+.hero--page .hero__grid { grid-template-columns: 1fr; padding-block: clamp(3.5rem, 8vh, 5.5rem) clamp(3rem, 7vh, 5rem); }
+.hero--page .hero__title { font-size: clamp(2rem, 4.6vw, 3.6rem); max-width: 18ch; }
+
+.breadcrumb {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+  font-size: 0.85rem; color: var(--color-navy-300);
+  margin-bottom: 1.6rem;
+}
+.breadcrumb a { color: var(--color-navy-200); transition: color 0.25s ease; }
+.breadcrumb a:hover { color: var(--color-gold-300); }
+.breadcrumb i {
+  width: 8px; height: 8px; flex: none;
+  background: var(--color-gold-500);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.answer-box {
+  background: rgba(31, 42, 82, 0.5);
+  border: 1px solid rgba(210, 174, 109, 0.3);
+  border-left: 4px solid var(--color-gold-500);
+  border-radius: 10px;
+  padding: clamp(1.2rem, 2.4vw, 1.7rem);
+  max-width: 46rem;
+  font-size: 1.06rem; color: var(--color-navy-100);
+}
+.answer-box strong { color: var(--color-gold-300); }
+
+.page-meta { font-size: 0.82rem; color: var(--color-navy-300); margin-top: 1.4rem; }
+
+.check-list { display: grid; gap: 12px; }
+.check-list li {
+  display: flex; gap: 14px; align-items: flex-start;
+  background: #fff; border: 1px solid rgba(53, 66, 113, 0.1);
+  border-radius: 8px; padding: 16px 20px;
+}
+.check-list li::before {
+  content: ''; flex: none; width: 22px; height: 22px; margin-top: 2px;
+  background: var(--color-gold-500);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+.check-list--x li::before { background: var(--color-gray-brand); clip-path: polygon(20% 0, 50% 30%, 80% 0, 100% 20%, 70% 50%, 100% 80%, 80% 100%, 50% 70%, 20% 100%, 0 80%, 30% 50%, 0 20%); }
+.check-list li strong { color: var(--color-navy-700); }
+
+.prose { max-width: 46rem; }
+.prose h2 {
+  font-family: var(--font-display); font-weight: 800; font-stretch: 112%;
+  font-size: clamp(1.45rem, 2.6vw, 1.9rem); line-height: 1.2;
+  color: var(--color-navy-700); margin: 2.6rem 0 1rem;
+}
+.prose h3 {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 1.15rem; color: var(--color-navy-700); margin: 1.8rem 0 0.7rem;
+}
+.prose p { margin-bottom: 1rem; color: var(--color-ink-soft); }
+.prose ul, .prose ol { margin: 0 0 1.2rem 1.2rem; display: grid; gap: 8px; color: var(--color-ink-soft); }
+.prose ul { list-style: none; margin-left: 0; }
+.prose ul li { padding-left: 26px; position: relative; }
+.prose ul li::before {
+  content: ''; position: absolute; left: 0; top: 8px;
+  width: 11px; height: 11px;
+  background: var(--color-gold-500);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+.prose ol { list-style: decimal; margin-left: 1.4rem; }
+.prose a { color: var(--color-navy-600); text-decoration: underline; text-underline-offset: 3px; }
+.prose a:hover { color: var(--color-gold-700); }
+.prose table { width: 100%; border-collapse: collapse; margin: 1.2rem 0; font-size: 0.95rem; }
+.prose th {
+  background: var(--color-navy-700); color: #fff; text-align: left;
+  font-family: var(--font-display); font-weight: 700; font-size: 0.9rem;
+  padding: 12px 16px;
+}
+.prose th:first-child { border-radius: 8px 0 0 0; }
+.prose th:last-child { border-radius: 0 8px 0 0; }
+.prose td { padding: 12px 16px; border-bottom: 1px solid rgba(53, 66, 113, 0.12); background: #fff; color: var(--color-ink-soft); }
+.prose blockquote {
+  border-left: 4px solid var(--color-gold-500);
+  background: var(--color-gold-100);
+  border-radius: 0 10px 10px 0;
+  padding: 1.1rem 1.4rem; margin: 1.4rem 0;
+  color: var(--color-navy-700); font-weight: 500;
+}
+
+/* ============================================================
    CARDS
    ============================================================ */
 .card {

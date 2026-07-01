@@ -90,14 +90,16 @@ ${settings.extra_instructions ? `\n# INSTRUÇÕES EXTRAS DO EDITOR\n${settings.e
 - NUNCA cite valores de honorários, valores de causas ou casos concretos do escritório.
 - Tom educativo: o artigo ensina; a decisão é do leitor.
 
-## AEO/SEO (answer-first)
-- O PRIMEIRO parágrafo responde a pergunta principal do tema DIRETAMENTE, em até 3 frases. Sem rodeios, sem "neste artigo vamos ver".
-- H2s formulados como perguntas quando soar natural (ex: "Quem tem direito ao auxílio-acidente?").
-- Use listas (ul/ol) e tabelas HTML quando ajudarem a escanear a informação.
-- Inclua definições claras dos termos técnicos.
-- Termine com uma seção <h2>Perguntas frequentes</h2> contendo as MESMAS perguntas/respostas do campo faq (em h3 + p).
-- Fundamente afirmações legais citando a norma: Lei 8.213/91, Lei 8.742/93 (LOAS), LC 142/2013, Decreto 3.048/99 etc.
-- PROIBIDO inventar: estatísticas, percentuais de êxito, decisões judiciais específicas, números de processos ou prazos que não sejam de lei conhecida. Se não tem certeza, não afirme.
+## AEO/SEO (answer-first — otimizado para citação por IAs de busca)
+- O PRIMEIRO parágrafo responde a pergunta principal do tema DIRETAMENTE, em 40-60 palavras, de forma autocontida (faz sentido lido isolado). Sem rodeios, sem "neste artigo vamos ver".
+- H2s formulados como perguntas quando soar natural (ex: "Quem tem direito ao auxílio-acidente?"). Logo abaixo de CADA H2, comece com 1-2 frases que respondem aquela pergunta diretamente, antes de aprofundar — cada seção deve funcionar como um trecho citável independente.
+- A primeira menção do conceito central deve ser uma definição explícita em frase completa ("Auxílio-acidente é...").
+- Use listas (ul/ol) e tabelas HTML quando ajudarem a escanear a informação (valores, prazos, requisitos, comparações).
+- Fundamente afirmações legais citando a norma COM link para a fonte oficial: <a href="https://www.planalto.gov.br/ccivil_03/leis/l8213cons.htm">Lei 8.213/91</a>, Lei 8.742/93 (LOAS), LC 142/2013, Decreto 3.048/99 etc.
+- Quando (e somente quando) você tiver CERTEZA de um dado oficial público (ex: valor do salário mínimo vigente, percentual de 50% do auxílio-acidente definido em lei, idade mínima do BPC), apresente-o como dado com a fonte nomeada ("segundo a Lei 8.213/91...", "conforme regra do INSS..."). Estatísticas com fonte aumentam muito a chance de citação por IAs.
+- Inclua UM <blockquote> no meio do artigo com uma explicação prática e memorável do ponto mais mal-entendido do tema, atribuída assim: "— Equipe jurídica Almeida & Matos".
+- Termine com uma seção <h2>Perguntas frequentes</h2> contendo as MESMAS perguntas/respostas do campo faq (em h3 + p; respostas autocontidas de 40-60 palavras).
+- PROIBIDO inventar: estatísticas, percentuais de êxito, decisões judiciais específicas, números de processos ou prazos que não sejam de lei conhecida. Se não tem certeza, não afirme. Precisão vale mais que persuasão — este é conteúdo YMYL (saúde/dinheiro/direito).
 
 ## Linkagem interna
 - Inclua 2 a 3 links contextuais (tag <a>) para páginas de produto relevantes, escolhendo entre:
