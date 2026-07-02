@@ -19,6 +19,26 @@ gsap.registerPlugin(ScrollTrigger);
  *  data-magnetic                    → botão magnético (desktop)
  */
 export function initAnimations({ prefersReduced, isTouch } = {}) {
+    try {
+        initAnimationsInner({ prefersReduced, isTouch });
+    } catch (err) {
+        // Safety-net: se o motor falhar por qualquer motivo, nenhum conteúdo
+        // pode ficar preso invisível nos estados iniciais de reveal.
+        console.error('[animations] falha no init — revelando conteúdo:', err);
+        revealEverything();
+    }
+}
+
+function revealEverything() {
+    document.querySelectorAll('[data-reveal], [data-reveal-title], [data-card], [data-hero-fade], [data-hero-visual]')
+        .forEach((el) => { el.style.opacity = 1; el.style.transform = 'none'; });
+    document.querySelectorAll('[data-hero-line] > span, .hero__line > span')
+        .forEach((el) => { el.style.transform = 'none'; });
+    document.querySelectorAll('[data-clip-reveal]').forEach((el) => { el.style.clipPath = 'none'; });
+    document.querySelectorAll('[data-rule]').forEach((el) => { el.style.transform = 'none'; });
+}
+
+function initAnimationsInner({ prefersReduced, isTouch } = {}) {
     if (prefersReduced === undefined) {
         prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     }

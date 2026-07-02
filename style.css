@@ -294,7 +294,7 @@ h2.display { font-size: clamp(1.9rem, 4.2vw, 3.1rem); }
 }
 
 .hero__eyebrow { color: var(--color-gold-300); margin-bottom: 1.4rem; }
-.hero__title { color: #fff; margin-bottom: 1.4rem; }
+h1.hero__title { color: #fff; margin-bottom: 1.4rem; font-size: clamp(2.1rem, 4.4vw, 3.4rem); }
 .hero__sub { font-size: clamp(1.05rem, 1.8vw, 1.3rem); color: var(--color-navy-200); max-width: 34rem; margin-bottom: 2.2rem; }
 
 .hero__line { display: block; overflow: hidden; padding-top: 0.14em; margin-top: -0.14em; padding-bottom: 0.08em; margin-bottom: -0.08em; }
@@ -319,6 +319,11 @@ h2.display { font-size: clamp(1.9rem, 4.2vw, 3.1rem); }
   position: relative; overflow: hidden;
   clip-path: polygon(8% 0, 100% 0, 100% 92%, 92% 100%, 0 100%, 0 8%);
   box-shadow: 0 44px 90px -30px rgba(0, 0, 0, 0.6);
+  /* fundo do cartão — a foto dos sócios é recortada (sem fundo próprio) */
+  background:
+    radial-gradient(120% 90% at 78% 12%, rgba(210, 174, 109, 0.22), transparent 55%),
+    linear-gradient(160deg, var(--color-navy-800) 0%, var(--color-navy-900) 62%, var(--color-navy-950) 100%);
+  border: 1px solid rgba(210, 174, 109, 0.22);
 }
 .hero__photo img { width: 100%; height: auto; display: block; }
 .hero__photo::after {
