@@ -8,15 +8,19 @@
     <title id="page-title">Carregando... | Almeida & Matos Advogados</title>
     <meta name="description" id="page-description" content="">
 
-    <!-- Canonical (set by JS) -->
+    <!-- Canonical (preenchido por SSG/JS) -->
     <link rel="canonical" id="page-canonical" href="">
 
-    <!-- Open Graph (set by JS) -->
+    <!-- Open Graph (preenchido por SSG/JS) -->
+    <meta property="og:type" content="article">
     <meta property="og:title" id="og-title" content="">
     <meta property="og:description" id="og-description" content="">
-    <meta property="og:type" content="article">
     <meta property="og:url" id="og-url" content="">
     <meta property="og:image" content="https://almeidaematos.com.br/img/og-cover.jpg">
+    <meta property="og:image:width" content="1500">
+    <meta property="og:image:height" content="788">
+    <meta property="og:site_name" content="Almeida & Matos Advogados">
+    <meta name="twitter:card" content="summary_large_image">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="./img/favicon-32.png">
@@ -28,12 +32,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,500..900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
         rel="stylesheet">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./blog-styles.css">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/blog-styles.css">
 
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -43,276 +47,199 @@
     })(window,document,'script','dataLayer','GTM-PLGK39C3');</script>
 </head>
 
-<body class="bg-hero-bg text-navy-950 font-sans antialiased overflow-x-clip">
-    <!-- Google Tag Manager (noscript) -->
+<body>
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PLGK39C3" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-    <!-- ============================== -->
-    <!-- NAVBAR -->
-    <!-- ============================== -->
-    <header id="navbar">
-        <div class="nav-inner">
-            <a href="/" class="nav-brand">
-                <img src="./img/logo-am-oficial.webp" alt="Almeida & Matos Advogados" class="nav-logo-img">
-            </a>
+    <!-- Símbolo A&M reutilizável -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <symbol id="am-mark" viewBox="0 0 220 170">
+            <path d="M85 4 L166 166 H4 Z" />
+            <path d="M85 44 L146 166 H118 L85 100 L52 166 H24 Z" />
+            <path d="M156 66 L216 166 H100 Z" />
+        </symbol>
+    </svg>
 
-            <!-- Desktop Nav -->
-            <div class="nav-links">
+    <div class="brand-rule" aria-hidden="true"></div>
+
+    <!-- NAV -->
+    <header class="nav" id="nav">
+        <div class="container nav__inner">
+            <a href="/" class="nav__logo" aria-label="Almeida & Matos — página inicial">
+                <span class="nav__logo-badge"><img src="/img/logo-am-oficial.webp" alt="Almeida & Matos Advogados" width="140" height="46"></span>
+            </a>
+            <nav class="nav__links" aria-label="Navegação principal">
                 <a href="/#atuacao">Atuação</a>
-                <a href="/#auxilio">Auxílio-Acidente</a>
+                <a href="/beneficios/">Benefícios</a>
                 <a href="/#como-funciona">Como Funciona</a>
                 <a href="/#escritorio">O Escritório</a>
                 <a href="/blog/">Blog</a>
-                <a href="/#faq">Dúvidas</a>
-                <a href="https://wa.me/5511930044411?text=Ol%C3%A1!%20Vi%20o%20escrit%C3%B3rio%20pelo%20site%20e%20gostaria%20de%20saber%20sobre%20meus%20direitos.%20Podem%20me%20ajudar%3F"
-                    class="btn-whatsapp-sm" target="_blank" rel="noopener">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                    </svg>
-                    Fale Conosco
-                </a>
-            </div>
-
-            <!-- Mobile Controls -->
-            <div class="nav-mobile-controls">
-                <a href="https://wa.me/5511930044411?text=Ol%C3%A1%2C%20Vi%20o%20escrit%C3%B3rio%20pelo%20site%20e%20gostaria%20de%20saber%20sobre%20meus%20direitos.%20Podem%20me%20ajudar%3F"
-                    class="nav-icon-btn bg-whatsapp text-white mobile-only rounded-full" target="_blank" rel="noopener"
-                    aria-label="WhatsApp">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                    </svg>
-                </a>
-                <button id="menu-toggle" aria-label="Menu" class="mobile-only">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
+                <a class="btn btn--gold" style="padding:11px 20px;font-size:0.9rem"
+                   href="https://wa.me/5511930044411?text=Ol%C3%A1!%20Li%20um%20artigo%20no%20blog%20de%20voc%C3%AAs%20e%20quero%20tirar%20uma%20d%C3%BAvida%20sobre%20o%20meu%20caso."
+                   target="_blank" rel="noopener">Fale Conosco</a>
+            </nav>
+            <button class="nav__burger" id="navBurger" aria-label="Abrir menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
         </div>
-
-        <!-- Mobile Nav Overlay -->
-        <nav id="mobile-nav" aria-label="Menu mobile">
-            <a href="/#atuacao">Atuação</a>
-            <a href="/#auxilio">Auxílio-Acidente</a>
-            <a href="/#como-funciona">Como Funciona</a>
-            <a href="/#escritorio">O Escritório</a>
-            <a href="/blog/">Blog</a>
-            <a href="/#faq">Dúvidas</a>
-        </nav>
     </header>
 
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+        <a href="/#atuacao">Atuação</a>
+        <a href="/beneficios/">Benefícios</a>
+        <a href="/#como-funciona">Como Funciona</a>
+        <a href="/#escritorio">O Escritório</a>
+        <a href="/blog/">Blog</a>
+        <a class="btn btn--whatsapp"
+           href="https://wa.me/5511930044411?text=Ol%C3%A1!%20Li%20um%20artigo%20no%20blog%20de%20voc%C3%AAs%20e%20quero%20tirar%20uma%20d%C3%BAvida%20sobre%20o%20meu%20caso."
+           target="_blank" rel="noopener">Falar no WhatsApp</a>
+    </div>
+
     <main>
-        <!-- ============================== -->
-        <!-- POST HERO -->
-        <!-- ============================== -->
-        <section class="blog-post-hero">
-            <div class="container mx-auto px-4 md:px-8 max-w-4xl">
-                <!-- Breadcrumb -->
-                <nav id="breadcrumb" class="breadcrumb" aria-label="Breadcrumb">
-                    <a href="/">Início</a>
-                    <span class="separator">/</span>
-                    <a href="/blog/">Blog</a>
-                    <span class="separator">/</span>
-                    <span id="breadcrumb-title" class="text-navy-600">Carregando...</span>
-                </nav>
+        <!-- HERO DO POST -->
+        <section class="hero hero--page post-hero">
+            <svg class="hero__watermark" aria-hidden="true" fill="none" stroke="#D2AE6D" stroke-width="1">
+                <use href="#am-mark" />
+            </svg>
+            <div class="container">
+                <div class="hero__grid">
+                    <div>
+                        <nav class="breadcrumb" aria-label="Você está em">
+                            <a href="/">Início</a><i></i>
+                            <a href="/blog/">Blog</a><i></i>
+                            <span id="breadcrumb-title">Carregando...</span>
+                        </nav>
 
-                <!-- Category -->
-                <div id="post-category" class="blog-card-category mb-4"></div>
+                        <span id="post-category" class="post-card__tag post-hero__tag">Artigo</span>
 
-                <!-- Title -->
-                <h1 id="post-title" class="heading-1 font-serif text-navy-950 mb-4">Carregando...</h1>
+                        <h1 id="post-title" class="display hero__title">Carregando...</h1>
 
-                <!-- Meta -->
-                <div id="post-meta" class="post-meta">
-                    <!-- Filled by JS -->
+                        <div id="post-meta" class="post-hero__meta">
+                            <!-- Filled by JS -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- ============================== -->
-        <!-- POST CONTENT + SIDEBAR -->
-        <!-- ============================== -->
-        <section class="section-light py-8 md:py-12">
-            <div class="container mx-auto px-4 md:px-8">
-                <div class="flex flex-col lg:flex-row gap-8 max-w-6xl mx-auto">
-                    <!-- Article Content -->
-                    <article class="flex-1 min-w-0">
-                        <div id="post-content" class="article-content">
-                            <!-- Loading skeleton -->
-                            <div class="skeleton" style="height: 1.5rem; width: 80%; margin-bottom: 1rem;"></div>
-                            <div class="skeleton" style="height: 1rem; width: 100%; margin-bottom: 0.5rem;"></div>
-                            <div class="skeleton" style="height: 1rem; width: 100%; margin-bottom: 0.5rem;"></div>
-                            <div class="skeleton" style="height: 1rem; width: 65%; margin-bottom: 1.5rem;"></div>
-                            <div class="skeleton" style="height: 1.5rem; width: 60%; margin-bottom: 1rem;"></div>
-                            <div class="skeleton" style="height: 1rem; width: 100%; margin-bottom: 0.5rem;"></div>
-                            <div class="skeleton" style="height: 1rem; width: 90%; margin-bottom: 0.5rem;"></div>
-                        </div>
+        <!-- CONTEÚDO -->
+        <section class="section section--paper post-section">
+            <div class="container">
+                <article class="post-article">
+                    <div id="post-content" class="prose post-body">
+                        <!-- Loading skeleton -->
+                        <div class="skeleton" style="height:1.5rem;width:80%;margin-bottom:1rem"></div>
+                        <div class="skeleton" style="height:1rem;width:100%;margin-bottom:0.5rem"></div>
+                        <div class="skeleton" style="height:1rem;width:100%;margin-bottom:0.5rem"></div>
+                        <div class="skeleton" style="height:1rem;width:65%;margin-bottom:1.5rem"></div>
+                        <div class="skeleton" style="height:1.5rem;width:60%;margin-bottom:1rem"></div>
+                        <div class="skeleton" style="height:1rem;width:100%;margin-bottom:0.5rem"></div>
+                        <div class="skeleton" style="height:1rem;width:90%;margin-bottom:0.5rem"></div>
+                    </div>
+                    <!-- /post-content -->
 
-                        <!-- Post CTA (inline, below content) -->
-                        <div class="rounded-2xl p-6 md:p-8 mt-8 mb-8 max-w-[720px] mx-auto" style="background: linear-gradient(135deg, #F5F0E8 0%, #EDE7DB 100%); border: 1px solid #E2E0DA;">
-                            <h3 class="font-serif text-navy-950 text-xl mb-2">Precisa de ajuda com seu caso?</h3>
-                            <p class="text-navy-600 text-sm leading-relaxed mb-4">
-                                Nossos especialistas podem analisar sua situação. São mais de 11 anos de experiência em direito acidentário.
-                            </p>
-                            <a href="https://wa.me/5511930044411?text=Ol%C3%A1%2C%20li%20um%20artigo%20no%20blog%20e%20Vi%20o%20escrit%C3%B3rio%20pelo%20site%20e%20gostaria%20de%20saber%20sobre%20meus%20direitos.%20Podem%20me%20ajudar%3F"
-                                class="btn-whatsapp" target="_blank" rel="noopener">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                                </svg>
-                                Falar com Especialista
-                            </a>
-                        </div>
-                    </article>
+                    <!-- CTA WhatsApp -->
+                    <div class="post-cta">
+                        <h3>Ficou com dúvida sobre o seu caso?</h3>
+                        <p>Nossa equipe analisa a sua situação sem custo. São mais de 11 anos de experiência e 10.000+ clientes atendidos em direito acidentário e previdenciário.</p>
+                        <a class="btn btn--whatsapp"
+                           href="https://wa.me/5511930044411?text=Ol%C3%A1!%20Li%20um%20artigo%20no%20blog%20de%20voc%C3%AAs%20e%20quero%20tirar%20uma%20d%C3%BAvida%20sobre%20o%20meu%20caso."
+                           target="_blank" rel="noopener">Fale com um especialista</a>
+                        <p class="btn-note">Sem custo. Sem compromisso.</p>
+                    </div>
 
-                    <!-- Sidebar -->
-                    <aside class="lg:w-80 flex-shrink-0">
-                        <!-- CTA Card -->
-                        <div class="blog-cta-sidebar mb-6">
-                            <div class="flex items-center gap-2 mb-3">
-                                <div class="w-8 h-8 rounded-full bg-gold-500/20 flex items-center justify-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gold-500" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                                    </svg>
-                                </div>
-                                <h3>Avaliação do seu caso</h3>
-                            </div>
-                            <p>Fale com nossos especialistas e descubra quais são seus direitos. Atendimento humanizado
-                                e sem compromisso.</p>
-                            <a href="https://wa.me/5511930044411?text=Ol%C3%A1%2C%20li%20um%20artigo%20no%20blog%20e%20Vi%20o%20escrit%C3%B3rio%20pelo%20site%20e%20gostaria%20de%20saber%20sobre%20meus%20direitos.%20Podem%20me%20ajudar%3F"
-                                class="btn-whatsapp w-full text-sm" target="_blank" rel="noopener">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                                </svg>
-                                Chamar no WhatsApp
-                            </a>
-                        </div>
+                    <p class="post-footer-nav"><a class="post-back" href="/blog/">Voltar para o blog</a></p>
+                </article>
+            </div>
+        </section>
 
-                        <!-- Related Posts -->
-                        <div id="related-posts" class="hidden">
-                            <h3 class="font-serif text-navy-950 text-lg mb-4">Artigos Relacionados</h3>
-                            <div id="related-posts-list" class="space-y-3">
-                                <!-- Filled by JS -->
-                            </div>
-                        </div>
-                    </aside>
+        <!-- RELACIONADOS -->
+        <section id="related-posts" class="section section--paper-2 related-section hidden">
+            <div class="container">
+                <div class="section-head">
+                    <p class="eyebrow">Continue lendo</p>
+                    <h2 class="display" style="color:var(--color-navy-700)">Artigos <span class="gold-word">relacionados</span></h2>
+                </div>
+                <div id="related-posts-list" class="grid-3">
+                    <!-- Filled by JS -->
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- ============================== -->
     <!-- FOOTER -->
-    <!-- ============================== -->
-    <footer class="footer-section py-10">
-        <div class="container mx-auto px-4 md:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div class="footer__brand">
+                    <span class="footer__badge"><img src="/img/logo-am-oficial.webp" alt="Almeida & Matos Advogados" width="146" height="48"></span>
+                    <p>Escritório fundado em 2015. Especialistas em acidentes e incapacidade — INSS, indenizações e seguros.</p>
+                    <p style="margin-top:0.9rem; font-size:0.85rem">CNPJ 24.895.043/0001-40</p>
+                </div>
                 <div>
-                    <div class="footer-brand mb-3">
-                        <img src="./img/logo-am-oficial.webp" alt="Almeida & Matos Advogados" class="footer-logo">
+                    <h4>Benefícios</h4>
+                    <ul>
+                        <li><a href="/beneficios/auxilio-acidente/">Auxílio-Acidente</a></li>
+                        <li><a href="/beneficios/auxilio-doenca/">Auxílio-Doença</a></li>
+                        <li><a href="/beneficios/bpc-loas/">BPC/LOAS</a></li>
+                        <li><a href="/beneficios/aposentadoria-por-invalidez/">Aposentadoria por Invalidez</a></li>
+                        <li><a href="/beneficios/pensao-por-morte/">Pensão por Morte</a></li>
+                        <li><a href="/beneficios/aposentadoria-pcd/">Aposentadoria PCD</a></li>
+                        <li><a href="/beneficios/indenizacao-civel-trabalhista/">Indenização Cível</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Contato</h4>
+                    <ul>
+                        <li><a href="https://wa.me/5511930044411" target="_blank" rel="noopener">(11) 93004-4411</a></li>
+                        <li><a href="mailto:contato@almeidaematos.com.br">contato@almeidaematos.com.br</a></li>
+                        <li>Seg a Sex — 9h às 18h</li>
+                        <li><a href="/blog/">Blog</a></li>
+                        <li><a href="https://www.instagram.com/almeidaematosadvogados/" target="_blank" rel="noopener">Instagram</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Onde estamos</h4>
+                    <p style="font-size:0.9rem; margin-bottom:1rem">Alameda Araguaia, 1142 · Bloco 3, 1º andar<br>Alphaville Industrial, Barueri - SP<br>CEP 06455-000</p>
+                    <div class="footer__map">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3658.634!2d-46.8449!3d-23.5069!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zQWxhbWVkYSBBcmFndWFpYSwgMTE0MiAtIEFscGhhdmlsbGUsIEJhcnVlcmkgLSBTUA!5e0!3m2!1spt-BR!2sbr!4v1"
+                            loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                            title="Mapa — Almeida & Matos, Alameda Araguaia 1142, Alphaville, Barueri"
+                            allowfullscreen></iframe>
                     </div>
-                    <p class="text-navy-700 text-sm leading-relaxed">Escritório fundado em 2015. Especialistas em
-                        acidentes e incapacidade.</p>
-                </div>
-
-                <div>
-                    <p class="text-navy-950 font-semibold text-sm mb-3 uppercase tracking-wider">Contato</p>
-                    <p class="text-navy-700 text-sm leading-loose">
-                        <a href="https://wa.me/5511930044411" class="hover:text-gold-500 transition-colors"
-                            target="_blank" rel="noopener">WhatsApp: (11) 93004-4411</a><br>
-                        <a href="mailto:contato@almeidaematos.com.br"
-                            class="hover:text-gold-500 transition-colors">contato@almeidaematos.com.br</a><br>
-                        Seg a Sex — 9h às 18h
-                    </p>
-                </div>
-
-                <div>
-                    <p class="text-navy-950 font-semibold text-sm mb-3 uppercase tracking-wider">Como Chegar</p>
-                    <p class="text-navy-700 text-sm leading-relaxed">
-                        Alameda Araguaia, 1142 - Bloco 3, 1º andar<br>
-                        Alphaville Industrial, Barueri - SP<br>
-                        CEP 06455-000
-                    </p>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Alameda+Araguaia+1142+Alphaville+Barueri+SP"
-                        class="inline-flex items-center gap-1.5 text-gold-500 hover:text-gold-600 text-sm font-semibold mt-3 transition-colors"
-                        target="_blank" rel="noopener">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                        Ver no mapa
-                    </a>
-                </div>
-
-                <div>
-                    <p class="text-navy-950 font-semibold text-sm mb-3 uppercase tracking-wider">Visite-nos</p>
-                    <p class="text-navy-700 text-sm leading-relaxed mb-3">
-                        Atendemos presencialmente em Alphaville, Barueri. Agende sua visita sem compromisso.
-                    </p>
-                    <a href="https://wa.me/5511930044411?text=Ol%C3%A1!%20Vi%20o%20escrit%C3%B3rio%20pelo%20site%20e%20gostaria%20de%20agendar%20uma%20visita."
-                        class="inline-flex items-center gap-1.5 text-gold-500 hover:text-gold-600 text-sm font-semibold transition-colors"
-                        target="_blank" rel="noopener">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                        Agendar visita
-                    </a>
-                    <p class="text-navy-500 text-xs mt-3">CNPJ: 24.895.043/0001-40</p>
                 </div>
             </div>
-
-            <!-- Disclaimer -->
-            <div class="border-t border-navy-200/20 mt-8 pt-5">
-                <p class="text-neutral-400 text-xs leading-relaxed max-w-3xl">
-                    ⚠️ O escritório Almeida e Matos não cobra taxas para
-                    liberação de valores. Verifique mensagens suspeitas nos canais oficiais:
-                    <a href="https://wa.me/5511930044411" class="underline hover:text-neutral-600">(11) 93004-4411</a> ou
-                    <a href="tel:+5511973304817" class="underline hover:text-neutral-600">(11) 97330-4817</a>.
-                </p>
-                <p class="text-navy-500 text-xs text-center">© 2026 Almeida & Matos Advogados. Todos os direitos
-                    reservados.</p>
+            <div class="footer__disclaimer">
+                <strong>Atenção — golpes em nome do escritório:</strong> o escritório Almeida e Matos não cobra taxas para liberação de valores. Em caso de dúvida ou suspeita de fraude, confirme pelo nosso WhatsApp oficial <a href="https://wa.me/5511973304817" style="color:var(--color-gold-300)">(11) 97330-4817</a>.
+            </div>
+            <div class="footer__bottom">
+                <span>© 2026 Almeida & Matos Advogados. Todos os direitos reservados.</span>
+                <span>Alameda Araguaia, 1142 — Alphaville, Barueri - SP</span>
             </div>
         </div>
     </footer>
 
-    <!-- WhatsApp Float -->
-    <a href="https://wa.me/5511930044411?text=Ol%C3%A1%2C%20Vi%20o%20escrit%C3%B3rio%20pelo%20site%20e%20gostaria%20de%20saber%20sobre%20meus%20direitos.%20Podem%20me%20ajudar%3F"
-        class="whatsapp-float" target="_blank" rel="noopener" aria-label="WhatsApp">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
-            <path
-                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-        </svg>
+    <!-- WhatsApp FAB -->
+    <a class="whats-fab" id="whatsFab" aria-label="Falar no WhatsApp"
+       href="https://wa.me/5511930044411?text=Ol%C3%A1!%20Li%20um%20artigo%20no%20blog%20de%20voc%C3%AAs%20e%20quero%20tirar%20uma%20d%C3%BAvida%20sobre%20o%20meu%20caso."
+       target="_blank" rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
     </a>
 
     <!-- Scripts -->
-    <script type="module" src="./blog.js"></script>
+    <script type="module" src="/blog.js"></script>
 
     <!-- DataLayer: tracking de cliques WhatsApp -->
     <script>
     document.addEventListener('click', function(e) {
         var link = e.target.closest('a[href*="wa.me"]');
         if (link) {
-            var location = 'unknown';
-            if (link.classList.contains('whatsapp-float')) location = 'float';
-            else if (link.classList.contains('btn-whatsapp-sm')) location = 'navbar';
-            else if (link.closest('footer') || link.closest('.footer-section')) location = 'footer';
-            else if (link.closest('.blog-cta-sidebar')) location = 'blog_sidebar';
-            else if (link.closest('article')) location = 'blog_cta';
-            else if (link.closest('#mobile-nav')) location = 'mobile_menu';
-            else if (link.closest('.nav-mobile-controls')) location = 'mobile_navbar';
-            else location = 'page_cta';
+            var location = 'page_cta';
+            if (link.closest('#whatsFab')) location = 'float';
+            else if (link.closest('.nav')) location = 'navbar';
+            else if (link.closest('.mobile-menu')) location = 'mobile_menu';
+            else if (link.closest('.post-cta')) location = 'blog_cta';
+            else if (link.closest('.footer')) location = 'footer';
             window.dataLayer = window.dataLayer || [];
             window.dataLayer.push({ event: 'click_whatsapp', click_location: location, page_path: window.location.pathname, page_title: document.title });
         }
