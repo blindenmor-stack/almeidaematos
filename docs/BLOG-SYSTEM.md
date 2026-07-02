@@ -87,7 +87,7 @@
 > A Vercel injeta `Authorization: Bearer $CRON_SECRET` automaticamente nas invocações de cron quando a env `CRON_SECRET` existe no projeto.
 
 ### 3.3 Gemini API key
-Google AI Studio (aistudio.google.com) → Get API key. O modelo padrão é `gemini-2.5-flash` (troca no painel admin, aba Linha editorial).
+Google AI Studio (aistudio.google.com) → Get API key. O modelo padrão é `gemini-pro-latest` (Gemini Pro mais recente — melhor escrita; `gemini-flash-latest` é a opção rápida/barata) (troca no painel admin, aba Linha editorial).
 
 ---
 
