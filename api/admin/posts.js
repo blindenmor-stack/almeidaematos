@@ -64,10 +64,6 @@ function cleanPayload(body, { isCreate }) {
         out.read_time = `${Math.max(1, Math.ceil(countWords(out.content_html) / 200))} min`;
     }
 
-    // Transições de publicação: seta/limpa published_at conforme o status
-    if (out.status === 'published') out.published_at = new Date().toISOString();
-    if (out.status === 'draft') out.published_at = null;
-
     return out;
 }
 
@@ -114,6 +110,7 @@ export default async function handler(req, res) {
             const payload = cleanPayload(body, { isCreate: true });
             payload.origin = 'manual';
             if (!payload.status) payload.status = 'draft';
+            if (payload.status === 'published') payload.published_at = new Date().toISOString();
 
             const rows = await sbFetch('blog_posts', { method: 'POST', body: payload });
             return res.status(201).json(rows[0]);
@@ -127,6 +124,14 @@ export default async function handler(req, res) {
             const body = await readJsonBody(req);
             const payload = cleanPayload(body, { isCreate: false });
             if (!Object.keys(payload).length) return sendError(res, 400, 'Nada para atualizar');
+
+            // published_at: preserva o histórico — só seta na PRIMEIRA publicação;
+            // editar um post publicado não muda a data, e despublicar não a apaga.
+            if (payload.status === 'published') {
+                const current = await sbFetch(`blog_posts?id=eq.${id}&select=published_at&limit=1`);
+                if (!current || !current.length) return sendError(res, 404, 'Post não encontrado');
+                if (!current[0].published_at) payload.published_at = new Date().toISOString();
+            }
 
             const rows = await sbFetch(`blog_posts?id=eq.${id}`, { method: 'PATCH', body: payload });
             if (!rows || !rows.length) return sendError(res, 404, 'Post não encontrado');

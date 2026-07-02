@@ -14,6 +14,18 @@ const SITE_URL = 'https://almeidaematos.com.br';
 const WHATSAPP_URL = 'https://wa.me/5511930044411?text=' +
     encodeURIComponent('Olá! Li o artigo no site e gostaria de saber sobre meus direitos.');
 
+// GTM — mesmo container de todo o site (mensuração de pageview + conversões
+// de WhatsApp dos posts gerados por IA; sem isso o tráfego do blog some do GA4).
+const GTM_ID = 'GTM-PLGK39C3';
+const GTM_HEAD = `<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','${GTM_ID}');</script>`;
+const GTM_NOSCRIPT = `<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>`;
+// Tracking de cliques de WhatsApp — mesmo evento/formato do main.js do site.
+const WA_TRACKING = `<script>window.dataLayer=window.dataLayer||[];document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href*="wa.me"]');if(!a)return;var loc='blog_post';if(a.closest('.post-cta'))loc='blog_cta';else if(a.closest('.site-header'))loc='navbar';else if(a.closest('.site-footer'))loc='footer';window.dataLayer.push({event:'click_whatsapp',click_location:loc,page_path:window.location.pathname,page_title:document.title});});</script>`;
+
 /** Data 'YYYY-MM-DD' ou ISO → '12 de junho de 2026'. */
 function formatDateBR(iso) {
     if (!iso) return '';
@@ -176,9 +188,11 @@ export function renderPostPage(post) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     ${buildJsonLd(post)}
+    ${GTM_HEAD}
     <style>${BASE_CSS}</style>
 </head>
 <body>
+    ${GTM_NOSCRIPT}
     <div class="topbar"></div>
     <header class="site-header">
         <div class="header-inner">
@@ -230,6 +244,7 @@ export function renderPostPage(post) {
             <span><a href="/blog/">Blog</a> · <a href="/beneficios/">Benefícios</a> · <a href="${WHATSAPP_URL}" target="_blank" rel="noopener">WhatsApp</a></span>
         </div>
     </footer>
+    ${WA_TRACKING}
 </body>
 </html>`;
 }

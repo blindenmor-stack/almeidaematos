@@ -23,7 +23,10 @@ export function requireAdmin(req, res) {
         res.status(500).json({ error: 'ADMIN_PASSWORD não configurada no servidor' });
         return false;
     }
-    const given = req.headers['x-admin-password'];
+    // O admin envia a senha percent-encoded (headers HTTP só aceitam Latin-1;
+    // senha com €/emoji quebraria o fetch do navegador). Decode com fallback.
+    let given = req.headers['x-admin-password'];
+    if (given) { try { given = decodeURIComponent(given); } catch { /* usa valor cru */ } }
     if (!given || !safeEqual(given, expected)) {
         res.status(401).json({ error: 'Não autorizado' });
         return false;

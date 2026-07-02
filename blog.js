@@ -265,6 +265,20 @@ function metaHTML(post) {
 
 async function initPostPage() {
     const slug = getSlugFromURL();
+
+    // Página SSG completa: o HTML já veio pronto do servidor. Nunca re-hidratar
+    // nem degradar para not-found (ex.: falha transitória do posts-data.json
+    // não pode injetar noindex numa página válida). Relacionados = best-effort.
+    const ssgContent = document.getElementById('post-content');
+    if (ssgContent && ssgContent.dataset.ssg) {
+        try {
+            const staticPostsSsg = (await fetchStaticPosts()).map(normalizePost).filter(Boolean);
+            const current = staticPostsSsg.find((p) => p.slug === slug);
+            if (current) renderRelatedPosts(staticPostsSsg, current);
+        } catch { /* sem relacionados — página segue íntegra */ }
+        return;
+    }
+
     const staticPosts = (await fetchStaticPosts()).map(normalizePost).filter(Boolean);
 
     const postMeta = staticPosts.find((p) => p.slug === slug);

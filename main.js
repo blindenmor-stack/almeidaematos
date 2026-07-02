@@ -24,8 +24,14 @@ if (!prefersReduced) {
 // ================================
 // 2. Preloader (1x por sessão)
 // ================================
+// sessionStorage pode lançar SecurityError (cookies bloqueados / webview
+// restrito) — nunca pode derrubar o módulo, senão o conteúdo fica invisível.
+const safeStorage = {
+    get(key) { try { return sessionStorage.getItem(key); } catch { return null; } },
+    set(key, val) { try { sessionStorage.setItem(key, val); } catch { /* sem storage: preloader roda de novo, sem quebrar */ } },
+};
 const preloader = document.getElementById('preloader');
-const seenPreloader = sessionStorage.getItem('am_preloader');
+const seenPreloader = safeStorage.get('am_preloader');
 
 function heroIntro() {
     if (prefersReduced) return;
@@ -38,7 +44,7 @@ function heroIntro() {
 function hidePreloader() {
     if (!preloader || preloader.dataset.done) return;
     preloader.dataset.done = '1';
-    sessionStorage.setItem('am_preloader', '1');
+    safeStorage.set('am_preloader', '1');
     if (prefersReduced) { preloader.remove(); return; }
     gsap.timeline()
         .to('.preloader__bar span', { width: '100%', duration: 0.4, ease: 'power1.inOut' })
@@ -166,7 +172,11 @@ document.querySelectorAll('.faq__item').forEach((item) => {
 // ================================
 const blogGrid = document.getElementById('blogPreviewGrid');
 if (blogGrid) {
-    const staticPosts = fetch('/blog/posts/posts-data.json').then((r) => r.json()).catch(() => []);
+    // posts-preview.json (12 posts, gerado no build) evita baixar os ~257KB
+    // do posts-data.json completo só pra montar 3 cards na home.
+    const staticPosts = fetch('/blog/posts/posts-preview.json')
+        .then((r) => (r.ok ? r.json() : Promise.reject(new Error('preview indisponível'))))
+        .catch(() => fetch('/blog/posts/posts-data.json').then((r) => r.json()).catch(() => []));
     const apiPosts = fetch('/api/blog/list?limit=3').then((r) => (r.ok ? r.json() : [])).catch(() => []);
 
     Promise.all([staticPosts, apiPosts]).then(([a, b]) => {

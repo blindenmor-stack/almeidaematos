@@ -9,6 +9,7 @@ import {
     RESPONSE_SCHEMA, TOPIC_RESPONSE_SCHEMA, CATEGORIES,
 } from './prompt.js';
 import { SLUG_RE, slugify, sanitizeHtml, countWords } from './util.js';
+import { LEGACY_SLUGS } from './legacy-slugs.js';
 
 const GEMINI_BASE = 'https://generativelanguage.googleapis.com/v1beta/models';
 const MIN_WORDS = 600;
@@ -55,6 +56,11 @@ async function ensureUniqueSlug(slug) {
     // Busca slugs iguais ou com sufixo numérico em uma query só
     const rows = await sbFetch(`blog_posts?slug=like.${encodeURIComponent(base + '*')}&select=slug`);
     const taken = new Set((rows || []).map((r) => r.slug));
+    // Slugs dos 491 posts legados (SSG) também são indisponíveis: o arquivo
+    // estático teria precedência sobre o rewrite e o post novo nunca apareceria.
+    for (const s of LEGACY_SLUGS) {
+        if (s === base || s.startsWith(base + '-')) taken.add(s);
+    }
     if (!taken.has(base)) return base;
     for (let i = 2; i <= 50; i++) {
         const candidate = `${base}-${i}`;

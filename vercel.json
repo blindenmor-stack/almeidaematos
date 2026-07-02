@@ -20,7 +20,7 @@
   "rewrites": [
     { "source": "/sitemap.xml", "destination": "/api/blog/sitemap" },
     {
-      "source": "/:slug((?!blog|assets|img|api|admin|beneficios|_next|favicon|robots|sitemap|llms).*)",
+      "source": "/:slug((?!blog(?:/|$)|assets(?:/|$)|img(?:/|$)|api(?:/|$)|admin(?:/|$)|beneficios(?:/|$)|_next(?:/|$)|favicon|robots|sitemap|llms).*)",
       "destination": "/api/blog/post?slug=:slug"
     }
   ],

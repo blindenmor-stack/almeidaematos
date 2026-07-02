@@ -817,7 +817,7 @@ html:not(.js) .faq__answer { height: auto; opacity: 1; }
 .js [data-reveal],
 .js [data-reveal-title],
 .js [data-card] { opacity: 0; transform: translateY(36px); }
-.js [data-hero-line] > span { transform: translateY(112%); display: block; }
+.js [data-hero-line] { transform: translateY(112%); display: block; }
 .js [data-hero-fade] { opacity: 0; transform: translateY(24px); }
 .js [data-hero-visual] { opacity: 0; transform: translateY(40px) scale(0.97); }
 .js [data-clip-reveal] { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
@@ -866,7 +866,7 @@ html:not(.js) .faq__answer { height: auto; opacity: 1; }
   }
   .js [data-reveal], .js [data-reveal-title], .js [data-card],
   .js [data-hero-fade], .js [data-hero-visual] { opacity: 1; transform: none; }
-  .js [data-hero-line] > span { transform: none; }
+  .js [data-hero-line] { transform: none; }
   .js [data-clip-reveal] { clip-path: none; }
   .js [data-rule] { transform: none; }
   .marquee__track, .team-marquee__track { animation: none; }

@@ -32,10 +32,12 @@ export function initAnimations({ prefersReduced, isTouch } = {}) {
 function revealEverything() {
     document.querySelectorAll('[data-reveal], [data-reveal-title], [data-card], [data-hero-fade], [data-hero-visual]')
         .forEach((el) => { el.style.opacity = 1; el.style.transform = 'none'; });
-    document.querySelectorAll('[data-hero-line] > span, .hero__line > span')
+    document.querySelectorAll('[data-hero-line], .hero__line > span')
         .forEach((el) => { el.style.transform = 'none'; });
     document.querySelectorAll('[data-clip-reveal]').forEach((el) => { el.style.clipPath = 'none'; });
     document.querySelectorAll('[data-rule]').forEach((el) => { el.style.transform = 'none'; });
+    // contadores não podem ficar travados no "0" inicial
+    document.querySelectorAll('[data-counter]').forEach(setCounterFinal);
 }
 
 function initAnimationsInner({ prefersReduced, isTouch } = {}) {

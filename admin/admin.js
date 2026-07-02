@@ -58,7 +58,7 @@
             method,
             headers: {
                 'Content-Type': 'application/json',
-                'x-admin-password': sessionStorage.getItem(STORAGE_KEY) || '',
+                'x-admin-password': encodeURIComponent(sessionStorage.getItem(STORAGE_KEY) || ''),
             },
             body: body ? JSON.stringify(body) : undefined,
         });

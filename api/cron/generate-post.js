@@ -65,6 +65,20 @@ export default async function handler(req, res) {
             return skip(res, `Post do dia já foi gerado (${sp.ymd})`);
         }
 
+        // 3b. Limite semanal (posts_per_week) — conta gerações de sucesso do
+        //     cron desde a segunda-feira da semana corrente (00:00 BRT).
+        const postsPerWeek = Number(settings.posts_per_week) || 3;
+        const daysSinceMonday = (sp.weekday + 6) % 7; // seg=0 ... dom=6
+        const monday = new Date(`${sp.ymd}T00:00:00-03:00`);
+        monday.setUTCDate(monday.getUTCDate() - daysSinceMonday);
+        const mondayYmd = monday.toISOString().slice(0, 10);
+        const weekRuns = await sbFetch(
+            `blog_generation_log?trigger_source=eq.cron&status=eq.success&run_at=gte.${encodeURIComponent(`${mondayYmd}T00:00:00-03:00`)}&select=id&limit=20`
+        );
+        if (weekRuns && weekRuns.length >= postsPerWeek) {
+            return skip(res, `Limite semanal atingido (${weekRuns.length}/${postsPerWeek} posts desde ${mondayYmd})`);
+        }
+
         // 4-7. Gera (pauta → Gemini → valida → insere → marca pauta → loga)
         const { post, topic, words } = await generatePost({ triggerSource: 'cron' });
 

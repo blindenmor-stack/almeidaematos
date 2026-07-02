@@ -63,6 +63,13 @@ export default async function handler(req, res) {
 
         // 2. Posts legados (SSG) — do posts-data.json no filesystem
         const legacy = readLegacyPosts();
+        if (!legacy.length) {
+            // Sem os 491 legados o sitemap estaria "válido porém mutilado" e o
+            // Google aceitaria a versão vazia. 500 força o crawler a manter a
+            // última versão boa em cache até o problema (includeFiles) ser visto.
+            console.error('sitemap: posts legados não encontrados no bundle — abortando com 500');
+            return res.status(500).send('sitemap indisponível');
+        }
         const legacySlugs = new Set();
         for (const p of legacy) {
             if (!p.slug) continue;

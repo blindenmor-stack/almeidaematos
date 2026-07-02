@@ -41,9 +41,11 @@ function escapeHtml(str) {
 }
 
 // Replace com validação: se o marcador não existir no template, lança erro.
+// O replacement vai via função para o JS não interpretar padrões especiais
+// ($&, $$, $`) presentes no conteúdo dos posts (ex: "R$&nbsp;1.200").
 function replaceOnce(html, regex, replacement, label) {
     if (!regex.test(html)) throw new Error(`Marcador não encontrado no template: ${label}`);
-    return html.replace(regex, replacement);
+    return html.replace(regex, () => replacement);
 }
 
 // Mesmo shape do metaHTML() do blog.js — mantém SSG e client-side idênticos
@@ -144,7 +146,7 @@ for (const postMeta of postsData) {
         // Conteúdo (troca o skeleton pelo HTML real; delimitado por <!-- /post-content -->)
         html = replaceOnce(html,
             /<div id="post-content"[\s\S]*?<!-- \/post-content -->/,
-            `<div id="post-content" class="prose post-body">\n${post.content}\n                    </div>\n                    <!-- /post-content -->`,
+            `<div id="post-content" class="prose post-body" data-ssg="1">\n${post.content}\n                    </div>\n                    <!-- /post-content -->`,
             'div#post-content'
         );
 
@@ -186,6 +188,24 @@ for (const postMeta of postsData) {
 }
 
 console.log(`SSG: ${generated} posts gerados, ${errors} erros`);
+if (errors > 0) {
+    // Falha o build (deploy não sai) — perder páginas legadas silenciosamente
+    // seria desindexação em massa do principal ativo de SEO.
+    console.error(`SSG FALHOU: ${errors} post(s) com erro — build abortado para proteger as URLs legadas.`);
+    process.exitCode = 1;
+}
+
+// posts-preview.json — os 12 mais recentes (a home busca este arquivo em vez
+// dos ~257KB do posts-data.json completo)
+try {
+    const preview = [...postsData]
+        .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')))
+        .slice(0, 12);
+    writeFileSync(join(DIST, 'blog', 'posts', 'posts-preview.json'), JSON.stringify(preview), 'utf-8');
+    console.log('posts-preview.json gerado (12 posts)');
+} catch (e) {
+    console.warn('posts-preview.json não gerado:', e.message);
+}
 
 // ============================================================
 // llms.txt (llmstxt.org) — páginas principais + posts recentes
