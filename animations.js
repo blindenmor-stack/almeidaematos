@@ -55,6 +55,10 @@ function initAnimationsInner({ prefersReduced, isTouch } = {}) {
         document.querySelectorAll('[data-counter]').forEach(setCounterFinal);
         const steps = document.getElementById('stepsPath');
         if (steps) steps.style.strokeDashoffset = 0;
+        const ppath = document.getElementById('processPath');
+        if (ppath) ppath.style.strokeDashoffset = 0;
+        document.querySelectorAll('[data-process-step]').forEach((s) => s.classList.add('is-active'));
+        document.querySelectorAll('[data-draw] path').forEach((p) => { p.style.strokeDashoffset = 0; });
         return;
     }
 
@@ -152,6 +156,43 @@ function initAnimationsInner({ prefersReduced, isTouch } = {}) {
             },
         });
     }
+
+    // ---- Timeline do processo: linha completa e etapas acendem no scroll ----
+    const processPath = document.getElementById('processPath');
+    if (processPath) {
+        const track = processPath.closest('.process__track');
+        const plen = processPath.getTotalLength();
+        processPath.style.strokeDasharray = plen;
+        processPath.style.strokeDashoffset = plen;
+        gsap.to(processPath, {
+            strokeDashoffset: 0, ease: 'none',
+            scrollTrigger: { trigger: track, start: 'top 62%', end: 'bottom 68%', scrub: 0.5 },
+        });
+        document.querySelectorAll('[data-process-step]').forEach((step) => {
+            ScrollTrigger.create({
+                trigger: step, start: 'top 66%',
+                onEnter: () => step.classList.add('is-active'),
+                onLeaveBack: () => step.classList.remove('is-active'),
+            });
+        });
+    }
+
+    // ---- Símbolo A&M se montando no scroll (data-draw) ----
+    document.querySelectorAll('[data-draw]').forEach((svg) => {
+        const paths = svg.querySelectorAll('path');
+        paths.forEach((p) => {
+            const l = p.getTotalLength();
+            p.style.strokeDasharray = l;
+            p.style.strokeDashoffset = l;
+        });
+        gsap.to(paths, {
+            strokeDashoffset: 0, ease: 'none', stagger: 0.12,
+            scrollTrigger: {
+                trigger: svg.closest('section') || svg,
+                start: 'top 82%', end: 'bottom 95%', scrub: 0.6,
+            },
+        });
+    });
 
     // ---- Botões magnéticos (desktop apenas) ----
     if (!isTouch) {

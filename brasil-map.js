@@ -50,6 +50,19 @@ const SP = { name: 'São Paulo', lat: -23.55, lon: -46.63 };
 // Bounds geográficos
 const LAT_MAX = 5.6, LAT_MIN = -34.2, LON_MIN = -74.2, LON_MAX = -34.4;
 
+// roundRect tem suporte recente (Safari 16+) — fallback manual evita
+// quebrar o loop de render inteiro em navegadores mais antigos.
+function rrect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    if (ctx.roundRect) { ctx.roundRect(x, y, w, h, r); return; }
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+}
+
 const GOLD = '#D2AE6D';
 const GOLD_SOFT = 'rgba(210, 174, 109, 0.85)';
 const DOT = 'rgba(151, 163, 204, 0.4)';
@@ -69,6 +82,8 @@ export function initBrasilMap({ prefersReduced } = {}) {
     let lastLaunch = 0;
     let queue = [];         // fila embaralhada de capitais
     let running = false;
+    let capPts = [];        // posições projetadas das capitais (interação)
+    const mouse = { x: -9999, y: -9999, active: false };
 
     // ---- Geometria ----
     function buildProjection() {
@@ -127,6 +142,7 @@ export function initBrasilMap({ prefersReduced } = {}) {
         ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
         buildProjection();
         buildDots();
+        capPts = CAPITAIS.map((c) => ({ name: c[0], ...project(c[1], c[2]) }));
         if (prefersReduced) drawStatic();
     }
 
@@ -167,16 +183,47 @@ export function initBrasilMap({ prefersReduced } = {}) {
     // ---- Desenho ----
     function drawBase(now) {
         ctx.clearRect(0, 0, W, H);
-        // dots do mapa (twinkle sutil)
+        const R_HOVER = 95;
+        // dots do mapa (twinkle sutil + brilho dourado perto do cursor)
         for (const d of dots) {
             const tw = 0.75 + 0.25 * Math.sin(now / 1400 + d.tw);
-            ctx.globalAlpha = tw;
-            ctx.fillStyle = d.gold ? GOLD_SOFT : (d.r > 1.5 ? DOT_BRIGHT : DOT);
-            ctx.beginPath();
-            ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
-            ctx.fill();
+            let near = 0;
+            if (mouse.active) {
+                const dist = Math.hypot(d.x - mouse.x, d.y - mouse.y);
+                if (dist < R_HOVER) near = 1 - dist / R_HOVER;
+            }
+            ctx.globalAlpha = Math.min(1, tw + near * 0.6);
+            if (near > 0.08) {
+                ctx.fillStyle = `rgba(210, 174, 109, ${0.35 + near * 0.65})`;
+                ctx.beginPath();
+                ctx.arc(d.x, d.y, d.r + near * 1.6, 0, Math.PI * 2);
+                ctx.fill();
+            } else {
+                ctx.fillStyle = d.gold ? GOLD_SOFT : (d.r > 1.5 ? DOT_BRIGHT : DOT);
+                ctx.beginPath();
+                ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+                ctx.fill();
+            }
         }
         ctx.globalAlpha = 1;
+
+        // capitais: marcador sutil sempre; badge quando o cursor se aproxima
+        let hoverCap = null, hoverDist = 64;
+        for (const c of capPts) {
+            ctx.fillStyle = 'rgba(210, 174, 109, 0.5)';
+            ctx.beginPath(); ctx.arc(c.x, c.y, 1.8, 0, Math.PI * 2); ctx.fill();
+            if (mouse.active) {
+                const dist = Math.hypot(c.x - mouse.x, c.y - mouse.y);
+                if (dist < hoverDist) { hoverDist = dist; hoverCap = c; }
+            }
+        }
+        if (hoverCap) {
+            ctx.fillStyle = GOLD;
+            ctx.shadowColor = GOLD; ctx.shadowBlur = 12;
+            ctx.beginPath(); ctx.arc(hoverCap.x, hoverCap.y, 3.4, 0, Math.PI * 2); ctx.fill();
+            ctx.shadowBlur = 0;
+            drawBadge(hoverCap.x, hoverCap.y, hoverCap.name, 1);
+        }
 
         // origem: São Paulo (pulso)
         const sp = project(SP.lat, SP.lon);
@@ -216,8 +263,7 @@ export function initBrasilMap({ prefersReduced } = {}) {
         ctx.fillStyle = 'rgba(13, 18, 38, 0.88)';
         ctx.strokeStyle = 'rgba(210, 174, 109, 0.45)';
         ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.roundRect(bx, by, wTxt + padX * 2, h, 5);
+        rrect(ctx, bx, by, wTxt + padX * 2, h, 5);
         ctx.fill(); ctx.stroke();
         // triângulo da marca no badge
         ctx.fillStyle = GOLD;
@@ -288,7 +334,20 @@ export function initBrasilMap({ prefersReduced } = {}) {
         }
     }
 
+    // ---- Interação de mouse (desktop) ----
+    canvas.addEventListener('mousemove', (e) => {
+        const r = canvas.getBoundingClientRect();
+        mouse.x = (e.clientX - r.left) * (W / r.width);
+        mouse.y = (e.clientY - r.top) * (H / r.height);
+        mouse.active = true;
+    }, { passive: true });
+    canvas.addEventListener('mouseleave', () => { mouse.active = false; });
+
     // ---- Ciclo de vida ----
+    if (!wrap.clientWidth) {
+        // container ainda sem largura (fonte/layout pendente) — tenta no próximo frame
+        requestAnimationFrame(() => requestAnimationFrame(resize));
+    }
     resize();
     let resizeTimer;
     window.addEventListener('resize', () => {

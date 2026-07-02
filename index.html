@@ -317,27 +317,27 @@
                     <article class="card card--dark" data-card>
                         <span class="card__num">01</span>
                         <h3>INSS</h3>
-                        <p>Benefício mensal do governo. Mesmo trabalhando. Até se aposentar.</p>
+                        <p>Um benefício por mês, direto na conta. Mesmo trabalhando.</p>
                     </article>
                     <article class="card card--dark" data-card>
                         <span class="card__num">02</span>
                         <h3>Indenização</h3>
-                        <p>Quem causou o acidente paga pelos seus danos.</p>
+                        <p>Quem causou, paga. Pelos danos, pelos gastos, pelo que você deixou de ganhar.</p>
                     </article>
                     <article class="card card--dark" data-card>
                         <span class="card__num">03</span>
-                        <h3>Seguro</h3>
-                        <p>Você já paga seguros e nem sabe. Cartão de crédito, conta de banco — nós descobrimos.</p>
+                        <h3>Seguros escondidos</h3>
+                        <p>Cartão, conta, empresa. Você paga seguros que nunca usou — nós encontramos.</p>
                     </article>
                     <article class="card card--dark" data-card>
                         <span class="card__num">04</span>
                         <h3>Seguro de Vida</h3>
-                        <p>Seguradoras negam pagamento? Nós cobramos pra você.</p>
+                        <p>A seguradora negou? A gente cobra.</p>
                     </article>
                     <article class="card card--dark" data-card>
                         <span class="card__num">05</span>
                         <h3>Direitos Trabalhistas</h3>
-                        <p>Indenização, estabilidade e reintegração após acidente de trabalho.</p>
+                        <p>Estabilidade, reintegração e indenização depois do acidente.</p>
                     </article>
                     <article class="card card--dark" data-card style="display:flex; flex-direction:column; justify-content:center; background:rgba(210,174,109,0.1)">
                         <h3 style="color:var(--color-gold-300)">Quantos são seus?</h3>
@@ -463,49 +463,83 @@
         </section>
 
         <!-- ============================== -->
-        <!-- 07 · COMO FUNCIONA -->
+        <!-- 07 · COMO FUNCIONA (timeline interativa) -->
         <!-- ============================== -->
         <section class="section section--dark cut-t-l" id="como-funciona">
             <div class="container">
-                <div class="section-head section-head--center">
-                    <p class="eyebrow eyebrow--center" data-reveal style="color:var(--color-gold-300)">Simples assim</p>
-                    <h2 class="display" data-reveal-title style="color:#fff">Simples <span class="gold-word">do primeiro ao último passo.</span></h2>
-                </div>
+                <div class="process">
+                    <div class="process__intro">
+                        <p class="eyebrow" data-reveal style="color:var(--color-gold-300)">Como funciona</p>
+                        <h2 class="display" data-reveal-title style="color:#fff">Do primeiro oi <span class="gold-word">ao resultado.</span></h2>
+                        <p class="lead" data-reveal>Uma equipe dedicada acompanha o seu caso do começo ao fim — e você recebe cada atualização sem precisar pedir.</p>
+                        <p data-reveal style="margin-top:1.8rem">
+                            <a class="btn btn--whatsapp" data-magnetic
+                               href="https://wa.me/5511930044411?text=Ol%C3%A1!%20Vi%20o%20escrit%C3%B3rio%20pelo%20site%20e%20gostaria%20de%20saber%20sobre%20meus%20direitos.%20Podem%20me%20ajudar%3F"
+                               target="_blank" rel="noopener">Começar a conversa</a>
+                        </p>
+                        <p class="btn-note" data-reveal>Análise gratuita. Você só paga se receber.</p>
+                    </div>
 
-                <div class="steps">
-                    <svg class="steps__line" viewBox="0 0 1200 70" preserveAspectRatio="none" aria-hidden="true">
-                        <path id="stepsPath" d="M0 55 L210 18 L470 55 L730 18 L990 55 L1200 30" />
-                    </svg>
-                    <div class="steps__grid">
-                        <article class="card card--dark" data-card>
-                            <span class="card__num">1</span>
-                            <h3>Conversa</h3>
-                            <p>Você conta o que aconteceu. Pelo WhatsApp mesmo.</p>
-                        </article>
-                        <article class="card card--dark" data-card>
-                            <span class="card__num">2</span>
-                            <h3>Análise</h3>
-                            <p>Verificamos cada direito que o caso gera. De graça.</p>
-                        </article>
-                        <article class="card card--dark" data-card>
-                            <span class="card__num">3</span>
-                            <h3>Ação</h3>
-                            <p>Cuidamos de documentos, INSS e Justiça por você.</p>
-                        </article>
-                        <article class="card card--dark" data-card>
-                            <span class="card__num">4</span>
-                            <h3>Resultado</h3>
-                            <p>Você recebe o que é seu. Só então nós recebemos também.</p>
-                        </article>
+                    <div class="process__track">
+                        <svg class="process__line" aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 2 100">
+                            <path class="process__line-bg" d="M1 0 L1 100" />
+                            <path class="process__line-fill" id="processPath" d="M1 0 L1 100" />
+                        </svg>
+                        <ol class="process__steps">
+                            <li class="process__step" data-process-step>
+                                <span class="process__dot" aria-hidden="true"></span>
+                                <h3><em>01</em> Conversa</h3>
+                                <p>Você conta o que aconteceu. Pelo WhatsApp mesmo.</p>
+                                <div class="process__ping">
+                                    <span class="process__ping-avatar" aria-hidden="true"><svg viewBox="0 0 220 170" fill="currentColor"><use href="#am-mark"/></svg></span>
+                                    <span class="process__ping-body"><strong>Equipe A&M</strong>Recebemos sua mensagem. Já estamos analisando o seu caso.</span>
+                                    <time>agora</time>
+                                </div>
+                            </li>
+                            <li class="process__step" data-process-step>
+                                <span class="process__dot" aria-hidden="true"></span>
+                                <h3><em>02</em> Análise gratuita</h3>
+                                <p>Verificamos cada direito que o seu caso gera, nas três esferas.</p>
+                                <div class="process__ping">
+                                    <span class="process__ping-avatar" aria-hidden="true"><svg viewBox="0 0 220 170" fill="currentColor"><use href="#am-mark"/></svg></span>
+                                    <span class="process__ping-body"><strong>Equipe A&M</strong>Boa notícia: identificamos possíveis direitos no seu caso ✓</span>
+                                    <time>dia 2</time>
+                                </div>
+                            </li>
+                            <li class="process__step" data-process-step>
+                                <span class="process__dot" aria-hidden="true"></span>
+                                <h3><em>03</em> Documentação</h3>
+                                <p>Nossa equipe reúne e organiza as provas por você — hospital, empresa e INSS.</p>
+                                <div class="process__ping">
+                                    <span class="process__ping-avatar" aria-hidden="true"><svg viewBox="0 0 220 170" fill="currentColor"><use href="#am-mark"/></svg></span>
+                                    <span class="process__ping-body"><strong>Equipe A&M</strong>Documentos completos. Sua pasta passou pela nossa auditoria ✓</span>
+                                    <time>semana 2</time>
+                                </div>
+                            </li>
+                            <li class="process__step" data-process-step>
+                                <span class="process__dot" aria-hidden="true"></span>
+                                <h3><em>04</em> Ação</h3>
+                                <p>Protocolamos o pedido tecnicamente fundamentado — e brigamos por ele.</p>
+                                <div class="process__ping">
+                                    <span class="process__ping-avatar" aria-hidden="true"><svg viewBox="0 0 220 170" fill="currentColor"><use href="#am-mark"/></svg></span>
+                                    <span class="process__ping-body"><strong>Equipe A&M</strong>Seu pedido foi protocolado. Te avisamos a cada movimentação.</span>
+                                    <time>semana 3</time>
+                                </div>
+                            </li>
+                            <li class="process__step process__step--final" data-process-step>
+                                <span class="process__dot" aria-hidden="true"></span>
+                                <h3><em>05</em> Resultado</h3>
+                                <p>Você recebe o que é seu. Só então nós recebemos também.</p>
+                                <div class="process__ping process__ping--gold">
+                                    <span class="process__ping-avatar" aria-hidden="true"><svg viewBox="0 0 220 170" fill="currentColor"><use href="#am-mark"/></svg></span>
+                                    <span class="process__ping-body"><strong>Equipe A&M</strong>Saiu o resultado — pode conferir na sua conta 🎉</span>
+                                    <time>êxito</time>
+                                </div>
+                            </li>
+                        </ol>
+                        <p class="process__note">Ilustração do acompanhamento feito pelo nosso time. Cada caso tem seu ritmo — e, se o INSS negar, seguimos na Justiça.</p>
                     </div>
                 </div>
-
-                <p style="text-align:center; margin-top:2.6rem" data-reveal>
-                    <a class="btn btn--whatsapp" data-magnetic
-                       href="https://wa.me/5511930044411?text=Ol%C3%A1!%20Vi%20o%20escrit%C3%B3rio%20pelo%20site%20e%20gostaria%20de%20saber%20sobre%20meus%20direitos.%20Podem%20me%20ajudar%3F"
-                       target="_blank" rel="noopener">Começar a conversa</a>
-                </p>
-                <p class="btn-note" style="text-align:center" data-reveal>Você só paga se ganhar. Honorários de êxito.</p>
             </div>
         </section>
 
@@ -744,8 +778,10 @@
         <!-- 12 · CTA FINAL -->
         <!-- ============================== -->
         <section class="section cta-final cut-t" id="contato">
-            <svg class="watermark" style="left:50%; transform:translateX(-50%); bottom:-18%" data-parallax="0.15" aria-hidden="true" fill="none" stroke="#D2AE6D" stroke-width="1">
-                <use href="#am-mark" />
+            <svg class="watermark watermark--draw" style="left:50%; transform:translateX(-50%); bottom:-18%; opacity:0.14" data-draw viewBox="0 0 220 170" aria-hidden="true" fill="none" stroke="#D2AE6D" stroke-width="1.5">
+                <path d="M85 4 L166 166 H4 Z" />
+                <path d="M85 44 L146 166 H118 L85 100 L52 166 H24 Z" />
+                <path d="M156 66 L216 166 H100 Z" />
             </svg>
             <div class="container">
                 <h2 class="display" data-reveal-title>Você já pagou por esse direito.<br><span class="gold-word">Nós vamos ativá-lo.</span></h2>
