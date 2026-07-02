@@ -1,80 +1,119 @@
 // ================================
-// Blog System — Almeida & Matos
-// Handles listing (blog/index.html) and post rendering (blog-post.html)
+// Blog System — Almeida & Matos (v2)
+// Roda em: listagem (/blog/), post em dev e post não-SSG.
+// Nas páginas SSG o conteúdo já vem no HTML; este script re-hidrata
+// meta/related sem quebrar nada.
 // ================================
 
-const POSTS_PER_PAGE = 10;
+const POSTS_PER_PAGE = 12;
 const SITE_URL = 'https://almeidaematos.com.br';
 
 // ================================
 // Utilities
 // ================================
+function esc(s) {
+    return String(s ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+}
+
 function formatDate(dateStr) {
-    const date = new Date(dateStr + 'T12:00:00');
-    return date.toLocaleDateString('pt-BR', {
-        day: '2-digit',
-        month: 'long',
-        year: 'numeric',
-    });
+    if (!dateStr) return '';
+    try {
+        const date = new Date(String(dateStr).slice(0, 10) + 'T12:00:00');
+        return date.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+    } catch { return dateStr; }
+}
+
+function formatDateShort(dateStr) {
+    if (!dateStr) return '';
+    try {
+        const date = new Date(String(dateStr).slice(0, 10) + 'T12:00:00');
+        return date.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
+    } catch { return dateStr; }
+}
+
+function slugify(str) {
+    return String(str ?? '')
+        .toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '') || 'geral';
 }
 
 function getSlugFromURL() {
     const path = window.location.pathname;
-    // Remove trailing slash and get last segment
     const segments = path.replace(/\/$/, '').split('/');
     return segments[segments.length - 1];
 }
 
-function isListingPage() {
-    const path = window.location.pathname;
-    return path.includes('/blog') && !document.getElementById('post-content');
-}
-
 function isPostPage() {
-    return !!document.getElementById('post-content');
+    return !!document.getElementById('post-content') && !document.getElementById('posts-grid');
+}
+
+function normalizePost(p) {
+    if (!p || !p.slug) return null;
+    const post = { ...p };
+    if (!post.category) post.category = 'Direitos';
+    if (!post.categorySlug) post.categorySlug = slugify(post.category);
+    if (!post.author) post.author = 'Equipe Almeida & Matos';
+    if (!post.readTime) {
+        const wordCount = String(post.content || post.excerpt || '').replace(/<[^>]+>/g, '').split(/\s+/).length;
+        post.readTime = Math.max(1, Math.ceil(wordCount / 200)) + ' min';
+    }
+    return post;
 }
 
 // ================================
-// Fetch posts data
+// Fetch de posts
 // ================================
-async function fetchPosts() {
+async function fetchStaticPosts() {
     try {
-        // Use absolute paths to avoid issues with slug-based URLs
-        const basePath = isPostPage() ? '/blog/posts/posts-data.json' : './posts/posts-data.json';
-        const response = await fetch(basePath);
+        const response = await fetch('/blog/posts/posts-data.json');
         if (!response.ok) throw new Error('Failed to fetch posts');
-        return await response.json();
+        const data = await response.json();
+        return Array.isArray(data) ? data : [];
     } catch (error) {
         console.error('Error fetching posts:', error);
         return [];
     }
 }
 
+// Posts novos (gerados por IA via admin/API) — pode nem existir ainda.
+async function fetchApiPosts() {
+    try {
+        const response = await fetch('/api/blog/list?limit=100');
+        if (!response.ok) return [];
+        const data = await response.json();
+        if (Array.isArray(data)) return data;
+        if (data && Array.isArray(data.posts)) return data.posts;
+        return [];
+    } catch {
+        return [];
+    }
+}
+
+// Merge por slug — API ganha do estático; ordena por data desc
+function mergePosts(staticPosts, apiPosts) {
+    const seen = new Set();
+    return [...apiPosts, ...staticPosts]
+        .map(normalizePost)
+        .filter((p) => p && !seen.has(p.slug) && seen.add(p.slug))
+        .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
+}
+
 // ================================
-// LISTING PAGE
+// LISTAGEM
 // ================================
 function renderPostCard(post) {
     return `
-        <a href="/${post.slug}/" class="blog-card" data-category="${post.categorySlug}">
-            <div class="blog-card-body">
-                <span class="blog-card-category">${post.category}</span>
-                <h2 class="blog-card-title">${post.title}</h2>
-                <p class="blog-card-excerpt">${post.excerpt}</p>
-                <div class="blog-card-meta">
-                    <span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                        ${formatDate(post.date)}
-                    </span>
-                    <span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        ${post.readTime}
-                    </span>
-                </div>
-            </div>
+        <a href="/${esc(post.slug)}/" class="card post-card" data-category="${esc(post.categorySlug)}">
+            <span class="post-card__tag">${esc(post.category)}</span>
+            <h3>${esc(post.title)}</h3>
+            <p class="post-card__excerpt">${esc(post.excerpt || '')}</p>
+            <span class="post-card__meta">${formatDateShort(post.date)} · ${esc(post.readTime)} de leitura</span>
         </a>
     `;
 }
@@ -83,38 +122,33 @@ function renderCategoryFilter(posts) {
     const filterContainer = document.getElementById('category-filter');
     if (!filterContainer) return;
 
-    // Extract unique categories (dedup by slug)
     const seen = new Set();
     const categories = [];
-    posts.forEach(p => {
+    posts.forEach((p) => {
         if (!seen.has(p.categorySlug)) {
             seen.add(p.categorySlug);
             categories.push({ name: p.category, slug: p.categorySlug });
         }
     });
 
-    // Sort alphabetically, put Uncategorized last
     categories.sort((a, b) => {
         if (a.slug === 'uncategorized') return 1;
         if (b.slug === 'uncategorized') return -1;
         return a.name.localeCompare(b.name, 'pt-BR');
     });
 
-    // Render as a select dropdown (more compact)
-    let html = `
+    filterContainer.innerHTML = `
+        <label for="category-select">Filtrar por tema</label>
         <select id="category-select" class="category-select">
             <option value="all">Todas as categorias</option>
-            ${categories.map(cat => `<option value="${cat.slug}">${cat.name}</option>`).join('')}
+            ${categories.map((cat) => `<option value="${esc(cat.slug)}">${esc(cat.name)}</option>`).join('')}
         </select>
     `;
 
-    filterContainer.innerHTML = html;
-
-    // Attach event
     document.getElementById('category-select').addEventListener('change', (e) => {
         window._blogCurrentCategory = e.target.value;
         window._blogCurrentPage = 1;
-        renderPostsPage(posts);
+        renderPostsPage(window._blogAllPosts);
     });
 }
 
@@ -130,44 +164,38 @@ function renderPagination(totalPosts, currentPage) {
 
     let html = '';
 
-    // Previous button
-    html += `<button class="pagination-btn" ${currentPage === 1 ? 'disabled' : ''} data-page="${currentPage - 1}">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    html += `<button class="pagination-btn" ${currentPage === 1 ? 'disabled' : ''} data-page="${currentPage - 1}" aria-label="Página anterior">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
     </button>`;
 
-    // Page numbers
     for (let i = 1; i <= totalPages; i++) {
         if (totalPages > 7) {
-            // Show first, last, and pages around current
             if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
                 html += `<button class="pagination-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
             } else if (i === currentPage - 2 || i === currentPage + 2) {
-                html += `<span class="text-navy-400 px-1">...</span>`;
+                html += `<span class="pagination-ellipsis">…</span>`;
             }
         } else {
             html += `<button class="pagination-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
         }
     }
 
-    // Next button
-    html += `<button class="pagination-btn" ${currentPage === totalPages ? 'disabled' : ''} data-page="${currentPage + 1}">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    html += `<button class="pagination-btn" ${currentPage === totalPages ? 'disabled' : ''} data-page="${currentPage + 1}" aria-label="Próxima página">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
         </svg>
     </button>`;
 
     paginationContainer.innerHTML = html;
 
-    // Attach events
-    paginationContainer.querySelectorAll('.pagination-btn:not([disabled])').forEach(btn => {
+    paginationContainer.querySelectorAll('.pagination-btn:not([disabled])').forEach((btn) => {
         btn.addEventListener('click', () => {
             const page = parseInt(btn.dataset.page);
             if (page && page > 0) {
                 window._blogCurrentPage = page;
                 renderPostsPage(window._blogAllPosts);
-                // Scroll to top of posts
                 document.getElementById('category-filter')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
@@ -182,10 +210,9 @@ function renderPostsPage(posts) {
     const category = window._blogCurrentCategory || 'all';
     const currentPage = window._blogCurrentPage || 1;
 
-    // Filter by category
     const filtered = category === 'all'
         ? posts
-        : posts.filter(p => p.categorySlug === category);
+        : posts.filter((p) => p.categorySlug === category);
 
     if (filtered.length === 0) {
         grid.innerHTML = '';
@@ -196,7 +223,6 @@ function renderPostsPage(posts) {
 
     noResults?.classList.add('hidden');
 
-    // Paginate
     const start = (currentPage - 1) * POSTS_PER_PAGE;
     const paginated = filtered.slice(start, start + POSTS_PER_PAGE);
 
@@ -205,11 +231,15 @@ function renderPostsPage(posts) {
 }
 
 async function initListingPage() {
-    const posts = await fetchPosts();
-    if (!posts.length) return;
+    const [staticPosts, apiPosts] = await Promise.all([fetchStaticPosts(), fetchApiPosts()]);
+    const posts = mergePosts(staticPosts, apiPosts);
 
-    // Sort by date (newest first)
-    posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+    const grid = document.getElementById('posts-grid');
+    if (!posts.length) {
+        if (grid) grid.innerHTML = '';
+        document.getElementById('no-results')?.classList.remove('hidden');
+        return;
+    }
 
     window._blogAllPosts = posts;
     window._blogCurrentCategory = 'all';
@@ -220,96 +250,102 @@ async function initListingPage() {
 }
 
 // ================================
-// POST PAGE
+// POST
 // ================================
+function metaHTML(post) {
+    const parts = [`Publicado em ${formatDate(post.date)}`];
+    const modified = post.modified || post.dateModified || post.updated;
+    if (modified && String(modified).slice(0, 10) !== String(post.date).slice(0, 10)) {
+        parts.push(`Atualizado em ${formatDate(modified)}`);
+    }
+    parts.push(`${esc(post.readTime)} de leitura`);
+    parts.push(esc(post.author));
+    return parts.map((t) => `<span>${t}</span>`).join('<i aria-hidden="true"></i>');
+}
+
 async function initPostPage() {
     const slug = getSlugFromURL();
-    const posts = await fetchPosts();
 
-    if (!posts.length) {
-        renderPostNotFound();
+    // Página SSG completa: o HTML já veio pronto do servidor. Nunca re-hidratar
+    // nem degradar para not-found (ex.: falha transitória do posts-data.json
+    // não pode injetar noindex numa página válida). Relacionados = best-effort.
+    const ssgContent = document.getElementById('post-content');
+    if (ssgContent && ssgContent.dataset.ssg) {
+        try {
+            const staticPostsSsg = (await fetchStaticPosts()).map(normalizePost).filter(Boolean);
+            const current = staticPostsSsg.find((p) => p.slug === slug);
+            if (current) renderRelatedPosts(staticPostsSsg, current);
+        } catch { /* sem relacionados — página segue íntegra */ }
         return;
     }
 
-    const postMeta = posts.find(p => p.slug === slug);
+    const staticPosts = (await fetchStaticPosts()).map(normalizePost).filter(Boolean);
+
+    const postMeta = staticPosts.find((p) => p.slug === slug);
+
     if (!postMeta) {
+        // Post pode ser novo (criado via admin/IA, ainda sem SSG). O rewrite
+        // server-side cuida de posts novos — recarrega UMA vez pra dar chance
+        // ao servidor; se voltar aqui, é 404 de verdade.
+        const isDevTemplate = /blog-post\.html$/i.test(window.location.pathname);
+        if (!isDevTemplate) {
+            try {
+                const retryKey = 'am_post_retry:' + slug;
+                if (!sessionStorage.getItem(retryKey)) {
+                    sessionStorage.setItem(retryKey, '1');
+                    window.location.replace(window.location.pathname + window.location.search);
+                    return;
+                }
+            } catch { /* sessionStorage indisponível — segue pro not found */ }
+        }
         renderPostNotFound();
         return;
     }
 
-    // Buscar conteúdo completo do post individual
+    // Conteúdo completo do post
     let post = postMeta;
     try {
-        const postPath = `/blog/posts/${slug}.json`;
-        const resp = await fetch(postPath);
+        const resp = await fetch(`/blog/posts/${slug}.json`);
         if (resp.ok) {
             const fullPost = await resp.json();
-            post = { ...postMeta, ...fullPost };
+            post = normalizePost({ ...postMeta, ...fullPost });
         }
-    } catch (e) {
+    } catch {
         console.warn('Could not fetch full post content, using metadata only');
     }
 
-    // Fallback: autor e readTime
-    if (!post.author) post.author = 'Equipe Almeida & Matos';
-    if (!post.readTime) {
-        const wordCount = (post.content || '').replace(/<[^>]+>/g, '').split(/\s+/).length;
-        post.readTime = Math.max(1, Math.ceil(wordCount / 200)) + ' min';
-    }
-
-    // Update page meta
-    document.getElementById('page-title').textContent = `${post.title} | Almeida & Matos Advogados`;
-    document.getElementById('page-description')?.setAttribute('content', post.excerpt);
+    // Meta da página
+    document.title = `${post.title} | Almeida & Matos Advogados`;
+    document.getElementById('page-description')?.setAttribute('content', post.excerpt || '');
     document.getElementById('page-canonical')?.setAttribute('href', `${SITE_URL}/${post.slug}/`);
     document.getElementById('og-title')?.setAttribute('content', post.title);
-    document.getElementById('og-description')?.setAttribute('content', post.excerpt);
+    document.getElementById('og-description')?.setAttribute('content', post.excerpt || '');
     document.getElementById('og-url')?.setAttribute('content', `${SITE_URL}/${post.slug}/`);
 
     // Breadcrumb
     const breadcrumbTitle = document.getElementById('breadcrumb-title');
     if (breadcrumbTitle) breadcrumbTitle.textContent = post.title;
 
-    // Category
+    // Categoria
     const categoryEl = document.getElementById('post-category');
     if (categoryEl) categoryEl.textContent = post.category;
 
-    // Title
+    // Título
     const titleEl = document.getElementById('post-title');
     if (titleEl) titleEl.textContent = post.title;
 
-    // Meta
+    // Meta (datas, leitura, autor)
     const metaEl = document.getElementById('post-meta');
-    if (metaEl) {
-        metaEl.innerHTML = `
-            <div class="post-meta-item">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                ${formatDate(post.date)}
-            </div>
-            <div class="post-meta-item">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                ${post.readTime} de leitura
-            </div>
-            <div class="post-meta-item">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-                ${post.author}
-            </div>
-        `;
-    }
+    if (metaEl) metaEl.innerHTML = metaHTML(post);
 
-    // Content
+    // Conteúdo
     const contentEl = document.getElementById('post-content');
-    if (contentEl) contentEl.innerHTML = post.content;
+    if (contentEl && post.content) contentEl.innerHTML = post.content;
 
-    // Related posts
-    renderRelatedPosts(posts, post);
+    // Relacionados
+    renderRelatedPosts(staticPosts, post);
 
-    // Schema.org structured data
+    // Schema.org (Article)
     injectStructuredData(post);
 }
 
@@ -318,15 +354,13 @@ function renderRelatedPosts(posts, currentPost) {
     const list = document.getElementById('related-posts-list');
     if (!container || !list) return;
 
-    // Find related by same category, excluding current
     let related = posts
-        .filter(p => p.id !== currentPost.id && p.categorySlug === currentPost.categorySlug)
+        .filter((p) => p.slug !== currentPost.slug && p.categorySlug === currentPost.categorySlug)
         .slice(0, 3);
 
-    // If not enough, fill with recent posts
     if (related.length < 3) {
         const more = posts
-            .filter(p => p.id !== currentPost.id && !related.find(r => r.id === p.id))
+            .filter((p) => p.slug !== currentPost.slug && !related.find((r) => r.slug === p.slug))
             .slice(0, 3 - related.length);
         related = [...related, ...more];
     }
@@ -334,18 +368,11 @@ function renderRelatedPosts(posts, currentPost) {
     if (related.length === 0) return;
 
     container.classList.remove('hidden');
-
-    list.innerHTML = related.map(post => `
-        <a href="/${post.slug}/" class="block p-3 rounded-lg border border-navy-100 hover:border-gold-400/30 transition-all hover:bg-white/50">
-            <span class="text-xs text-gold-600 font-semibold uppercase">${post.category}</span>
-            <h4 class="text-sm font-semibold text-navy-950 mt-1 leading-snug">${post.title}</h4>
-            <span class="text-xs text-navy-400 mt-1 block">${formatDate(post.date)}</span>
-        </a>
-    `).join('');
+    list.innerHTML = related.map(renderPostCard).join('');
 }
 
 function renderPostNotFound() {
-    // Sinalizar ao Google que esta página não deve ser indexada (evita soft 404)
+    // Sinaliza ao Google que esta página não deve ser indexada (evita soft 404)
     const noindex = document.createElement('meta');
     noindex.name = 'robots';
     noindex.content = 'noindex, nofollow';
@@ -354,47 +381,50 @@ function renderPostNotFound() {
     // Canonical aponta pra home pra evitar indexação de URL lixo
     document.getElementById('page-canonical')?.setAttribute('href', 'https://almeidaematos.com.br/');
 
-    document.getElementById('page-title').textContent = 'Artigo não encontrado | Almeida & Matos';
+    document.title = 'Artigo não encontrado | Almeida & Matos';
     const titleEl = document.getElementById('post-title');
     if (titleEl) titleEl.textContent = 'Artigo não encontrado';
     const categoryEl = document.getElementById('post-category');
     if (categoryEl) categoryEl.style.display = 'none';
     const metaEl = document.getElementById('post-meta');
     if (metaEl) metaEl.innerHTML = '';
+    const breadcrumbTitle = document.getElementById('breadcrumb-title');
+    if (breadcrumbTitle) breadcrumbTitle.textContent = 'Não encontrado';
+
     const contentEl = document.getElementById('post-content');
     if (contentEl) {
         contentEl.innerHTML = `
-            <div class="text-center py-12">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 mx-auto mb-4 text-navy-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+            <div class="post-notfound">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <p class="text-lg font-semibold text-navy-600 mb-2">Este artigo não foi encontrado</p>
-                <p class="text-navy-400 mb-6">O artigo que você procura pode ter sido removido ou o link está incorreto.</p>
-                <a href="/blog/" class="inline-flex items-center gap-2 px-5 py-2.5 bg-gold-500 text-white font-semibold rounded-full hover:bg-gold-600 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                    </svg>
-                    Voltar ao Blog
-                </a>
+                <p class="post-notfound__title">Este artigo não foi encontrado</p>
+                <p>O artigo que você procura pode ter sido removido ou o link está incorreto.</p>
+                <a href="/blog/" class="btn btn--gold">Voltar ao Blog</a>
             </div>
         `;
     }
-    const breadcrumbTitle = document.getElementById('breadcrumb-title');
-    if (breadcrumbTitle) breadcrumbTitle.textContent = 'Não encontrado';
+    // esconde o CTA do template no estado de erro
+    document.querySelector('.post-cta')?.classList.add('hidden');
 }
 
 function injectStructuredData(post) {
+    // Páginas SSG já trazem o Article JSON-LD — não duplica
+    if (document.querySelector('script[data-am-article]')) return;
+
+    const modified = post.modified || post.dateModified || post.updated || post.date;
     const schema = {
         '@context': 'https://schema.org',
         '@type': 'Article',
         'headline': post.title,
-        'description': post.excerpt,
+        'description': post.excerpt || '',
         'image': `${SITE_URL}/img/og-cover.jpg`,
         'datePublished': post.date,
-        'dateModified': post.date,
+        'dateModified': modified,
+        'inLanguage': 'pt-BR',
         'author': {
             '@type': 'Organization',
-            'name': 'Almeida & Matos Advogados',
+            'name': 'Equipe Almeida & Matos',
             'url': SITE_URL,
         },
         'publisher': {
@@ -411,62 +441,54 @@ function injectStructuredData(post) {
 
     const script = document.createElement('script');
     script.type = 'application/ld+json';
+    script.setAttribute('data-am-article', '');
     script.textContent = JSON.stringify(schema);
     document.head.appendChild(script);
 }
 
 // ================================
-// SHARED: Navbar scroll + mobile menu
+// SHARED: nav v2 (scroll) + menu mobile
 // ================================
-function initNavbar() {
-    const navbar = document.getElementById('navbar');
-    if (!navbar) return;
-
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.classList.add('navbar-scrolled');
-        } else {
-            navbar.classList.remove('navbar-scrolled');
-        }
-    }, { passive: true });
+function initNav() {
+    const nav = document.getElementById('nav');
+    if (!nav) return;
+    let lastY = 0;
+    const onScroll = () => {
+        const y = window.scrollY;
+        nav.classList.toggle('is-scrolled', y > 50);
+        nav.classList.toggle('is-hidden',
+            y > 480 && y > lastY && !document.body.classList.contains('menu-open'));
+        lastY = y;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
 }
 
 function initMobileMenu() {
-    const toggle = document.getElementById('menu-toggle');
-    const mobileNav = document.getElementById('mobile-nav');
-    if (!toggle || !mobileNav) return;
+    const burger = document.getElementById('navBurger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (!burger || !mobileMenu) return;
 
-    let menuOpen = false;
+    const closeMenu = () => {
+        document.body.classList.remove('menu-open');
+        burger.setAttribute('aria-expanded', 'false');
+        mobileMenu.setAttribute('aria-hidden', 'true');
+    };
 
-    toggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        menuOpen = !menuOpen;
-        mobileNav.classList.toggle('open', menuOpen);
-        toggle.classList.toggle('open', menuOpen);
+    burger.addEventListener('click', () => {
+        const open = document.body.classList.toggle('menu-open');
+        burger.setAttribute('aria-expanded', String(open));
+        mobileMenu.setAttribute('aria-hidden', String(!open));
     });
 
-    mobileNav.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            menuOpen = false;
-            mobileNav.classList.remove('open');
-            toggle.classList.remove('open');
-        });
-    });
-
-    document.addEventListener('click', (e) => {
-        if (menuOpen && !mobileNav.contains(e.target) && !toggle.contains(e.target)) {
-            menuOpen = false;
-            mobileNav.classList.remove('open');
-            toggle.classList.remove('open');
-        }
-    });
+    mobileMenu.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeMenu));
 }
 
 // ================================
 // INIT
 // ================================
 document.addEventListener('DOMContentLoaded', () => {
-    initNavbar();
+    initNav();
     initMobileMenu();
 
     if (isPostPage()) {

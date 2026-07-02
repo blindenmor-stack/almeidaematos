@@ -18,9 +18,10 @@
     { "source": "/sitemap_index.xml", "destination": "/sitemap.xml", "statusCode": 301 }
   ],
   "rewrites": [
+    { "source": "/sitemap.xml", "destination": "/api/blog/sitemap" },
     {
-      "source": "/:slug((?!blog|assets|img|api|_next|favicon|robots|sitemap).*)",
-      "destination": "/blog-post.html"
+      "source": "/:slug((?!blog(?:/|$)|assets(?:/|$)|img(?:/|$)|api(?:/|$)|admin(?:/|$)|beneficios(?:/|$)|_next(?:/|$)|favicon|robots|sitemap|llms).*)",
+      "destination": "/api/blog/post?slug=:slug"
     }
   ],
   "headers": [
@@ -29,6 +30,21 @@
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=86400, s-maxage=86400" }
       ]
+    },
+    {
+      "source": "/admin/(.*)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" },
+        { "key": "Cache-Control", "value": "no-store" }
+      ]
     }
-  ]
+  ],
+  "crons": [
+    { "path": "/api/cron/generate-post", "schedule": "0 10 * * *" }
+  ],
+  "functions": {
+    "api/blog/sitemap.js": { "includeFiles": "public/blog/posts/posts-data.json" },
+    "api/cron/generate-post.js": { "maxDuration": 300 },
+    "api/admin/generate.js": { "maxDuration": 300 }
+  }
 }

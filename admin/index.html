@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Blog Admin | Almeida &amp; Matos</title>
+    <link rel="icon" href="/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+
+    <!-- =========================== LOGIN =========================== -->
+    <div id="login-screen" class="login-screen">
+        <form id="login-form" class="login-card">
+            <span class="brand-eyebrow">Almeida &amp; Matos</span>
+            <h1>Blog Admin</h1>
+            <div class="field">
+                <label for="login-password">Senha de acesso</label>
+                <input type="password" id="login-password" autocomplete="current-password" required autofocus>
+            </div>
+            <button type="submit" id="login-btn" class="btn btn-primary btn-block">Entrar</button>
+            <p id="login-error" class="error-text hidden"></p>
+        </form>
+    </div>
+
+    <!-- ============================ APP ============================ -->
+    <div id="app" class="hidden">
+        <header class="app-header">
+            <div class="app-header-top">
+                <div>
+                    <span class="brand-eyebrow">Almeida &amp; Matos</span>
+                    <h1>Blog Admin</h1>
+                </div>
+                <div style="display:flex;gap:.5rem;align-items:center">
+                    <button id="btn-generate" class="btn btn-primary">
+                        <span class="btn-label">Gerar post agora</span>
+                    </button>
+                    <button id="btn-logout" class="btn btn-outline btn-sm">Sair</button>
+                </div>
+            </div>
+            <nav class="tabs" role="tablist">
+                <button class="tab active" data-tab="dashboard">Dashboard</button>
+                <button class="tab" data-tab="topics">Pautas</button>
+                <button class="tab" data-tab="settings">Linha editorial</button>
+            </nav>
+        </header>
+
+        <main class="app-main">
+
+            <!-- ------------------- TAB: DASHBOARD ------------------- -->
+            <section id="tab-dashboard" class="tab-panel">
+                <div class="stats-grid" id="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Publicados</div>
+                        <div class="stat-value" id="stat-published">—</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Rascunhos</div>
+                        <div class="stat-value" id="stat-drafts">—</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Pautas na fila</div>
+                        <div class="stat-value" id="stat-topics">—</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Próxima publicação</div>
+                        <div class="stat-value small" id="stat-next">—</div>
+                    </div>
+                </div>
+
+                <div class="toolbar">
+                    <h2 class="section-title" style="margin:0">Posts</h2>
+                    <div class="filters">
+                        <input type="text" id="posts-search" placeholder="Buscar por título…">
+                        <select id="posts-status-filter">
+                            <option value="">Todos os status</option>
+                            <option value="published">Publicados</option>
+                            <option value="draft">Rascunhos</option>
+                            <option value="archived">Arquivados</option>
+                        </select>
+                        <button id="btn-new-post" class="btn btn-outline btn-sm">+ Post manual</button>
+                    </div>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Título</th>
+                                <th>Status</th>
+                                <th>Categoria</th>
+                                <th>Data</th>
+                                <th style="text-align:right">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="posts-tbody"></tbody>
+                    </table>
+                    <div id="posts-loading" class="page-spinner"><div class="spinner"></div></div>
+                    <div id="posts-empty" class="empty-state hidden">Nenhum post encontrado.</div>
+                </div>
+            </section>
+
+            <!-- --------------------- TAB: PAUTAS --------------------- -->
+            <section id="tab-topics" class="tab-panel hidden">
+                <div class="panel">
+                    <h2 class="section-title">Nova pauta</h2>
+                    <form id="topic-form">
+                        <div class="field-row">
+                            <div class="field" style="flex:3">
+                                <label for="topic-input">Tema / dúvida a responder</label>
+                                <input type="text" id="topic-input" placeholder="Ex: Auxílio-acidente para quem voltou a trabalhar" required>
+                            </div>
+                            <div class="field" style="flex:2">
+                                <label for="topic-keyword">Palavra-chave alvo</label>
+                                <input type="text" id="topic-keyword" placeholder="Ex: auxílio-acidente voltou a trabalhar">
+                            </div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="topic-product">Produto relacionado</label>
+                                <select id="topic-product">
+                                    <option value="">— nenhum —</option>
+                                    <option value="auxilio-acidente">Auxílio-acidente</option>
+                                    <option value="auxilio-doenca">Auxílio-doença</option>
+                                    <option value="bpc-loas">BPC/LOAS</option>
+                                    <option value="aposentadoria-por-invalidez">Aposentadoria por invalidez</option>
+                                    <option value="pensao-por-morte">Pensão por morte</option>
+                                    <option value="aposentadoria-pcd">Aposentadoria PCD</option>
+                                    <option value="indenizacao-civel-trabalhista">Indenização cível/trabalhista</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="topic-priority">Prioridade (0-100)</label>
+                                <input type="number" id="topic-priority" min="0" max="100" value="5">
+                            </div>
+                            <div class="field" style="display:flex;align-items:flex-end">
+                                <button type="submit" id="topic-add-btn" class="btn btn-primary btn-block">Adicionar pauta</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="toolbar">
+                    <h2 class="section-title" style="margin:0">Fila de pautas</h2>
+                    <div class="filters">
+                        <select id="topics-status-filter">
+                            <option value="pending">Pendentes</option>
+                            <option value="used">Usadas</option>
+                            <option value="discarded">Descartadas</option>
+                            <option value="">Todas</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:60px">Prior.</th>
+                                <th>Pauta</th>
+                                <th>Produto</th>
+                                <th>Status</th>
+                                <th style="text-align:right">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="topics-tbody"></tbody>
+                    </table>
+                    <div id="topics-loading" class="page-spinner"><div class="spinner"></div></div>
+                    <div id="topics-empty" class="empty-state hidden">Nenhuma pauta aqui.</div>
+                </div>
+            </section>
+
+            <!-- ------------------- TAB: LINHA EDITORIAL ------------------- -->
+            <section id="tab-settings" class="tab-panel hidden">
+                <div class="panel">
+                    <h2 class="section-title">Automação</h2>
+                    <form id="settings-form">
+                        <label class="switch-row">
+                            <input type="checkbox" id="set-enabled">
+                            <span class="switch-track"></span>
+                            <span class="switch-label"><strong>Sistema ativo</strong> — gera posts automaticamente nos dias marcados</span>
+                        </label>
+                        <label class="switch-row">
+                            <input type="checkbox" id="set-auto-publish">
+                            <span class="switch-track"></span>
+                            <span class="switch-label"><strong>Publicar direto</strong> — desligado, os posts entram como rascunho pra revisão</span>
+                        </label>
+
+                        <div class="field" style="margin-top:1rem">
+                            <label>Dias de publicação</label>
+                            <div class="days-grid" id="set-days">
+                                <label class="day-chip"><input type="checkbox" value="1"><span>Seg</span></label>
+                                <label class="day-chip"><input type="checkbox" value="2"><span>Ter</span></label>
+                                <label class="day-chip"><input type="checkbox" value="3"><span>Qua</span></label>
+                                <label class="day-chip"><input type="checkbox" value="4"><span>Qui</span></label>
+                                <label class="day-chip"><input type="checkbox" value="5"><span>Sex</span></label>
+                                <label class="day-chip"><input type="checkbox" value="6"><span>Sáb</span></label>
+                                <label class="day-chip"><input type="checkbox" value="0"><span>Dom</span></label>
+                            </div>
+                            <p class="field-hint">O cron roda 1x por dia às 7h (BRT). Ele publica só nos dias marcados — máximo de 1 post/dia.</p>
+                        </div>
+
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="set-posts-per-week">Posts por semana (referência)</label>
+                                <input type="number" id="set-posts-per-week" min="1" max="7">
+                            </div>
+                            <div class="field">
+                                <label for="set-model">Modelo de IA</label>
+                                <select id="set-model">
+                                    <option value="gemini-pro-latest">gemini-pro-latest — melhor escrita (padrão)</option>
+                                    <option value="gemini-flash-latest">gemini-flash-latest — rápido e barato</option>
+                                    <option value="gemini-3.1-pro-preview">gemini-3.1-pro-preview</option>
+                                    <option value="gemini-2.5-flash">gemini-2.5-flash</option>
+                                    <option value="gemini-2.5-pro">gemini-2.5-pro</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <h2 class="section-title" style="margin-top:1.5rem">Linha editorial</h2>
+                        <div class="field">
+                            <label for="set-editorial">Descrição da linha editorial</label>
+                            <textarea id="set-editorial" placeholder="Que temas cobrir, pra quem, com que prioridade…"></textarea>
+                        </div>
+                        <div class="field">
+                            <label for="set-tone">Tom de voz</label>
+                            <textarea id="set-tone" style="min-height:60px" placeholder="Ex: advogado-educador, simples, direto, empático…"></textarea>
+                        </div>
+                        <div class="field">
+                            <label for="set-extra">Instruções extras pro redator IA (opcional)</label>
+                            <textarea id="set-extra" placeholder="Regras adicionais que entram em todo prompt de geração"></textarea>
+                        </div>
+
+                        <button type="submit" id="settings-save-btn" class="btn btn-primary">
+                            <span class="btn-label">Salvar configurações</span>
+                        </button>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- ====================== MODAL: EDITAR POST ====================== -->
+    <div id="post-modal" class="modal-backdrop hidden">
+        <div class="modal">
+            <h2 id="post-modal-title">Editar post</h2>
+            <form id="post-form">
+                <div class="field">
+                    <label for="pm-title">Título</label>
+                    <input type="text" id="pm-title" required>
+                </div>
+                <div class="field-row">
+                    <div class="field" style="flex:2">
+                        <label for="pm-slug">Slug (URL)</label>
+                        <input type="text" id="pm-slug" pattern="[a-z0-9-]+" title="Só minúsculas, números e hífens">
+                    </div>
+                    <div class="field">
+                        <label for="pm-status">Status</label>
+                        <select id="pm-status">
+                            <option value="draft">Rascunho</option>
+                            <option value="published">Publicado</option>
+                            <option value="archived">Arquivado</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="pm-excerpt">Resumo (excerpt)</label>
+                    <textarea id="pm-excerpt" style="min-height:60px" maxlength="400"></textarea>
+                </div>
+                <div class="field-row">
+                    <div class="field">
+                        <label for="pm-meta-title">Meta title (≤60)</label>
+                        <input type="text" id="pm-meta-title" maxlength="70">
+                    </div>
+                    <div class="field">
+                        <label for="pm-meta-description">Meta description (≤155)</label>
+                        <input type="text" id="pm-meta-description" maxlength="170">
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="pm-content">Conteúdo (HTML)</label>
+                    <textarea id="pm-content" class="code" spellcheck="false"></textarea>
+                </div>
+                <div class="field">
+                    <label>FAQ (vira schema FAQPage no Google)</label>
+                    <div id="pm-faq-list"></div>
+                    <button type="button" id="pm-faq-add" class="btn btn-outline btn-sm">+ Adicionar pergunta</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="pm-cancel" class="btn btn-outline">Cancelar</button>
+                    <button type="submit" id="pm-save" class="btn btn-primary">
+                        <span class="btn-label">Salvar</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ====================== MODAL: GERAR POST ====================== -->
+    <div id="generate-modal" class="modal-backdrop hidden">
+        <div class="modal" style="max-width:540px">
+            <h2>Gerar post agora</h2>
+            <div class="field">
+                <label for="gen-topic-select">Pauta da fila</label>
+                <select id="gen-topic-select">
+                    <option value="">Automática (maior prioridade)</option>
+                </select>
+            </div>
+            <div class="field">
+                <label for="gen-topic-free">…ou pauta livre</label>
+                <input type="text" id="gen-topic-free" placeholder="Digite um tema (ignora a seleção acima)">
+            </div>
+            <p class="field-hint">A geração leva de 30s a 2min. O post segue a regra "Publicar direto" das configurações.</p>
+            <div class="modal-footer">
+                <button type="button" id="gen-cancel" class="btn btn-outline">Cancelar</button>
+                <button type="button" id="gen-confirm" class="btn btn-primary">
+                    <span class="btn-label">Gerar</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="/admin/admin.js"></script>
+</body>
+</html>
