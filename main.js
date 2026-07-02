@@ -2,6 +2,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 import { initAnimations } from './animations.js';
+import { initBrasilMap } from './brasil-map.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -22,16 +23,9 @@ if (!prefersReduced) {
 }
 
 // ================================
-// 2. Preloader (1x por sessão)
+// 2. Preloader (toda visita, ≤2s no pior caso)
 // ================================
-// sessionStorage pode lançar SecurityError (cookies bloqueados / webview
-// restrito) — nunca pode derrubar o módulo, senão o conteúdo fica invisível.
-const safeStorage = {
-    get(key) { try { return sessionStorage.getItem(key); } catch { return null; } },
-    set(key, val) { try { sessionStorage.setItem(key, val); } catch { /* sem storage: preloader roda de novo, sem quebrar */ } },
-};
 const preloader = document.getElementById('preloader');
-const seenPreloader = safeStorage.get('am_preloader');
 
 function heroIntro() {
     if (prefersReduced) return;
@@ -44,24 +38,22 @@ function heroIntro() {
 function hidePreloader() {
     if (!preloader || preloader.dataset.done) return;
     preloader.dataset.done = '1';
-    safeStorage.set('am_preloader', '1');
     if (prefersReduced) { preloader.remove(); return; }
     gsap.timeline()
-        .to('.preloader__bar span', { width: '100%', duration: 0.4, ease: 'power1.inOut' })
+        .to('.preloader__bar span', { width: '100%', duration: 0.3, ease: 'power1.inOut' })
         .to(preloader, {
             // sai com wipe diagonal (gramática da marca)
             clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)',
-            duration: 0.8, ease: 'power4.inOut',
+            duration: 0.65, ease: 'power4.inOut',
             onComplete: () => { preloader.remove(); ScrollTrigger.refresh(); },
-        }, '+=0.05');
+        }, '+=0.04');
     heroIntro();
 }
 
 if (preloader) {
-    if (seenPreloader || prefersReduced) {
-        // visitas seguintes: sem preloader, hero entra direto
+    if (prefersReduced) {
         preloader.remove();
-        if (!prefersReduced) heroIntro(); else revealAllInstant();
+        revealAllInstant();
     } else {
         // desenha o símbolo (stroke) + barra
         const marks = preloader.querySelectorAll('.preloader__mark path');
@@ -69,12 +61,12 @@ if (preloader) {
             const len = p.getTotalLength();
             p.style.strokeDasharray = len;
             p.style.strokeDashoffset = len;
-            gsap.to(p, { strokeDashoffset: 0, duration: 1.1, ease: 'power2.inOut' });
+            gsap.to(p, { strokeDashoffset: 0, duration: 0.85, ease: 'power2.inOut' });
         });
         gsap.set(preloader, { clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' });
-        gsap.to('.preloader__bar span', { width: '78%', duration: 0.7, ease: 'power2.out' });
+        gsap.to('.preloader__bar span', { width: '78%', duration: 0.5, ease: 'power2.out' });
         window.addEventListener('load', hidePreloader);
-        setTimeout(hidePreloader, 2200); // fallback: nunca trava
+        setTimeout(hidePreloader, 1000); // teto: com a saída (~1s), fica ≤2s sempre
     }
 } else {
     heroIntro();
@@ -236,6 +228,7 @@ document.addEventListener('click', (e) => {
 });
 
 // ================================
-// 9. Animações on-scroll
+// 9. Animações on-scroll + mapa do Brasil
 // ================================
 initAnimations({ prefersReduced, isTouch });
+try { initBrasilMap({ prefersReduced }); } catch (e) { console.error('[brasil-map]', e); }
