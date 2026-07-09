@@ -80,7 +80,7 @@
 |---|---|
 | `SUPABASE_URL` | `https://argvppsbnoeyozjepagb.supabase.co` |
 | `SUPABASE_SECRET_KEY` | service_role key (Supabase → Settings → API) |
-| `GEMINI_API_KEY` | chave do Google AI Studio |
+| `GEMINI_API_KEY` (obrigatória: artigos-fallback + capas Nano Banana Pro), `ANTHROPIC_API_KEY` e `OPENAI_API_KEY` (opcionais: destravam modelos claude-*/gpt-* no painel) | chave do Google AI Studio |
 | `ADMIN_PASSWORD` | senha do painel `/admin/` |
 | `CRON_SECRET` | string aleatória longa (`openssl rand -hex 32`) |
 

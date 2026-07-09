@@ -18,7 +18,7 @@ export default async function handler(req, res) {
         const category = String(req.query?.category || '').trim();
 
         let path = 'blog_posts?status=eq.published'
-            + '&select=title,slug,excerpt,category,category_slug,author,read_time,published_at'
+            + '&select=title,slug,excerpt,category,category_slug,author,read_time,published_at,cover_url'
             + `&order=published_at.desc&limit=${limit}&offset=${offset}`;
 
         if (category) {
@@ -38,7 +38,8 @@ export default async function handler(req, res) {
             categorySlug: p.category_slug || '',
             author: p.author || 'Equipe Almeida & Matos',
             readTime: p.read_time || '',
-        }));
+        cover: p.cover_url || null,
+    }));
 
         res.setHeader('Content-Type', 'application/json; charset=utf-8');
         res.setHeader('Cache-Control', 'public, s-maxage=600, stale-while-revalidate=3600');

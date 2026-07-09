@@ -55,14 +55,18 @@ if (preloader) {
         preloader.remove();
         revealAllInstant();
     } else {
-        // desenha o símbolo (stroke) + barra
-        const marks = preloader.querySelectorAll('.preloader__mark path');
-        marks.forEach((p) => {
+        // 1) contornos do símbolo se desenham; 2) as cores do logo preenchem
+        const lines = preloader.querySelectorAll('.preloader__mark .mk-line');
+        lines.forEach((p, i) => {
             const len = p.getTotalLength();
             p.style.strokeDasharray = len;
             p.style.strokeDashoffset = len;
-            gsap.to(p, { strokeDashoffset: 0, duration: 0.85, ease: 'power2.inOut' });
+            gsap.to(p, { strokeDashoffset: 0, duration: 0.7, delay: i * 0.06, ease: 'power2.inOut' });
         });
+        gsap.to(preloader.querySelectorAll('.preloader__mark .mk-fill'), {
+            opacity: 1, duration: 0.35, delay: 0.62, stagger: 0.05, ease: 'power1.in',
+        });
+        gsap.to(lines, { opacity: 0, duration: 0.3, delay: 0.85 });
         gsap.set(preloader, { clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' });
         gsap.to('.preloader__bar span', { width: '78%', duration: 0.5, ease: 'power2.out' });
         window.addEventListener('load', hidePreloader);

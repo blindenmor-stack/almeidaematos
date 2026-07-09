@@ -4,6 +4,8 @@
 // ============================================================================
 
 import { sbFetch, getSettings, logGeneration } from './supabase.js';
+import { callLLM } from './llm.js';
+import { generateCover } from './cover.js';
 import {
     buildArticlePrompt, buildTopicPrompt,
     RESPONSE_SCHEMA, TOPIC_RESPONSE_SCHEMA, CATEGORIES,
@@ -15,37 +17,8 @@ const GEMINI_BASE = 'https://generativelanguage.googleapis.com/v1beta/models';
 const MIN_WORDS = 600;
 
 /** Chama o Gemini com saída JSON estruturada e retorna o objeto parseado. */
-async function callGemini({ model, prompt, responseSchema }) {
-    const key = process.env.GEMINI_API_KEY;
-    if (!key) throw new Error('GEMINI_API_KEY não configurada');
+// callGemini → substituído por callLLM (multi-provider: Gemini/Claude/GPT) em llm.js
 
-    const res = await fetch(`${GEMINI_BASE}/${encodeURIComponent(model)}:generateContent`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-goog-api-key': key },
-        body: JSON.stringify({
-            contents: [{ role: 'user', parts: [{ text: prompt }] }],
-            generationConfig: {
-                responseMimeType: 'application/json',
-                responseSchema,
-                temperature: 0.7,
-                maxOutputTokens: 16384,
-            },
-        }),
-    });
-
-    if (!res.ok) {
-        const text = await res.text().catch(() => '');
-        throw new Error(`Gemini ${res.status}: ${text.slice(0, 400)}`);
-    }
-
-    const data = await res.json();
-    const raw = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (!raw) {
-        const reason = data?.candidates?.[0]?.finishReason || 'sem candidato';
-        throw new Error(`Gemini não retornou texto (${reason})`);
-    }
-    return JSON.parse(raw);
-}
 
 /** Garante slug único: se colidir com posts existentes, sufixa -2, -3... */
 async function ensureUniqueSlug(slug) {
@@ -136,8 +109,8 @@ async function pickTopic({ topicId, topicText, settings }) {
 
     // Fila vazia → IA sugere uma pauta nova baseada na linha editorial
     const recent = await sbFetch('blog_posts?order=created_at.desc&limit=30&select=title');
-    const suggestion = await callGemini({
-        model: settings.model || 'gemini-2.5-flash',
+    const { result: suggestion } = await callLLM({
+        model: settings.model || 'gemini-pro-latest',
         prompt: buildTopicPrompt({ settings, recentTitles: (recent || []).map((r) => r.title) }),
         responseSchema: TOPIC_RESPONSE_SCHEMA,
     });
@@ -164,7 +137,7 @@ async function pickTopic({ topicId, topicText, settings }) {
 export async function generatePost({ triggerSource, topicId = null, topicText = null }) {
     const started = Date.now();
     const settings = await getSettings();
-    const model = settings.model || 'gemini-2.5-flash';
+    const model = settings.model || 'gemini-pro-latest';
     let topic = null;
     let postId = null;
 
@@ -175,7 +148,7 @@ export async function generatePost({ triggerSource, topicId = null, topicText = 
         const recentRows = await sbFetch('blog_posts?order=created_at.desc&limit=40&select=slug');
         const existingSlugs = (recentRows || []).map((r) => r.slug);
 
-        const article = await callGemini({
+        const { result: article, modelUsed } = await callLLM({
             model,
             prompt: buildArticlePrompt({ topic, settings, existingSlugs }),
             responseSchema: RESPONSE_SCHEMA,
@@ -186,11 +159,15 @@ export async function generatePost({ triggerSource, topicId = null, topicText = 
         const category = normalizeCategory(article, topic);
         const publishNow = settings.auto_publish !== false;
 
+        // Capa na identidade da marca (Nano Banana Pro) — best-effort
+        const coverUrl = await generateCover({ slug, title: article.title, category: category.name });
+
         const inserted = await sbFetch('blog_posts', {
             method: 'POST',
             body: {
                 title: String(article.title).slice(0, 300),
                 slug,
+                cover_url: coverUrl,
                 excerpt: clean.excerpt,
                 content_html: clean.contentHtml,
                 category: category.name,
