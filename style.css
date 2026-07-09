@@ -862,8 +862,13 @@ html:not(.js) .faq__answer { height: auto; opacity: 1; }
 /* sem JS o preloader nunca seria removido — não pode existir */
 html:not(.js) .preloader { display: none; }
 .preloader__inner { display: grid; place-items: center; }
-.preloader__mark { width: 96px; height: auto; }
-.preloader__mark path { stroke: var(--color-gold-500); stroke-width: 2; fill: none; }
+.preloader__mark { width: 118px; height: auto; }
+/* contornos que se desenham */
+.preloader__mark .mk-line { stroke: var(--color-gold-500); stroke-width: 2.5; fill: none; }
+/* preenchimentos fiéis ao logo (aparecem após o traço) */
+.preloader__mark .mk-fill { opacity: 0; }
+.preloader__mark .mk-fill--gold { fill: var(--color-gold-500); }
+.preloader__mark .mk-fill--navy { fill: var(--color-navy-950); }
 .preloader__bar { width: 150px; height: 2px; background: rgba(210, 174, 109, 0.2); margin-top: 26px; overflow: hidden; }
 .preloader__bar span { display: block; width: 0; height: 100%; background: var(--gold-grad); }
 

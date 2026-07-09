@@ -46,7 +46,7 @@ function buildJsonLd(post) {
         '@type': 'Article',
         headline: post.title,
         description: post.excerpt || post.meta_description || '',
-        image: `${SITE_URL}/img/og-cover.jpg`,
+        image: post.cover_url || `${SITE_URL}/img/og-cover.jpg`,
         datePublished: published,
         dateModified: post.updated_at || published,
         author: { '@type': 'Organization', name: 'Almeida & Matos Advogados', url: SITE_URL },
@@ -179,9 +179,7 @@ export function renderPostPage(post) {
     <meta property="og:title" content="${esc(title)}">
     <meta property="og:description" content="${esc(description)}">
     <meta property="og:url" content="${esc(url)}">
-    <meta property="og:image" content="${SITE_URL}/img/og-cover.jpg">
-    <meta property="og:image:width" content="1500">
-    <meta property="og:image:height" content="788">
+    <meta property="og:image" content="${esc(post.cover_url || `${SITE_URL}/img/og-cover.jpg`)}">
     <meta property="og:locale" content="pt_BR">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -220,6 +218,7 @@ export function renderPostPage(post) {
                 <span>${esc(post.author || 'Equipe Almeida & Matos')}</span>
             </div>
 
+            ${post.cover_url ? `<figure class="post-cover"><img src="${esc(post.cover_url)}" alt="" loading="eager" style="width:100%;border-radius:12px;display:block;margin:0 0 1.6rem"></figure>` : ''}
             <div class="article-content">
                 ${post.content_html || ''}
             </div>

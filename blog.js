@@ -110,6 +110,7 @@ function mergePosts(staticPosts, apiPosts) {
 function renderPostCard(post) {
     return `
         <a href="/${esc(post.slug)}/" class="card post-card" data-category="${esc(post.categorySlug)}">
+            ${post.cover ? `<span class="post-card__cover"><img src="${esc(post.cover)}" alt="" loading="lazy"></span>` : ''}
             <span class="post-card__tag">${esc(post.category)}</span>
             <h3>${esc(post.title)}</h3>
             <p class="post-card__excerpt">${esc(post.excerpt || '')}</p>
