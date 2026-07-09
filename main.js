@@ -2,7 +2,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 import { initAnimations } from './animations.js';
-import { initBrasilMap } from './brasil-map.js';
+import { initGlobe } from './globe.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -232,7 +232,7 @@ document.addEventListener('click', (e) => {
 });
 
 // ================================
-// 9. Animações on-scroll + mapa do Brasil
+// 9. Animações on-scroll + globo 3D do Brasil
 // ================================
 initAnimations({ prefersReduced, isTouch });
-try { initBrasilMap({ prefersReduced }); } catch (e) { console.error('[brasil-map]', e); }
+try { initGlobe({ prefersReduced }); } catch (e) { console.error('[globe]', e); }

@@ -151,6 +151,7 @@ h2.display { font-size: clamp(1.9rem, 4.2vw, 3.1rem); }
   color: var(--color-navy-100);
 }
 .section--dark .lead { color: var(--color-navy-100); }
+.section--darker .lead { color: var(--color-navy-100); }
 .section--darker { background: var(--color-navy-950); color: var(--color-navy-100); }
 .section--paper { background: var(--color-paper); }
 .section--paper-2 { background: var(--color-paper-2); }
@@ -762,7 +763,7 @@ html:not(.js) .faq__answer { height: auto; opacity: 1; }
    MAPA DO BRASIL (canvas)
    ============================================================ */
 .brasil-map { max-width: 820px; margin-inline: auto; }
-.brasil-map canvas { width: 100%; display: block; }
+.brasil-map canvas { width: 100%; display: block; cursor: grab; user-select: none; }
 
 /* ============================================================
    CTA FINAL
