@@ -937,8 +937,10 @@ html:not(.js) .preloader { display: none; }
   .nav__links { display: none; }
   .nav__burger { display: flex; }
   .hero { min-height: auto; }
-  .hero__grid { grid-template-columns: 1fr; }
-  .hero__visual { max-width: 480px; }
+  .hero__grid { grid-template-columns: 1fr; gap: 1.6rem; padding-block: clamp(1.8rem, 4vh, 3rem) clamp(3.5rem, 8vh, 5.5rem); }
+  /* prova social sai da 1ª dobra no mobile — a 2ª dobra (stats) já tem os números */
+  .hero__proof { display: none; }
+  .hero__visual { max-width: 340px; margin-inline: auto; }
   .hero__tag--tl { left: 0; }
   .hero__tag--br { right: 0; }
   .grid-3 { grid-template-columns: 1fr; }

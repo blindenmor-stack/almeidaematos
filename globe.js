@@ -195,7 +195,8 @@ function boot(canvas, section, data, reduced) {
     let autoBlend = 1;        // peso da auto-rotação (crossfade pós-drag)
     let inertiaVel = 0;       // rad/frame após soltar o drag
     let dragVel = 0;          // velocidade medida durante o drag
-    let autoVelScale = 1, autoVelScaleT = 1;   // parallax: ±20% no yawVel
+    let mouseSX = -9999, mouseSY = -9999, mouseOn = false; // hover (glow local)
+    let yawPar = 0, yawParT = 0;               // parallax: alvo de yaw (posição)
     let pitchPar = 0, pitchParT = 0;           // parallax: alvo de pitch
     const settle = { v: 0 };  // offset de yaw animado na entrada (−0.35 → 0)
     let dragging = false, activePtr = -1, lastPX = 0, lastPY = 0;
@@ -242,15 +243,29 @@ function boot(canvas, section, data, reduced) {
     function resize() {
         const DPR = Math.min(window.devicePixelRatio || 1, 2);
         W = wrap.clientWidth || 320;
-        H = W; // aspect 1:1 (spec)
+        H = Math.round(W * (W < 560 ? 0.94 : 0.8)); // recorte: menos vazio vertical
         canvas.width = Math.round(W * DPR);
         canvas.height = Math.round(H * DPR);
         canvas.style.height = `${H}px`;
         ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-        CX = W / 2; CY = H / 2;
-        R = W * 0.455;
-        stride = W < 560 ? 2 : 1;                    // mobile: metade dos pontos
-        sizeK = clamp(R / 300, 0.72, 1);             // dots proporcionais ao raio
+        // RECORTE do globo: raio bem maior que o quadro — o Brasil domina a cena
+        // e a curvatura do planeta aparece nas bordas (câmera apontada no país).
+        R = W * 0.92;
+        // Centraliza o centroide do Brasil (lat −14, lon −53) no quadro:
+        // projeta o ponto com yaw/pitch home e desloca o centro do globo.
+        {
+            const phi = -14 * DEG, lam = -53 * DEG;
+            const bx = Math.cos(phi) * Math.sin(lam), by = Math.sin(phi), bz = Math.cos(phi) * Math.cos(lam);
+            const sy0 = Math.sin(YAW_HOME), cy0 = Math.cos(YAW_HOME);
+            const sp0 = Math.sin(PITCH_BASE), cp0 = Math.cos(PITCH_BASE);
+            const x1 = bx * cy0 + bz * sy0;
+            const z1 = bz * cy0 - bx * sy0;
+            const y2 = by * cp0 - z1 * sp0;
+            CX = W / 2 - x1 * R;
+            CY = H / 2 + y2 * R + H * 0.02;
+        }
+        stride = W < 560 ? 2 : 1;                    // mobile: metade dos pontos (só mundo)
+        sizeK = clamp(R / 300, 0.72, 1.5);           // dots proporcionais ao raio (close = maiores)
         for (let i = 0; i < nw; i++) worldRadS[i] = worldRad[i] * sizeK;
         for (let i = 0; i < nb; i++) brazilRadS[i] = brazilRad[i] * sizeK;
         // Disco do globo: gradiente radial com "luz" sutil no alto-esquerdo
@@ -347,6 +362,15 @@ function boot(canvas, section, data, reduced) {
             if (ws >= 0) {
                 const e = now - ws - brazilDelay[i];
                 if (e >= 0 && e < HOLD_MS) target = 1;
+            }
+            // Hover: dots próximos do cursor acendem (o lerp do glow suaviza)
+            if (mouseOn) {
+                const mdx = brazilSX[i] - mouseSX, mdy = brazilSY[i] - mouseSY;
+                const md2 = mdx * mdx + mdy * mdy;
+                if (md2 < 6400) { // raio 80px
+                    const t2 = 0.9 * (1 - Math.sqrt(md2) / 80);
+                    if (t2 > target) target = t2;
+                }
             }
             let g = brazilGlow[i];
             g += (target - g) * glowLerpK;
@@ -632,8 +656,8 @@ function boot(canvas, section, data, reduced) {
         const dt = Math.min(gsap.ticker.deltaRatio(60), 2.5); // frames normalizados
 
         // Parallax converge devagar (lerp 0.05 — o globo "acompanha o olhar")
-        autoVelScale += (autoVelScaleT - autoVelScale) * Math.min(1, 0.05 * dt);
         pitchPar += (pitchParT - pitchPar) * Math.min(1, 0.05 * dt);
+        yawPar += (yawParT - yawPar) * Math.min(1, 0.05 * dt);
 
         if (dragging) {
             // Velocidade medida por frame (suavizada) — vira inércia no release
@@ -645,9 +669,16 @@ function boot(canvas, section, data, reduced) {
             autoBlend += (1 - autoBlend) * Math.min(1, AUTO_BLEND_K * dt);
             inertiaVel *= Math.pow(INERTIA_DAMP, dt);
             if (inertiaVel > -1e-6 && inertiaVel < 1e-6) inertiaVel = 0;
-            yaw += (AUTO_VEL * autoVelScale * autoBlend + inertiaVel) * dt;
+            // Deriva orgânica em torno do Brasil ("respiração") + retorno suave
+            // pós-drag — o país nunca sai de cena, e nada se move em linha reta.
+            const tSec = now * 0.001;
+            const yawTarget = YAW_HOME + Math.sin(tSec * 0.22) * 0.07 + yawPar;
+            let dyaw = (yawTarget - yaw) % TAU;
+            if (dyaw > Math.PI) dyaw -= TAU; else if (dyaw < -Math.PI) dyaw += TAU;
+            yaw += dyaw * Math.min(1, 0.03 * dt) * autoBlend + inertiaVel * dt;
             // Pitch volta suave pro enquadramento (base + parallax)
-            pitch += (PITCH_BASE + pitchPar - pitch) * Math.min(1, 0.04 * dt);
+            const pitchDrift = Math.sin(now * 0.001 * 0.15 + 1.3) * 0.035;
+            pitch += (PITCH_BASE + pitchDrift + pitchPar - pitch) * Math.min(1, 0.04 * dt) * autoBlend;
         }
         yawPrevFrame = yaw;
 
@@ -677,13 +708,15 @@ function boot(canvas, section, data, reduced) {
             try { canvas.setPointerCapture(e.pointerId); } catch { /* iframe edge */ }
         });
 
+        canvas.addEventListener('pointerleave', () => { mouseOn = false; yawParT = 0; pitchParT = 0; });
         canvas.addEventListener('pointermove', (e) => {
             if (hoverCapable && !dragging && W >= 560) {
                 // Alvos do parallax: yawVel ±20% (mouseX) e pitch ±0.06 (mouseY)
                 const nx = clamp((e.offsetX / W) * 2 - 1, -1, 1);
                 const ny = clamp((e.offsetY / H) * 2 - 1, -1, 1);
-                autoVelScaleT = 1 + 0.2 * nx;
+                yawParT = nx * 0.085;
                 pitchParT = ny * 0.06;
+                mouseSX = e.offsetX; mouseSY = e.offsetY; mouseOn = true;
             }
             if (!dragging || e.pointerId !== activePtr) return;
             const dx = e.clientX - lastPX, dy = e.clientY - lastPY;
