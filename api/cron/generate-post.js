@@ -12,6 +12,7 @@
 import { timingSafeEqual, createHash } from 'node:crypto';
 import { getSettings, sbFetch, logGeneration } from '../_lib/supabase.js';
 import { generatePost } from '../_lib/generate.js';
+import { syncContentLabTopics } from '../_lib/contentlab-sync.js';
 import { nowInSaoPaulo, sendError } from '../_lib/util.js';
 
 // Geração via Gemini pode demorar — estende o timeout da function
@@ -47,6 +48,13 @@ export default async function handler(req, res) {
         if (!settings.enabled) {
             return skip(res, 'Sistema desativado nas settings (enabled=false)');
         }
+
+        // 1b. Mantém a fila de pautas fresca com os assuntos do Content Lab.
+        //     Roda TODO dia (mesmo sem publicação) e nunca derruba a geração.
+        const sync = await syncContentLabTopics().catch((e) => {
+            console.error('contentlab-sync:', e.message);
+            return null;
+        });
 
         // 2. Hoje é dia de publicar? (fuso America/Sao_Paulo)
         const sp = nowInSaoPaulo();
