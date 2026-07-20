@@ -45,6 +45,7 @@
             <nav class="tabs" role="tablist">
                 <button class="tab active" data-tab="dashboard">Dashboard</button>
                 <button class="tab" data-tab="topics">Pautas</button>
+                <button class="tab" data-tab="logs">Histórico</button>
                 <button class="tab" data-tab="settings">Linha editorial</button>
             </nav>
         </header>
@@ -162,6 +163,7 @@
                             <tr>
                                 <th style="width:60px">Prior.</th>
                                 <th>Pauta</th>
+                                <th>Origem</th>
                                 <th>Produto</th>
                                 <th>Status</th>
                                 <th style="text-align:right">Ações</th>
@@ -172,6 +174,46 @@
                     <div id="topics-loading" class="page-spinner"><div class="spinner"></div></div>
                     <div id="topics-empty" class="empty-state hidden">Nenhuma pauta aqui.</div>
                 </div>
+            </section>
+
+            <!-- -------------------- TAB: HISTÓRICO -------------------- -->
+            <section id="tab-logs" class="tab-panel hidden">
+                <div id="logs-health" class="health-banner hidden"></div>
+
+                <div class="toolbar">
+                    <h2 class="section-title" style="margin:0">Execuções do gerador</h2>
+                    <div class="filters">
+                        <select id="logs-status-filter">
+                            <option value="">Todas</option>
+                            <option value="success">Publicações</option>
+                            <option value="error">Erros</option>
+                            <option value="skipped">Dias pulados</option>
+                        </select>
+                        <button id="btn-refresh-logs" class="btn btn-outline btn-sm">Atualizar</button>
+                    </div>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:130px">Quando</th>
+                                <th style="width:90px">Origem</th>
+                                <th style="width:100px">Resultado</th>
+                                <th>Detalhe</th>
+                                <th style="width:90px;text-align:right">Duração</th>
+                            </tr>
+                        </thead>
+                        <tbody id="logs-tbody"></tbody>
+                    </table>
+                    <div id="logs-loading" class="page-spinner"><div class="spinner"></div></div>
+                    <div id="logs-empty" class="empty-state hidden">Nenhuma execução registrada ainda.</div>
+                </div>
+                <p class="field-hint" style="margin-top:12px">
+                    O gerador roda todo dia e registra o resultado aqui — inclusive quando pula
+                    (fora dos dias de publicação ou limite semanal atingido). Vários dias sem
+                    nenhuma linha significa que o agendamento parou de rodar.
+                </p>
             </section>
 
             <!-- ------------------- TAB: LINHA EDITORIAL ------------------- -->

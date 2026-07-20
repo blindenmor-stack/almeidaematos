@@ -18,6 +18,7 @@
         editingPostId: null,
         postsFilter: { status: '', q: '' },
         topicsFilter: 'pending',
+        logsFilter: '',
     };
 
     const $ = (sel) => document.querySelector(sel);
@@ -117,6 +118,7 @@
         document.querySelectorAll('.tab').forEach((t) => t.classList.toggle('active', t.dataset.tab === name));
         document.querySelectorAll('.tab-panel').forEach((p) => p.classList.toggle('hidden', p.id !== `tab-${name}`));
         if (name === 'topics') loadTopics();
+        if (name === 'logs') loadLogs();
         if (name === 'settings') loadSettings(true);
         if (name === 'dashboard') loadDashboard();
     }
@@ -393,6 +395,21 @@
 
     const TOPIC_STATUS_LABEL = { pending: 'Pendente', used: 'Usada', discarded: 'Descartada' };
 
+    // Origem das pautas: de onde cada uma entrou na fila
+    const SOURCE_LABEL = {
+        manual: 'Manual',
+        contentlab: 'Content Lab',
+        notion: 'Notion',
+        editorial: 'Linha editorial',
+        ia: 'IA',
+    };
+
+    function renderSourceBadge(source) {
+        const key = String(source || 'manual');
+        const label = SOURCE_LABEL[key] || key;
+        return `<span class="badge badge-source badge-source-${esc(key)}">${esc(label)}</span>`;
+    }
+
     function renderTopicsTable(topics) {
         const tbody = $('#topics-tbody');
         if (!topics.length) {
@@ -410,6 +427,7 @@
                     <span class="post-title-cell" style="white-space:normal">${esc(t.topic)}</span>
                     ${t.target_keyword ? `<span class="post-slug-cell">kw: ${esc(t.target_keyword)}</span>` : ''}
                 </td>
+                <td>${renderSourceBadge(t.source)}</td>
                 <td>${esc(t.product_slug || '—')}</td>
                 <td><span class="badge badge-${esc(t.status)}">${TOPIC_STATUS_LABEL[t.status] || esc(t.status)}</span></td>
                 <td>
@@ -479,6 +497,101 @@
             toast(err.message, 'error');
         } finally {
             setBtnLoading(btn, false);
+        }
+    }
+
+    // -------------------------------------------------------------- Histórico
+    const LOG_STATUS_LABEL = { success: 'Publicou', error: 'Erro', skipped: 'Pulou' };
+    const TRIGGER_LABEL = { cron: 'Automático', manual: 'Manual' };
+
+    /** "hoje 07h01", "ontem 07h00" ou "18/07 07h00" */
+    function formatRunAt(iso) {
+        const d = new Date(iso);
+        if (Number.isNaN(d.getTime())) return '—';
+        const hhmm = `${String(d.getHours()).padStart(2, '0')}h${String(d.getMinutes()).padStart(2, '0')}`;
+        const today = new Date();
+        const dayDiff = Math.round(
+            (new Date(today.getFullYear(), today.getMonth(), today.getDate()) -
+             new Date(d.getFullYear(), d.getMonth(), d.getDate())) / 86400000
+        );
+        if (dayDiff === 0) return `hoje ${hhmm}`;
+        if (dayDiff === 1) return `ontem ${hhmm}`;
+        return `${d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })} ${hhmm}`;
+    }
+
+    function formatDuration(ms) {
+        if (!ms && ms !== 0) return '—';
+        return ms < 1000 ? `${ms}ms` : `${(ms / 1000).toFixed(0)}s`;
+    }
+
+    /** Banner de saúde: silencioso quando está tudo em dia. */
+    function renderLogsHealth(health) {
+        const el = $('#logs-health');
+        const days = health.days_since_success;
+
+        if (days === null) {
+            el.className = 'health-banner warn';
+            el.innerHTML = '<strong>Nenhuma publicação registrada ainda.</strong> Assim que o gerador rodar, o resultado aparece aqui.';
+            el.classList.remove('hidden');
+            return;
+        }
+        // Sem publicar há mais de 4 dias: passou de um ciclo seg/qua/sex inteiro
+        if (days > 4) {
+            el.className = 'health-banner error';
+            el.innerHTML = `<strong>Atenção: ${days} dias sem publicar.</strong> ` +
+                (health.last_error_detail
+                    ? `Último erro: ${esc(String(health.last_error_detail).slice(0, 200))}`
+                    : 'O agendamento pode ter parado de rodar.');
+            el.classList.remove('hidden');
+            return;
+        }
+        el.className = 'health-banner ok';
+        el.innerHTML = `Última publicação: <strong>${formatRunAt(health.last_success_at)}</strong>. Agendamento rodando normalmente.`;
+        el.classList.remove('hidden');
+    }
+
+    function renderLogsTable(items) {
+        const tbody = $('#logs-tbody');
+        if (!items.length) {
+            $('#logs-empty').classList.remove('hidden');
+            tbody.innerHTML = '';
+            return;
+        }
+        $('#logs-empty').classList.add('hidden');
+
+        tbody.innerHTML = items.map((it) => {
+            // Post publicado vira link; senão mostra o detalhe cru do log
+            const detail = it.post
+                ? `${it.post.status === 'published'
+                    ? `<a href="/${esc(it.post.slug)}/" target="_blank" rel="noopener">${esc(it.post.title)}</a>`
+                    : esc(it.post.title)}` +
+                  (it.topic ? `<span class="post-slug-cell">pauta ${esc(it.topic.source || 'manual')}${it.model ? ` · ${esc(it.model)}` : ''}</span>` : '')
+                : `<span class="log-detail">${esc(it.detail || '—')}</span>`;
+
+            return `
+            <tr>
+                <td>${esc(formatRunAt(it.run_at))}</td>
+                <td>${esc(TRIGGER_LABEL[it.trigger_source] || it.trigger_source || '—')}</td>
+                <td><span class="badge badge-log-${esc(it.status)}">${LOG_STATUS_LABEL[it.status] || esc(it.status)}</span></td>
+                <td>${detail}</td>
+                <td style="text-align:right">${esc(formatDuration(it.duration_ms))}</td>
+            </tr>`;
+        }).join('');
+    }
+
+    async function loadLogs() {
+        $('#logs-loading').classList.remove('hidden');
+        $('#logs-empty').classList.add('hidden');
+        try {
+            const params = new URLSearchParams({ limit: '60' });
+            if (state.logsFilter) params.set('status', state.logsFilter);
+            const { items, health } = await api(`/admin/logs?${params}`);
+            renderLogsHealth(health);
+            renderLogsTable(items);
+        } catch (err) {
+            toast(err.message, 'error');
+        } finally {
+            $('#logs-loading').classList.add('hidden');
         }
     }
 
@@ -596,6 +709,13 @@
             state.topicsFilter = e.target.value;
             loadTopics();
         });
+
+        // Histórico
+        $('#logs-status-filter').addEventListener('change', (e) => {
+            state.logsFilter = e.target.value;
+            loadLogs();
+        });
+        $('#btn-refresh-logs').addEventListener('click', loadLogs);
 
         // Settings
         $('#settings-form').addEventListener('submit', handleSettingsSave);

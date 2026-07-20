@@ -430,6 +430,33 @@ td .post-slug-cell { font-size: .72rem; color: var(--gray-500); }
 .badge-used { background: rgba(30, 142, 90, .15); color: #5AC58F; border: 1px solid rgba(30, 142, 90, .35); }
 .badge-discarded { background: rgba(132, 134, 136, .15); color: var(--gray-500); border: 1px solid rgba(132, 134, 136, .35); }
 
+/* Origem da pauta (de onde ela entrou na fila) */
+.badge-source { font-weight: 600; letter-spacing: .03em; text-transform: none; }
+.badge-source-manual { background: rgba(132, 134, 136, .12); color: var(--gray-500); border: 1px solid rgba(132, 134, 136, .3); }
+.badge-source-contentlab { background: rgba(85, 102, 166, .18); color: var(--navy-300); border: 1px solid rgba(85, 102, 166, .45); }
+.badge-source-notion { background: rgba(210, 174, 109, .12); color: var(--gold-300); border: 1px solid rgba(210, 174, 109, .35); }
+.badge-source-editorial { background: rgba(30, 142, 90, .14); color: #5AC58F; border: 1px solid rgba(30, 142, 90, .32); }
+.badge-source-ia { background: rgba(53, 66, 113, .4); color: var(--navy-300); border: 1px solid rgba(151, 163, 204, .25); }
+
+/* Resultado da execução no histórico */
+.badge-log-success { background: rgba(30, 142, 90, .18); color: #5AC58F; border: 1px solid rgba(30, 142, 90, .4); }
+.badge-log-error { background: rgba(190, 60, 60, .18); color: #E48383; border: 1px solid rgba(190, 60, 60, .42); }
+.badge-log-skipped { background: rgba(132, 134, 136, .15); color: var(--gray-500); border: 1px solid rgba(132, 134, 136, .35); }
+
+.log-detail { color: var(--gray-500); font-size: .86rem; }
+
+/* Banner de saúde do agendamento (topo do histórico) */
+.health-banner {
+    padding: .8rem 1rem;
+    border-radius: 10px;
+    margin-bottom: 1.1rem;
+    font-size: .9rem;
+    line-height: 1.5;
+}
+.health-banner.ok { background: rgba(30, 142, 90, .1); color: #8FD9B4; border: 1px solid rgba(30, 142, 90, .3); }
+.health-banner.warn { background: rgba(210, 174, 109, .1); color: var(--gold-300); border: 1px solid rgba(210, 174, 109, .32); }
+.health-banner.error { background: rgba(190, 60, 60, .12); color: #E9A0A0; border: 1px solid rgba(190, 60, 60, .38); }
+
 /* Toolbar acima da tabela */
 .toolbar {
     display: flex;
