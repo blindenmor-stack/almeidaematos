@@ -23,6 +23,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','${GTM_ID}');</script>`;
 const GTM_NOSCRIPT = `<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>`;
+
+// Microsoft Clarity — mesmo projeto do resto do site. As páginas do Vite recebem
+// por plugin (vite.config.js); estes posts são montados aqui, fora do build, e
+// precisam da própria cópia. Trocou o ID? Trocar nos dois lugares.
+const CLARITY_ID = 'xpeqwvizm1';
+const CLARITY_HEAD = `<script>(function(c,l,a,r,i,t,y){
+c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+})(window, document, "clarity", "script", "${CLARITY_ID}");</script>`;
 // Tracking de cliques de WhatsApp — mesmo evento/formato do main.js do site.
 const WA_TRACKING = `<script>window.dataLayer=window.dataLayer||[];document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href*="wa.me"]');if(!a)return;var loc='blog_post';if(a.closest('.post-cta'))loc='blog_cta';else if(a.closest('.site-header'))loc='navbar';else if(a.closest('.site-footer'))loc='footer';window.dataLayer.push({event:'click_whatsapp',click_location:loc,page_path:window.location.pathname,page_title:document.title});});</script>`;
 
@@ -187,6 +197,7 @@ export function renderPostPage(post) {
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     ${buildJsonLd(post)}
     ${GTM_HEAD}
+    ${CLARITY_HEAD}
     <style>${BASE_CSS}</style>
 </head>
 <body>
