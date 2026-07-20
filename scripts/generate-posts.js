@@ -16,6 +16,7 @@
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import { join, resolve } from 'path';
+import { renderPost, escapeHtml, formatDateBR as formatDate } from '../api/_lib/post-renderer.js';
 
 const DIST = resolve(import.meta.dirname, '..', 'dist');
 const POSTS_DIR = join(DIST, 'blog', 'posts');
@@ -26,39 +27,6 @@ const template = readFileSync(join(DIST, 'blog-post.html'), 'utf-8');
 
 // Ler posts-data.json
 const postsData = JSON.parse(readFileSync(join(POSTS_DIR, 'posts-data.json'), 'utf-8'));
-
-function formatDate(dateStr) {
-    const date = new Date(String(dateStr).slice(0, 10) + 'T12:00:00');
-    return date.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
-}
-
-function escapeHtml(str) {
-    return String(str ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-}
-
-// Replace com validação: se o marcador não existir no template, lança erro.
-// O replacement vai via função para o JS não interpretar padrões especiais
-// ($&, $$, $`) presentes no conteúdo dos posts (ex: "R$&nbsp;1.200").
-function replaceOnce(html, regex, replacement, label) {
-    if (!regex.test(html)) throw new Error(`Marcador não encontrado no template: ${label}`);
-    return html.replace(regex, () => replacement);
-}
-
-// Mesmo shape do metaHTML() do blog.js — mantém SSG e client-side idênticos
-function metaHTML(post) {
-    const parts = [`Publicado em ${formatDate(post.date)}`];
-    const modified = post.modified || post.dateModified || post.updated;
-    if (modified && String(modified).slice(0, 10) !== String(post.date).slice(0, 10)) {
-        parts.push(`Atualizado em ${formatDate(modified)}`);
-    }
-    parts.push(`${escapeHtml(post.readTime)} de leitura`);
-    parts.push(escapeHtml(post.author));
-    return parts.map((t) => `<span>${t}</span>`).join('<i aria-hidden="true"></i>');
-}
 
 let generated = 0;
 let errors = 0;
@@ -75,106 +43,17 @@ for (const postMeta of postsData) {
             post.readTime = Math.max(1, Math.ceil(wordCount / 200)) + ' min';
         }
 
-        let html = template;
-
-        // Title (preserva o id — blog.js usa document.title, mas mantém consistência)
-        html = replaceOnce(html,
-            /<title id="page-title"[^>]*>[\s\S]*?<\/title>/,
-            `<title id="page-title">${escapeHtml(post.title)} | Almeida &amp; Matos Advogados</title>`,
-            'title#page-title'
-        );
-
-        // Meta description
-        html = replaceOnce(html,
-            /<meta name="description" id="page-description"[^>]*>/,
-            `<meta name="description" id="page-description" content="${escapeHtml(post.excerpt)}">`,
-            'meta#page-description'
-        );
-
-        // Canonical
-        html = replaceOnce(html,
-            /<link rel="canonical" id="page-canonical"[^>]*>/,
-            `<link rel="canonical" id="page-canonical" href="${SITE_URL}/${post.slug}/">`,
-            'link#page-canonical'
-        );
-
-        // OG tags (og:image/width/height já são estáticos no template)
-        html = replaceOnce(html,
-            /<meta property="og:title" id="og-title"[^>]*>/,
-            `<meta property="og:title" id="og-title" content="${escapeHtml(post.title)}">`,
-            'meta#og-title'
-        );
-        html = replaceOnce(html,
-            /<meta property="og:description" id="og-description"[^>]*>/,
-            `<meta property="og:description" id="og-description" content="${escapeHtml(post.excerpt)}">`,
-            'meta#og-description'
-        );
-        html = replaceOnce(html,
-            /<meta property="og:url" id="og-url"[^>]*>/,
-            `<meta property="og:url" id="og-url" content="${SITE_URL}/${post.slug}/">`,
-            'meta#og-url'
-        );
-
-        // Breadcrumb title
-        html = replaceOnce(html,
-            /<span id="breadcrumb-title"[^>]*>[\s\S]*?<\/span>/,
-            `<span id="breadcrumb-title">${escapeHtml(post.title)}</span>`,
-            'span#breadcrumb-title'
-        );
-
-        // Categoria (tag do hero)
-        html = replaceOnce(html,
-            /<span id="post-category"[^>]*>[\s\S]*?<\/span>/,
-            `<span id="post-category" class="post-card__tag post-hero__tag">${escapeHtml(post.category)}</span>`,
-            'span#post-category'
-        );
-
-        // H1
-        html = replaceOnce(html,
-            /<h1 id="post-title"[^>]*>[\s\S]*?<\/h1>/,
-            `<h1 id="post-title" class="display hero__title">${escapeHtml(post.title)}</h1>`,
-            'h1#post-title'
-        );
-
-        // Meta do post (datas, leitura, autor)
-        html = replaceOnce(html,
-            /<div id="post-meta"[^>]*>[\s\S]*?<\/div>/,
-            `<div id="post-meta" class="post-hero__meta">${metaHTML(post)}</div>`,
-            'div#post-meta'
-        );
-
-        // Conteúdo (troca o skeleton pelo HTML real; delimitado por <!-- /post-content -->)
-        html = replaceOnce(html,
-            /<div id="post-content"[\s\S]*?<!-- \/post-content -->/,
-            `<div id="post-content" class="prose post-body" data-ssg="1">\n${post.content}\n                    </div>\n                    <!-- /post-content -->`,
-            'div#post-content'
-        );
-
-        // Structured data (JSON-LD Article) — datas em ISO 8601
-        const modified = post.modified || post.dateModified || post.updated || post.date;
-        const schema = JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'Article',
-            headline: post.title,
-            description: post.excerpt,
-            image: `${SITE_URL}/img/og-cover.jpg`,
-            datePublished: post.date,
-            dateModified: modified,
-            inLanguage: 'pt-BR',
-            author: { '@type': 'Organization', name: 'Equipe Almeida & Matos', url: SITE_URL },
-            publisher: {
-                '@type': 'Organization',
-                name: 'Almeida & Matos Advogados',
-                url: SITE_URL,
-                logo: { '@type': 'ImageObject', url: `${SITE_URL}/img/logo-am-oficial.webp` }
-            },
-            mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE_URL}/${post.slug}/` }
+        const html = renderPost(template, {
+            title: post.title,
+            slug: post.slug,
+            excerpt: post.excerpt,
+            category: post.category,
+            date: post.date,
+            modified: post.modified || post.dateModified || post.updated || null,
+            author: post.author,
+            readTime: post.readTime,
+            content: post.content,
         });
-        html = replaceOnce(html,
-            /<\/head>/,
-            `    <script type="application/ld+json" data-am-article>${schema}</script>\n</head>`,
-            '</head> (JSON-LD)'
-        );
 
         // Escrever dist/{slug}/index.html
         const outDir = join(DIST, post.slug);

@@ -1,24 +1,91 @@
 {
   "redirects": [
-    { "source": "/wp-admin/:path*", "destination": "/", "statusCode": 301 },
-    { "source": "/wp-login.php", "destination": "/", "statusCode": 301 },
-    { "source": "/wp-content/:path*", "destination": "/", "statusCode": 301 },
-    { "source": "/wp-includes/:path*", "destination": "/", "statusCode": 301 },
-    { "source": "/wp-json/:path*", "destination": "/", "statusCode": 301 },
-    { "source": "/feed/:path*", "destination": "/blog/", "statusCode": 301 },
-    { "source": "/feed", "destination": "/blog/", "statusCode": 301 },
-    { "source": "/category/:path*", "destination": "/blog/", "statusCode": 301 },
-    { "source": "/tag/:path*", "destination": "/blog/", "statusCode": 301 },
-    { "source": "/author/:path*", "destination": "/blog/", "statusCode": 301 },
-    { "source": "/page/:path*", "destination": "/blog/", "statusCode": 301 },
-    { "source": "/xmlrpc.php", "destination": "/", "statusCode": 301 },
-    { "source": "/areas-de-atuacao/:path*", "destination": "/", "statusCode": 301 },
-    { "source": "/quem-somos/:path*", "destination": "/", "statusCode": 301 },
-    { "source": "/home", "destination": "/", "statusCode": 301 },
-    { "source": "/sitemap_index.xml", "destination": "/sitemap.xml", "statusCode": 301 }
+    {
+      "source": "/wp-admin/:path*",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-login.php",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-content/:path*",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-includes/:path*",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/wp-json/:path*",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/feed/:path*",
+      "destination": "/blog/",
+      "statusCode": 301
+    },
+    {
+      "source": "/feed",
+      "destination": "/blog/",
+      "statusCode": 301
+    },
+    {
+      "source": "/category/:path*",
+      "destination": "/blog/",
+      "statusCode": 301
+    },
+    {
+      "source": "/tag/:path*",
+      "destination": "/blog/",
+      "statusCode": 301
+    },
+    {
+      "source": "/author/:path*",
+      "destination": "/blog/",
+      "statusCode": 301
+    },
+    {
+      "source": "/page/:path*",
+      "destination": "/blog/",
+      "statusCode": 301
+    },
+    {
+      "source": "/xmlrpc.php",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/areas-de-atuacao/:path*",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/quem-somos/:path*",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/home",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sitemap_index.xml",
+      "destination": "/sitemap.xml",
+      "statusCode": 301
+    }
   ],
   "rewrites": [
-    { "source": "/sitemap.xml", "destination": "/api/blog/sitemap" },
+    {
+      "source": "/sitemap.xml",
+      "destination": "/api/blog/sitemap"
+    },
     {
       "source": "/:slug((?!blog(?:/|$)|assets(?:/|$)|img(?:/|$)|api(?:/|$)|admin(?:/|$)|beneficios(?:/|$)|_next(?:/|$)|favicon|robots|sitemap|llms).*)",
       "destination": "/api/blog/post?slug=:slug"
@@ -28,23 +95,44 @@
     {
       "source": "/blog/posts/(.*).json",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400, s-maxage=86400" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, s-maxage=86400"
+        }
       ]
     },
     {
       "source": "/admin/(.*)",
       "headers": [
-        { "key": "X-Robots-Tag", "value": "noindex, nofollow" },
-        { "key": "Cache-Control", "value": "no-store" }
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
       ]
     }
   ],
   "crons": [
-    { "path": "/api/cron/generate-post", "schedule": "0 10 * * *" }
+    {
+      "path": "/api/cron/generate-post",
+      "schedule": "0 10 * * *"
+    }
   ],
   "functions": {
-    "api/blog/sitemap.js": { "includeFiles": "public/blog/posts/posts-data.json" },
-    "api/cron/generate-post.js": { "maxDuration": 300 },
-    "api/admin/generate.js": { "maxDuration": 300 }
+    "api/blog/sitemap.js": {
+      "includeFiles": "public/blog/posts/posts-data.json"
+    },
+    "api/cron/generate-post.js": {
+      "maxDuration": 300
+    },
+    "api/admin/generate.js": {
+      "maxDuration": 300
+    },
+    "api/blog/post.js": {
+      "includeFiles": "dist/blog-post.html"
+    }
   }
 }

@@ -30,7 +30,16 @@ DIREÇÃO DE ARTE OBRIGATÓRIA (identidade da marca Almeida & Matos):
 - Composição horizontal 16:9, elemento central levemente à direita (espaço de respiro à esquerda)`;
 }
 
-async function generateImage({ title, category }) {
+// O modelo de imagem devolve 503 "high demand" com alguma frequência, e é
+// transitório: sem repetir, o post é publicado sem capa PARA SEMPRE (nada
+// reprocessa depois). Estes são os status que valem nova tentativa.
+const RETRYABLE = new Set([429, 500, 502, 503, 504]);
+const MAX_ATTEMPTS = 3;
+const BACKOFF_MS = [3000, 9000];
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+async function generateImageOnce({ title, category }) {
     const key = process.env.GEMINI_API_KEY;
     if (!key) throw new Error('GEMINI_API_KEY não configurada');
     const res = await fetch(
@@ -47,11 +56,38 @@ async function generateImage({ title, category }) {
             }),
         }
     );
-    if (!res.ok) throw new Error(`nano-banana-pro ${res.status}: ${(await res.text()).slice(0, 300)}`);
+    if (!res.ok) {
+        const err = new Error(`nano-banana-pro ${res.status}: ${(await res.text()).slice(0, 300)}`);
+        err.status = res.status;
+        throw err;
+    }
     const data = await res.json();
     const part = (data.candidates?.[0]?.content?.parts || []).find((p) => p.inlineData?.data);
-    if (!part) throw new Error('nano-banana-pro: resposta sem imagem');
+    if (!part) {
+        // Resposta vazia costuma ser bloqueio de segurança momentâneo — tentar de novo é válido.
+        const err = new Error('nano-banana-pro: resposta sem imagem');
+        err.status = 503;
+        throw err;
+    }
     return { buffer: Buffer.from(part.inlineData.data, 'base64'), mime: part.inlineData.mimeType || 'image/png' };
+}
+
+/** Tenta gerar a imagem até MAX_ATTEMPTS quando a falha é transitória. */
+async function generateImage({ title, category }) {
+    let lastErr;
+    for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+        try {
+            return await generateImageOnce({ title, category });
+        } catch (err) {
+            lastErr = err;
+            const canRetry = RETRYABLE.has(err.status) && attempt < MAX_ATTEMPTS;
+            if (!canRetry) throw err;
+            const wait = BACKOFF_MS[attempt - 1] ?? 9000;
+            console.warn(`[cover] tentativa ${attempt}/${MAX_ATTEMPTS} falhou (${err.status}); repetindo em ${wait / 1000}s`);
+            await sleep(wait);
+        }
+    }
+    throw lastErr;
 }
 
 async function uploadToStorage({ slug, buffer, mime }) {
