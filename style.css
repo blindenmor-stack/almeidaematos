@@ -781,8 +781,11 @@ html:not(.js) .preloader { display: none; }
 }
 .hero__photo { position: relative; z-index: 1; background: none; border: 0; border-radius: 0; }
 .hero__photo::after {
-  content: ''; position: absolute; inset: auto 0 0 0; height: 1px; background: var(--line);
+  /* base dourada: o "chão" dos sócios, na cor do logo */
+  content: ''; position: absolute; inset: auto 0 0 0; height: 6px;
+  background: var(--gold-grad);
 }
+.hero__photo { padding-bottom: 6px; }
 .hero__visual::before {
   content: ''; position: absolute; left: 10%; right: 10%; top: 14%; bottom: 0; z-index: 0;
   background: radial-gradient(ellipse at 50% 70%, rgba(53, 66, 113, 0.10), transparent 70%);
