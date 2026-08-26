@@ -617,7 +617,7 @@ html:not(.js) .faq__answer { height: auto; opacity: 1; }
 .footer ul { display: grid; gap: 8px; font-size: 0.93rem; }
 .footer__brand p { font-size: 0.92rem; max-width: 26rem; }
 .footer__badge { display: inline-block; line-height: 0; margin-bottom: 1rem; }
-.footer__badge img { height: 46px; }
+.footer__badge img { height: 56px; width: auto; display: block; }
 .footer__oab { font-size: 0.85rem; margin-top: 0.8rem; display: grid; gap: 2px; }
 
 .footer__map {
@@ -760,6 +760,69 @@ html:not(.js) .preloader { display: none; }
   h1.hero__title { font-size: clamp(2rem, 3.6vw, 2.8rem); margin-bottom: 1rem; }
   .hero__sub { margin-bottom: 1.4rem; }
   .hero__visual { max-width: min(100%, 52vh); margin-inline: auto; }
+}
+
+
+/* ============================================================
+   TEXTURA (grão fino, SVG inline; sem asset)
+   ============================================================ */
+.section--paper::before, .section--paper-2::before, .hero::before, .footer::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n' x='0' y='0'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.21 0 0 0 0 0.26 0 0 0 0 0.44 0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity: 0.3;
+}
+.hero > .container, .footer > .container { position: relative; z-index: 1; }
+
+/* marca vazada (contorno) */
+.hero__mark {
+  display: block; position: absolute; z-index: 0; pointer-events: none;
+  width: 140%; left: -20%; top: -3%;
+  opacity: 0.26;
+}
+.hero__photo { position: relative; z-index: 1; background: none; border: 0; border-radius: 0; }
+.hero__photo::after {
+  content: ''; position: absolute; inset: auto 0 0 0; height: 1px; background: var(--line);
+}
+.hero__visual::before {
+  content: ''; position: absolute; left: 10%; right: 10%; top: 14%; bottom: 0; z-index: 0;
+  background: radial-gradient(ellipse at 50% 70%, rgba(53, 66, 113, 0.10), transparent 70%);
+  pointer-events: none;
+}
+.hero { overflow: hidden; }
+.hero__mark--page { width: 46%; left: auto; right: -9%; top: -6%; opacity: 0.16; }
+.cta-final { overflow: hidden; }
+.cta-final__mark {
+  display: block; position: absolute; z-index: 0; pointer-events: none;
+  width: 44%; right: -8%; bottom: -34%; opacity: 0.2;
+}
+
+/* faixa com foto + frase */
+.band__grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+.band__photo { margin: 0; overflow: hidden; border-radius: 8px; max-width: 420px; }
+.band__photo img { width: 100%; height: auto; display: block; }
+.band__quote {
+  font-family: var(--font-display); font-weight: 500; font-style: italic;
+  font-size: clamp(1.5rem, 2.8vw, 2.2rem); line-height: 1.25; color: var(--color-navy-800);
+  margin: 0.6rem 0 1.2rem; text-wrap: balance;
+}
+
+/* seção em duas colunas com foto */
+.split { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+.split__photo { margin: 0; overflow: hidden; border-radius: 8px; border: 1px solid var(--line-soft); background: #fff; }
+.split__photo img { width: 100%; height: auto; display: block; }
+.split__photo figcaption { font-size: 0.84rem; color: var(--color-gray-brand); padding: 10px 14px; }
+.split .section-head { margin-bottom: clamp(1.4rem, 3vw, 2rem); }
+
+.steps-photo { margin: 1.6rem 0 0; overflow: hidden; border-radius: 8px; max-width: 360px; }
+.steps-photo img { width: 100%; height: auto; display: block; }
+
+@media (max-width: 860px) {
+  .band__grid, .split { grid-template-columns: 1fr; }
+  .band__photo { max-width: 100%; }
+  .hero__mark { width: 150%; left: -25%; top: -10%; }
+  .hero__mark--page { width: 80%; right: -25%; top: 0; }
+  .cta-final__mark { width: 90%; right: -30%; bottom: -30%; }
+  .steps-photo { max-width: 100%; }
 }
 
 /* ============================================================
