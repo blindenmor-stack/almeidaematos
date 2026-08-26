@@ -26,7 +26,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,500..900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
         rel="stylesheet">
 
     <!-- CSS -->
@@ -63,7 +63,7 @@
             {
                 "@type": "Service",
                 "name": "Auxílio-Doença",
-                "serviceType": "Assessoria jurídica em auxílio-doença — benefício por incapacidade temporária (INSS)",
+                "serviceType": "Assessoria jurídica em auxílio-doença (benefício por incapacidade temporária, INSS)",
                 "provider": { "@id": "https://almeidaematos.com.br/#org" },
                 "areaServed": "BR",
                 "description": "Análise e condução de pedidos de auxílio-doença (benefício por incapacidade temporária): benefício do INSS para o segurado que fica incapaz de trabalhar por mais de 15 dias por doença ou acidente."
@@ -82,32 +82,32 @@
                     {
                         "@type": "Question",
                         "name": "Meu vizinho tem o mesmo problema e conseguiu. Por que o meu foi negado?",
-                        "acceptedAnswer": { "@type": "Answer", "text": "Porque o INSS avalia a incapacidade, não a doença. A mesma condição pode incapacitar quem faz esforço físico e não incapacitar quem trabalha sentado. A função exercida e a qualidade dos laudos mudam completamente o resultado." }
+                        "acceptedAnswer": { "@type": "Answer", "text": "Porque o INSS decide caso a caso, olhando a sua incapacidade específica. A mesma doença pode incapacitar quem faz esforço físico e não incapacitar quem trabalha sentado. A função que você exerce e a qualidade dos laudos mudam o resultado." }
                     },
                     {
                         "@type": "Question",
                         "name": "O médico não quis colocar o CID ou o prazo no atestado. E agora?",
-                        "acceptedAnswer": { "@type": "Answer", "text": "Não protocole ainda. Orientamos exatamente o que o atestado precisa ter — CID, prazo estimado de afastamento, data, assinatura, carimbo e CRM — para você levar ao médico. Com essas informações claras, a maioria dos médicos completa o documento." }
+                        "acceptedAnswer": { "@type": "Answer", "text": "Não protocole ainda. A equipe explica exatamente o que o atestado precisa ter: CID, prazo estimado de afastamento, data, assinatura, carimbo e CRM. Você leva essa lista ao médico e, na maioria dos casos, ele completa o documento." }
                     },
                     {
                         "@type": "Question",
                         "name": "A perícia vai demorar meses. Como fico até lá?",
-                        "acceptedAnswer": { "@type": "Answer", "text": "Em muitos casos o Atestmed permite a análise só por documentos, sem perícia presencial — o que acelera a decisão. E, se o pedido for aprovado, você recebe os valores retroativos desde a data de entrada do requerimento (DER)." }
+                        "acceptedAnswer": { "@type": "Answer", "text": "Em muitos casos o Atestmed analisa só os documentos, sem perícia presencial, e isso acelera a decisão. Se o pedido for aprovado, você recebe os valores atrasados desde a data de entrada do requerimento (DER)." }
                     },
                     {
                         "@type": "Question",
                         "name": "Meu benefício tem data para acabar. E se eu não melhorar?",
-                        "acceptedAnswer": { "@type": "Answer", "text": "O auxílio-doença nasce com uma data de cessação (DCB). Se você ainda não tem condições de voltar ao trabalho, é preciso pedir a prorrogação antes desse prazo, pelo Meu INSS ou pelo telefone 135." }
+                        "acceptedAnswer": { "@type": "Answer", "text": "Você pede a prorrogação antes do prazo acabar. O auxílio-doença nasce com uma data de cessação (DCB). Se ainda não tiver condições de voltar ao trabalho, peça a prorrogação pelo Meu INSS ou pelo telefone 135." }
                     },
                     {
                         "@type": "Question",
                         "name": "Estou desempregado. Ainda tenho direito ao auxílio-doença?",
-                        "acceptedAnswer": { "@type": "Answer", "text": "É possível. Quem para de contribuir mantém a qualidade de segurado por um tempo — o chamado período de graça, que varia em geral de 3 a 36 meses conforme o histórico. Se a incapacidade começou dentro desse período, o direito pode existir." }
+                        "acceptedAnswer": { "@type": "Answer", "text": "Depende do caso, mas é possível. Quem para de contribuir continua segurado do INSS por um tempo (o período de graça), que varia em geral de 3 a 36 meses conforme o histórico. Se a incapacidade começou dentro desse período, o direito pode existir." }
                     },
                     {
                         "@type": "Question",
                         "name": "Vocês garantem que eu vou receber?",
-                        "acceptedAnswer": { "@type": "Answer", "text": "Não — e desconfie de quem garante. A decisão é do perito do INSS ou do juiz. O que garantimos é o método: um pedido completo, tecnicamente fundamentado e sem falhas formais, acompanhado até a decisão final." }
+                        "acceptedAnswer": { "@type": "Answer", "text": "Não, e desconfie de quem garante. A decisão é do perito do INSS ou do juiz. O que a equipe garante é o método: um pedido completo, bem fundamentado e acompanhado até a decisão final." }
                     }
                 ]
             }
@@ -121,20 +121,23 @@
 
     <!-- Símbolo A&M reutilizável -->
     <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-        <symbol id="am-mark" viewBox="0 0 400 357">
-            <path d="M200,1 L399,356 L1,356 Z" fill="var(--mk-gold, #D2AE6D)" stroke="var(--mk-stroke, none)" stroke-width="var(--mk-sw, 0)" />
-            <path d="M233,156 L345,355 L298,355 L235,242 L218,260 L169,355 L122,355 Z" fill="var(--mk-navy, #141B38)" stroke="var(--mk-stroke, none)" stroke-width="var(--mk-sw, 0)" /><path d="M165,156 L193,202 L186,226 L173,245 L165,241 L159,246 L99,355 L54,355 Z" fill="var(--mk-navy, #141B38)" stroke="var(--mk-stroke, none)" stroke-width="var(--mk-sw, 0)" /><path d="M225,266 L277,355 L230,355 L205,305 Z" fill="var(--mk-navy, #141B38)" stroke="var(--mk-stroke, none)" stroke-width="var(--mk-sw, 0)" />
+        <symbol id="am-mark" viewBox="0 0 400 351">
+            <path d="M200.0,0.0 L400.1,350.6 L0.0,350.6 Z" fill="var(--mk-navy, #354271)" stroke="var(--mk-stroke, none)" stroke-width="var(--mk-sw, 0)" stroke-linejoin="miter" />
+            <path d="M276.4,350.6 L165.5,145.9 L54.6,350.6 L103.2,350.6 L165.5,235.4 L227.8,350.6 Z" fill="var(--mk-gold, #D2AE6D)" stroke="var(--mk-stroke, none)" stroke-width="var(--mk-sw, 0)" stroke-linejoin="miter" />
+            <path d="M344.6,350.6 L233.7,145.9 L122.8,350.6 L171.5,350.6 L233.7,235.4 L296.0,350.6 Z" fill="var(--mk-gray, #848688)" stroke="var(--mk-stroke, none)" stroke-width="var(--mk-sw, 0)" stroke-linejoin="miter" />
         </symbol>
     </svg>
 
     <!-- Preloader -->
     <div class="preloader" id="preloader" aria-hidden="true">
         <div class="preloader__inner">
-            <svg class="preloader__mark" viewBox="0 0 400 357" aria-hidden="true">
-                <path class="mk-fill mk-fill--gold" d="M200,1 L399,356 L1,356 Z" />
-                <path class="mk-fill mk-fill--navy" d="M233,156 L345,355 L298,355 L235,242 L218,260 L169,355 L122,355 Z" /><path class="mk-fill mk-fill--navy" d="M165,156 L193,202 L186,226 L173,245 L165,241 L159,246 L99,355 L54,355 Z" /><path class="mk-fill mk-fill--navy" d="M225,266 L277,355 L230,355 L205,305 Z" />
-                <path class="mk-line" d="M200,1 L399,356 L1,356 Z" />
-                <path class="mk-line" d="M233,156 L345,355 L298,355 L235,242 L218,260 L169,355 L122,355 Z" /><path class="mk-line" d="M165,156 L193,202 L186,226 L173,245 L165,241 L159,246 L99,355 L54,355 Z" /><path class="mk-line" d="M225,266 L277,355 L230,355 L205,305 Z" />
+            <svg class="preloader__mark" viewBox="0 0 400 351" aria-hidden="true">
+                <path class="mk-fill mk-fill--navy" d="M200.0,0.0 L400.1,350.6 L0.0,350.6 Z" />
+                <path class="mk-fill mk-fill--gold" d="M276.4,350.6 L165.5,145.9 L54.6,350.6 L103.2,350.6 L165.5,235.4 L227.8,350.6 Z" />
+                <path class="mk-fill mk-fill--gray" d="M344.6,350.6 L233.7,145.9 L122.8,350.6 L171.5,350.6 L233.7,235.4 L296.0,350.6 Z" />
+                <path class="mk-line" d="M200.0,0.0 L400.1,350.6 L0.0,350.6 Z" />
+                <path class="mk-line" d="M223.9,253.7 L199.6,298.5 L227.8,350.6 L276.4,350.6 Z M165.5,145.9 L54.6,350.6 L103.2,350.6 L165.5,235.4 L175.3,253.7 L199.6,208.9 Z" />
+                <path class="mk-line" d="M344.6,350.6 L233.7,145.9 L122.8,350.6 L171.5,350.6 L233.7,235.4 L296.0,350.6 Z" />
             </svg>
             <div class="preloader__bar"><span></span></div>
         </div>
@@ -145,19 +148,20 @@
     <!-- NAV -->
     <header class="nav" id="nav">
         <div class="container nav__inner">
-            <a href="/" class="nav__logo" aria-label="Almeida & Matos — página inicial">
-                <span class="nav__logo-badge"><img src="/img/logo-am-oficial.webp" alt="Almeida & Matos Advogados" width="140" height="46"></span>
+            <a href="/" class="nav__logo" aria-label="Almeida & Matos: página inicial">
+                <img src="/img/logo-am-nav.webp" alt="Almeida & Matos Advogados" width="529" height="200">
             </a>
+
             <nav class="nav__links" aria-label="Navegação principal">
-                <a href="/#atuacao">Atuação</a>
+                <a href="/#direitos">Áreas de atuação</a>
                 <a href="/beneficios/">Benefícios</a>
-                <a href="/#como-funciona">Como Funciona</a>
-                <a href="/#escritorio">O Escritório</a>
+                <a href="/#como-funciona">Como funciona</a>
+                <a href="/#escritorio">Escritório</a>
                 <a href="/blog/">Blog</a>
-                <a class="btn btn--gold" style="padding:11px 20px;font-size:0.9rem"
-                   href="https://wa.me/5511930044411?text=Ol%C3%A1!%20Vi%20a%20p%C3%A1gina%20de%20aux%C3%ADlio-doen%C3%A7a%20no%20site%20e%20quero%20tirar%20uma%20d%C3%BAvida."
-                   target="_blank" rel="noopener">Fale Conosco</a>
+                <a href="/#faq">Dúvidas</a>
+                <a class="btn btn--navy" href="https://wa.me/5511930044411?text=Ol%C3%A1!%20Vi%20a%20p%C3%A1gina%20de%20aux%C3%ADlio-doen%C3%A7a%20no%20site%20e%20quero%20tirar%20uma%20d%C3%BAvida." target="_blank" rel="noopener">Falar no WhatsApp</a>
             </nav>
+
             <button class="nav__burger" id="navBurger" aria-label="Abrir menu" aria-expanded="false">
                 <span></span><span></span><span></span>
             </button>
@@ -165,22 +169,19 @@
     </header>
 
     <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-        <a href="/#atuacao">Atuação</a>
+        <a href="/#direitos">Áreas de atuação</a>
         <a href="/beneficios/">Benefícios</a>
-        <a href="/#como-funciona">Como Funciona</a>
-        <a href="/#escritorio">O Escritório</a>
+        <a href="/#como-funciona">Como funciona</a>
+        <a href="/#escritorio">Escritório</a>
         <a href="/blog/">Blog</a>
-        <a class="btn btn--whatsapp"
-           href="https://wa.me/5511930044411?text=Ol%C3%A1!%20Vi%20a%20p%C3%A1gina%20de%20aux%C3%ADlio-doen%C3%A7a%20no%20site%20e%20quero%20tirar%20uma%20d%C3%BAvida."
-           target="_blank" rel="noopener">Falar no WhatsApp</a>
+        <a href="/#faq">Dúvidas</a>
+        <a class="btn btn--whatsapp" href="https://wa.me/5511930044411?text=Ol%C3%A1!%20Vi%20a%20p%C3%A1gina%20de%20aux%C3%ADlio-doen%C3%A7a%20no%20site%20e%20quero%20tirar%20uma%20d%C3%BAvida." target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> Falar no WhatsApp</a>
     </div>
 
     <main>
         <!-- HERO -->
         <section class="hero hero--page">
-            <svg class="hero__watermark" data-parallax="0.2" aria-hidden="true" style="--mk-gold:transparent; --mk-navy:transparent; --mk-stroke:#D2AE6D; --mk-sw:1">
-                <use href="#am-mark" />
-            </svg>
+            <svg class="hero__mark hero__mark--page" viewBox="0 0 400 351" aria-hidden="true" style="--mk-gold:transparent; --mk-navy:transparent; --mk-gray:transparent; --mk-stroke:#354271; --mk-sw:0.9"><use href="#am-mark" /></svg>
             <div class="container">
                 <div class="hero__grid">
                     <div>
@@ -194,19 +195,18 @@
                         <h1 class="display hero__title">
                             <span class="hero__line"><span data-hero-line>Auxílio-doença:</span></span>
                             <span class="hero__line"><span data-hero-line>quem tem direito</span></span>
-                            <span class="hero__line"><span data-hero-line>e <em class="gold-word" style="font-style:normal">como pedir?</em></span></span>
+                            <span class="hero__line"><span data-hero-line>e como pedir?</span></span>
                         </h1>
 
                         <div class="answer-box" data-hero-fade>
-                            <strong>Resposta direta:</strong> o auxílio-doença — hoje chamado de benefício por incapacidade temporária — é pago pelo INSS a quem fica incapaz de trabalhar por mais de 15 dias seguidos, por doença ou acidente. <strong>Não basta estar doente:</strong> é preciso comprovar, com atestados e laudos, que a condição impede o seu trabalho.
+                            <b>O INSS paga o auxílio-doença a quem fica sem conseguir trabalhar por mais de 15 dias</b>, por doença ou acidente. É preciso provar, com atestados e laudos, que a doença impede o seu trabalho.
                         </div>
 
                         <div class="hero__ctas" style="margin-top:2rem" data-hero-fade>
-                            <a class="btn btn--whatsapp" data-magnetic
+                            <a class="btn btn--whatsapp"
                                href="https://wa.me/5511930044411?text=Ol%C3%A1!%20Vi%20a%20p%C3%A1gina%20de%20aux%C3%ADlio-doen%C3%A7a%20no%20site%20e%20quero%20tirar%20uma%20d%C3%BAvida."
-                               target="_blank" rel="noopener">Tire sua dúvida no WhatsApp</a>
+                               target="_blank" rel="noopener">Tirar minha dúvida no WhatsApp</a>
                         </div>
-                        <p class="page-meta" data-hero-fade>Atualizado em 01/07/2026 · Conteúdo educativo da equipe Almeida & Matos</p>
                     </div>
                 </div>
             </div>
@@ -217,19 +217,19 @@
             <div class="container">
                 <div class="prose">
                     <h2>O que é o auxílio-doença?</h2>
-                    <p>O auxílio-doença é um benefício previdenciário previsto nos <a href="https://www.planalto.gov.br/ccivil_03/leis/l8213cons.htm" target="_blank" rel="noopener">arts. 59 a 63 da Lei 8.213/91</a>. Ele é pago ao segurado do INSS que fica <strong>temporariamente incapaz</strong> de exercer o seu trabalho ou a sua atividade habitual por mais de 15 dias consecutivos, por causa de uma doença ou de um acidente.</p>
-                    <p>Um ponto que muita gente descobre tarde demais: <strong>estar doente é diferente de estar incapaz</strong>. O INSS não paga o benefício pela doença em si — paga pela incapacidade que ela gera para o seu trabalho específico. Uma tendinite pode incapacitar um pedreiro e não incapacitar quem trabalha sentado o dia inteiro.</p>
+                    <p>O INSS paga o auxílio-doença (hoje chamado de <b>benefício por incapacidade temporária</b>) a quem fica sem conseguir trabalhar por mais de 15 dias seguidos, por doença ou acidente, conforme os <a href="https://www.planalto.gov.br/ccivil_03/leis/l8213cons.htm" target="_blank" rel="noopener">arts. 59 a 63 da Lei 8.213/91</a>.</p>
+                    <p>Estar doente é diferente de estar incapaz. O INSS avalia se a sua doença ou lesão impede o seu trabalho específico. <b>Uma tendinite pode incapacitar um pedreiro e não incapacitar quem trabalha sentado o dia inteiro.</b></p>
 
-                    <blockquote>O INSS é um seguro que você já pagou, mês a mês, enquanto trabalhava. Se uma doença ou um acidente tirou você do trabalho, usar esse seguro não é favor: é direito.</blockquote>
+                    <blockquote>O INSS é um seguro que você já pagou, mês a mês, enquanto trabalhava. Se uma doença ou um acidente tirou você do trabalho, usar esse seguro é o seu direito.</blockquote>
 
                     <h2>Como funciona o auxílio-doença na prática?</h2>
                     <ol>
-                        <li><strong>Afastamento por mais de 15 dias</strong> — no regime CLT, a empresa paga os primeiros 15 dias; a partir do 16º, o INSS assume. Autônomos e demais contribuintes recebem do INSS desde o início do afastamento.</li>
-                        <li><strong>Pedido e perícia médica</strong> — o requerimento é feito no Meu INSS. Um perito do INSS avalia se a incapacidade existe e por quanto tempo deve durar.</li>
-                        <li><strong>Atestmed (análise documental)</strong> — em muitos casos o benefício pode ser concedido apenas pela análise dos documentos médicos, sem perícia presencial. Para isso, o atestado precisa estar completo e sem falhas.</li>
-                        <li><strong>Data de cessação (DCB)</strong> — o benefício nasce com data para acabar. Se você ainda não tiver condições de voltar, é preciso pedir a prorrogação antes desse prazo.</li>
+                        <li><strong>Afastamento por mais de 15 dias:</strong> no regime CLT, a empresa paga os primeiros 15 dias e o INSS assume a partir do 16º. Autônomos e demais contribuintes recebem do INSS desde o início do afastamento.</li>
+                        <li><strong>Pedido e perícia médica:</strong> você faz o requerimento no Meu INSS. Um perito avalia se a incapacidade existe e por quanto tempo deve durar.</li>
+                        <li><strong>Atestmed (análise documental):</strong> o INSS pode conceder o benefício só pela análise dos documentos médicos, sem perícia presencial, se o atestado estiver completo e sem falhas.</li>
+                        <li><strong>Data de cessação (DCB):</strong> o benefício nasce com data para acabar. Se você ainda não tiver condições de voltar, precisa pedir a prorrogação antes desse prazo.</li>
                     </ol>
-                    <p>E se o pedido for aprovado depois de uma longa espera? Os valores contam desde a <strong>data de entrada do requerimento (DER)</strong> — a demora do INSS não faz você perder o que é seu.</p>
+                    <p>E se o pedido for aprovado depois de uma longa espera? Os valores contam desde a <strong>data de entrada do requerimento (DER)</strong>. A demora do INSS não faz você perder o que é seu.</p>
 
                     <h2>Você tem direito? Faça o teste das 3 perguntas</h2>
                     <p>Antes de pedir, verifique se você responde "sim" às três perguntas abaixo. São elas que o INSS vai analisar:</p>
@@ -237,61 +237,62 @@
 
                 <div style="max-width:46rem; margin-top:1.4rem">
                     <ul class="check-list">
-                        <li data-card><span><strong>Você tem qualidade de segurado?</strong> Está contribuindo para o INSS — ou parou há pouco tempo e ainda está no "período de graça", que em geral varia de 3 a 36 meses após a última contribuição.</span></li>
+                        <li data-card><span><strong>Você está segurado do INSS?</strong> Isso significa estar contribuindo, ou ainda dentro do período em que continua coberto mesmo tendo parado (em geral de 3 a 36 meses, conforme o seu histórico).</span></li>
                         <li data-card><span><strong>Você cumpriu a carência?</strong> Em regra, são necessárias 12 contribuições mensais antes do início da incapacidade. Acidentes e doenças graves previstas em lei dispensam essa exigência.</span></li>
-                        <li data-card><span><strong>A incapacidade está comprovada?</strong> Atestados, laudos e exames precisam demonstrar com clareza que você não consegue exercer o seu trabalho hoje.</span></li>
+                        <li data-card><span><strong>A incapacidade está comprovada?</strong> Atestados, laudos e exames precisam mostrar com clareza que você não consegue exercer o seu trabalho hoje.</span></li>
                     </ul>
                 </div>
 
                 <div class="prose" style="margin-top:2rem">
-                    <p>Uma regra prática que usamos aqui: se os papéis sobre a mesa não explicam por que você não pode trabalhar, o perito do INSS também não vai entender. A força do pedido está nos documentos.</p>
+                    <p>Uma regra prática que a equipe usa aqui: se os papéis sobre a mesa não explicam por que você não pode trabalhar, o perito do INSS também não vai entender. <b>A força do pedido está nos documentos.</b></p>
 
                     <h2>Preciso de 12 contribuições (carência)?</h2>
-                    <p>Em regra, sim: o auxílio-doença exige <strong>12 contribuições mensais</strong> antes do início da incapacidade. Mas há duas exceções importantes que <strong>dispensam totalmente a carência</strong>:</p>
+                    <p>Em regra, sim: o auxílio-doença exige <strong>12 contribuições mensais</strong> antes do início da incapacidade, mas duas exceções dispensam totalmente essa exigência:</p>
                     <ul>
-                        <li><strong>Acidente de qualquer natureza</strong> — de trabalho, de trânsito, doméstico ou de lazer;</li>
-                        <li><strong>Doenças graves previstas em lei</strong> — como neoplasia maligna (câncer), cardiopatia grave, entre outras.</li>
+                        <li><strong>Acidente de qualquer natureza:</strong> de trabalho, de trânsito, doméstico ou de lazer.</li>
+                        <li><strong>Doenças graves previstas em lei:</strong> como neoplasia maligna (câncer), cardiopatia grave, entre outras.</li>
                     </ul>
-                    <p>Nesses casos, basta ter qualidade de segurado na data do afastamento. Se você se acidentou ou recebeu um diagnóstico grave logo depois de começar a contribuir, o direito pode existir mesmo sem os 12 meses.</p>
+                    <p>Nesses casos, basta <b>estar segurado do INSS</b> na data do afastamento. Se você se acidentou ou recebeu um diagnóstico grave logo depois de começar a contribuir, o direito pode existir mesmo sem os 12 meses.</p>
 
                     <h2>Quais documentos o INSS exige?</h2>
-                    <p>Sem documento, não há benefício. Use a tabela abaixo como checklist do que reunir:</p>
-                    <table>
-                        <thead>
-                            <tr><th>Categoria</th><th>O que reunir</th><th>Por que importa</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td><strong>Pessoais</strong></td><td>RG, CPF e comprovante de residência</td><td>Identificação básica e atualização cadastral no INSS.</td></tr>
-                            <tr><td><strong>Profissionais</strong></td><td>Carteira de trabalho, carnês de contribuição (GPS) ou extrato CNIS</td><td>Comprovam que você é segurado e cumpriu a carência.</td></tr>
-                            <tr><td><strong>Médicos</strong></td><td>Atestado atualizado, com CID, prazo de afastamento, assinatura, carimbo e CRM</td><td>É o coração do pedido — sem ele, o requerimento não avança.</td></tr>
-                            <tr><td><strong>Complementares</strong></td><td>Laudos, exames de imagem, prontuários e receitas de uso contínuo</td><td>Dão peso ao atestado: provam a gravidade e a evolução da doença.</td></tr>
-                            <tr><td><strong>Empresa (se CLT)</strong></td><td>Declaração do Último Dia Trabalhado (DUT)</td><td>Define a partir de que data o INSS deve começar a pagar.</td></tr>
-                        </tbody>
-                    </table>
+                    <p>O pedido só anda com documento. Veja abaixo o que reunir:</p>
+                </div>
 
+                <div class="cmp-list" style="max-width:56rem">
+                    <div class="cmp-item" data-card><h4>Pessoais</h4><p><b>O que reunir:</b> RG, CPF e comprovante de residência. <b>Por que importa:</b> identificação básica e atualização cadastral no INSS.</p></div>
+                    <div class="cmp-item" data-card><h4>Profissionais</h4><p><b>O que reunir:</b> carteira de trabalho, carnês de contribuição (GPS) ou extrato CNIS. <b>Por que importa:</b> comprovam que você está segurado e cumpriu a carência.</p></div>
+                    <div class="cmp-item" data-card><h4>Médicos</h4><p><b>O que reunir:</b> atestado atualizado, com CID, prazo de afastamento, assinatura, carimbo e CRM. <b>Por que importa:</b> é o coração do pedido, sem ele o requerimento não avança.</p></div>
+                    <div class="cmp-item" data-card><h4>Complementares</h4><p><b>O que reunir:</b> laudos, exames de imagem, prontuários e receitas de uso contínuo. <b>Por que importa:</b> dão peso ao atestado e provam a gravidade e a evolução da doença.</p></div>
+                    <div class="cmp-item" data-card><h4>Empresa (se CLT)</h4><p><b>O que reunir:</b> declaração do último dia trabalhado (DUT). <b>Por que importa:</b> define a partir de que data o INSS deve começar a pagar.</p></div>
+                </div>
+
+                <div class="prose" style="margin-top:1.4rem">
                     <h2>Como deve ser o atestado médico ideal?</h2>
-                    <p>O atestado é o documento que mais derruba pedidos de auxílio-doença. O INSS recusa atestados vagos — então confira se o seu tem, no mínimo:</p>
+                    <p>O atestado é o documento que mais derruba pedidos de auxílio-doença. O INSS recusa atestados vagos. Confira se o seu tem, no mínimo:</p>
                     <ul>
-                        <li><strong>CID</strong> — o código da doença;</li>
-                        <li><strong>Prazo estimado de afastamento</strong> — por exemplo, "necessita de 60 dias de afastamento";</li>
-                        <li><strong>Data de emissão</strong> recente;</li>
-                        <li><strong>Assinatura, carimbo e CRM</strong> do médico.</li>
+                        <li><strong>CID:</strong> o código da doença.</li>
+                        <li><strong>Prazo estimado de afastamento:</strong> por exemplo, "necessita de 60 dias de afastamento".</li>
+                        <li><strong>Data de emissão:</strong> recente.</li>
+                        <li><strong>Assinatura, carimbo e CRM:</strong> do médico.</li>
                     </ul>
-                    <p>Se o seu atestado não tem algum desses itens, não protocole ainda: vale voltar ao médico e pedir o complemento. Parte do nosso trabalho é justamente orientar, antes do pedido, o que cada documento precisa conter.</p>
+                    <p>Se o seu atestado não tem algum desses itens, não protocole ainda. Volte ao médico e peça o complemento. <b>A equipe orienta esse passo antes de enviar o pedido ao INSS.</b></p>
 
                     <h2>E se a sua situação mudar?</h2>
-                    <p><strong>Voltou a trabalhar, mas ficou com sequela?</strong> Se você recebeu auxílio-doença após um acidente, voltou à ativa e ficou com uma limitação permanente, o caso pode virar <a href="/beneficios/auxilio-acidente/">auxílio-acidente</a> — uma indenização mensal paga junto com o salário, até a aposentadoria. O INSS raramente faz essa conversão de forma automática.</p>
+                    <p><strong>Voltou a trabalhar, mas ficou com alguma limitação?</strong> Se você recebeu auxílio-doença depois de um acidente, voltou a trabalhar e ficou com uma limitação permanente, o caso pode virar <a href="/beneficios/auxilio-acidente/">auxílio-acidente</a>.</p>
+                    <p><b>É uma indenização mensal</b> paga junto com o salário, até a aposentadoria. O INSS raramente faz essa conversão sozinho.</p>
                     <p><strong>A incapacidade se tornou total e permanente?</strong> Quando não há mais possibilidade de retorno ou de reabilitação para outra função, o caminho pode ser a <a href="/beneficios/aposentadoria-por-invalidez/">aposentadoria por invalidez</a>.</p>
 
-                    <h2>Como funciona o processo?</h2>
+                    <h2>Como funciona o pedido, passo a passo</h2>
                     <ol>
-                        <li><strong>Conversa inicial</strong> — você conta o que aconteceu, pelo WhatsApp mesmo. Avaliamos se há direito, sem custo.</li>
-                        <li><strong>Documentação</strong> — nossa equipe orienta e organiza os documentos médicos e previdenciários, incluindo o que o atestado precisa ter.</li>
-                        <li><strong>Pedido</strong> — protocolamos o requerimento tecnicamente fundamentado no INSS; se negado, seguimos para a via judicial.</li>
-                        <li><strong>Acompanhamento</strong> — monitoramos prazos, prorrogações e a decisão final, mantendo você informado em cada etapa.</li>
+                        <li><strong>Você conta o que aconteceu</strong>, pelo WhatsApp. A equipe avalia se há direito, sem custo.</li>
+                        <li><strong>Juntamos os documentos com você.</strong> A equipe organiza atestados, laudos e exames e confere antes de enviar.</li>
+                        <li><strong>Entramos com o pedido no INSS</strong> e acompanhamos a perícia. Se ele negar, o caso segue para a Justiça.</li>
+                        <li><strong>Você recebe</strong> o benefício enquanto estiver afastado e os valores atrasados que forem devidos.</li>
                     </ol>
-                    <p><strong>Quanto custa?</strong> Trabalhamos com honorários de êxito: você só paga se o caso tiver resultado positivo, conforme contrato.</p>
+                    <p><b>Quanto custa?</b> Nada até você receber. Os honorários saem do valor que você receber, conforme o contrato.</p>
                 </div>
+
+                <p class="page-meta">Conteúdo educativo da equipe Almeida &amp; Matos. Atualizado em 26/08/2026.</p>
             </div>
         </section>
 
@@ -300,33 +301,33 @@
             <div class="container">
                 <div class="section-head section-head--center">
                     <p class="eyebrow eyebrow--center" data-reveal>Perguntas frequentes</p>
-                    <h2 class="display" data-reveal-title style="color:var(--color-navy-700)">Dúvidas sobre <span class="gold-word">auxílio-doença</span></h2>
+                    <h2 class="display" data-reveal-title style="color:var(--color-navy-700)">Dúvidas sobre auxílio-doença</h2>
                 </div>
 
                 <div class="faq">
                     <details class="faq__item" data-reveal>
                         <summary>Meu vizinho tem o mesmo problema e conseguiu. Por que o meu foi negado? <span class="faq__icon"></span></summary>
-                        <div class="faq__answer"><div class="faq__answer-inner">Porque o INSS avalia a incapacidade, não a doença. A mesma condição pode incapacitar quem faz esforço físico e não incapacitar quem trabalha sentado. A função exercida e a qualidade dos laudos mudam completamente o resultado.</div></div>
+                        <div class="faq__answer"><div class="faq__answer-inner"><b>Porque o INSS decide caso a caso, olhando a sua incapacidade específica.</b> A mesma doença pode incapacitar quem faz esforço físico e não incapacitar quem trabalha sentado. A função que você exerce e a qualidade dos laudos mudam o resultado.</div></div>
                     </details>
                     <details class="faq__item" data-reveal>
                         <summary>O médico não quis colocar o CID ou o prazo no atestado. E agora? <span class="faq__icon"></span></summary>
-                        <div class="faq__answer"><div class="faq__answer-inner">Não protocole ainda. Orientamos exatamente o que o atestado precisa ter — CID, prazo estimado de afastamento, data, assinatura, carimbo e CRM — para você levar ao médico. Com essas informações claras, a maioria dos médicos completa o documento.</div></div>
+                        <div class="faq__answer"><div class="faq__answer-inner"><b>Não protocole ainda.</b> A equipe explica exatamente o que o atestado precisa ter: CID, prazo estimado de afastamento, data, assinatura, carimbo e CRM. Você leva essa lista ao médico e, na maioria dos casos, ele completa o documento.</div></div>
                     </details>
                     <details class="faq__item" data-reveal>
                         <summary>A perícia vai demorar meses. Como fico até lá? <span class="faq__icon"></span></summary>
-                        <div class="faq__answer"><div class="faq__answer-inner">Em muitos casos o Atestmed permite a análise só por documentos, sem perícia presencial — o que acelera a decisão. E, se o pedido for aprovado, você recebe os valores retroativos desde a data de entrada do requerimento (DER).</div></div>
+                        <div class="faq__answer"><div class="faq__answer-inner"><b>Em muitos casos o Atestmed analisa só os documentos, sem perícia presencial, e isso acelera a decisão.</b> Se o pedido for aprovado, você recebe os valores atrasados desde a data de entrada do requerimento (DER).</div></div>
                     </details>
                     <details class="faq__item" data-reveal>
                         <summary>Meu benefício tem data para acabar. E se eu não melhorar? <span class="faq__icon"></span></summary>
-                        <div class="faq__answer"><div class="faq__answer-inner">O auxílio-doença nasce com uma data de cessação (DCB). Se você ainda não tem condições de voltar ao trabalho, é preciso pedir a prorrogação antes desse prazo, pelo Meu INSS ou pelo telefone 135.</div></div>
+                        <div class="faq__answer"><div class="faq__answer-inner"><b>Você pede a prorrogação antes do prazo acabar.</b> O auxílio-doença nasce com uma data de cessação (DCB). Se ainda não tiver condições de voltar ao trabalho, peça a prorrogação pelo Meu INSS ou pelo telefone 135.</div></div>
                     </details>
                     <details class="faq__item" data-reveal>
                         <summary>Estou desempregado. Ainda tenho direito? <span class="faq__icon"></span></summary>
-                        <div class="faq__answer"><div class="faq__answer-inner">É possível. Quem para de contribuir mantém a qualidade de segurado por um tempo — o chamado período de graça, que varia em geral de 3 a 36 meses conforme o histórico. Se a incapacidade começou dentro desse período, o direito pode existir.</div></div>
+                        <div class="faq__answer"><div class="faq__answer-inner"><b>Depende do caso, mas é possível.</b> Quem para de contribuir continua segurado do INSS por um tempo (o período de graça), que varia em geral de 3 a 36 meses conforme o histórico. Se a incapacidade começou dentro desse período, o direito pode existir.</div></div>
                     </details>
                     <details class="faq__item" data-reveal>
                         <summary>Vocês garantem que eu vou receber? <span class="faq__icon"></span></summary>
-                        <div class="faq__answer"><div class="faq__answer-inner">Não — e desconfie de quem garante. A decisão é do perito do INSS ou do juiz. O que garantimos é o método: um pedido completo, tecnicamente fundamentado e sem falhas formais, acompanhado até a decisão final.</div></div>
+                        <div class="faq__answer"><div class="faq__answer-inner"><b>Não, e desconfie de quem garante.</b> A decisão é do perito do INSS ou do juiz. O que a equipe garante é o método: um pedido completo, bem fundamentado e acompanhado até a decisão final.</div></div>
                     </details>
                 </div>
             </div>
@@ -334,18 +335,16 @@
 
         <!-- CTA FINAL -->
         <section class="section cta-final cut-t">
-            <svg class="watermark" style="left:50%; transform:translateX(-50%); bottom:-18%" data-parallax="0.15" aria-hidden="true" style="--mk-gold:transparent; --mk-navy:transparent; --mk-stroke:#D2AE6D; --mk-sw:1">
-                <use href="#am-mark" />
-            </svg>
+            <svg class="cta-final__mark" viewBox="0 0 400 351" aria-hidden="true" style="--mk-gold:transparent; --mk-navy:transparent; --mk-gray:transparent; --mk-stroke:#D2AE6D; --mk-sw:0.8"><use href="#am-mark" /></svg>
             <div class="container">
-                <h2 class="display" data-reveal-title>Quer entender se você tem direito?<br><span class="gold-word">A análise não custa nada.</span></h2>
+                <h2 class="display" data-reveal-title>Quer saber se você tem direito? Conte seu caso no WhatsApp.</h2>
                 <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-top:2.4rem" data-reveal>
-                    <a class="btn btn--whatsapp" data-magnetic
+                    <a class="btn btn--whatsapp"
                        href="https://wa.me/5511930044411?text=Ol%C3%A1!%20Vi%20a%20p%C3%A1gina%20de%20aux%C3%ADlio-doen%C3%A7a%20no%20site%20e%20quero%20tirar%20uma%20d%C3%BAvida."
-                       target="_blank" rel="noopener">Falar com a equipe no WhatsApp</a>
+                       target="_blank" rel="noopener">Contar meu caso no WhatsApp</a>
                     <a class="btn btn--ghost" href="/beneficios/">Ver outros benefícios</a>
                 </div>
-                <p class="btn-note" data-reveal>Sem custo. Sem compromisso.</p>
+                <p class="btn-note" data-reveal>Sem custo e sem compromisso.</p>
             </div>
         </section>
     </main>
@@ -355,50 +354,60 @@
         <div class="container">
             <div class="footer__grid">
                 <div class="footer__brand">
-                    <span class="footer__badge"><img src="/img/logo-am-oficial.webp" alt="Almeida & Matos Advogados" width="146" height="48"></span>
-                    <p>Escritório fundado em 2015. Especialistas em acidentes e incapacidade — INSS, indenizações e seguros.</p>
-                    <p style="margin-top:0.9rem; font-size:0.85rem">CNPJ 24.895.043/0001-40</p>
+                    <span class="footer__badge"><img src="/img/logo-am-nav.webp" alt="Almeida & Matos Advogados" width="529" height="200"></span>
+                    <p>Escritório de advocacia fundado em 2015. Acidentes, benefícios do INSS, indenizações e seguros.</p>
+                    <div class="footer__oab">
+                        <span>Almeida &amp; Matos Sociedade de Advogados · CNPJ 24.895.043/0001-40</span>
+                        <span>Felipe Almeida · OAB/SP 338.615</span>
+                        <span>Fellipe Matos · OAB/SP 345.432</span>
+                    </div>
                 </div>
+
                 <div>
                     <h4>Benefícios</h4>
                     <ul>
-                        <li><a href="/beneficios/auxilio-acidente/">Auxílio-Acidente</a></li>
-                        <li><a href="/beneficios/auxilio-doenca/">Auxílio-Doença</a></li>
+                        <li><a href="/beneficios/auxilio-acidente/">Auxílio-acidente</a></li>
+                        <li><a href="/beneficios/auxilio-doenca/">Auxílio-doença</a></li>
                         <li><a href="/beneficios/bpc-loas/">BPC/LOAS</a></li>
-                        <li><a href="/beneficios/aposentadoria-por-invalidez/">Aposentadoria por Invalidez</a></li>
-                        <li><a href="/beneficios/pensao-por-morte/">Pensão por Morte</a></li>
+                        <li><a href="/beneficios/aposentadoria-por-invalidez/">Aposentadoria por invalidez</a></li>
+                        <li><a href="/beneficios/pensao-por-morte/">Pensão por morte</a></li>
                         <li><a href="/beneficios/aposentadoria-pcd/">Aposentadoria PCD</a></li>
-                        <li><a href="/beneficios/indenizacao-civel-trabalhista/">Indenização Cível</a></li>
+                        <li><a href="/beneficios/indenizacao-civel-trabalhista/">Indenização</a></li>
                     </ul>
                 </div>
+
                 <div>
                     <h4>Contato</h4>
                     <ul>
-                        <li><a href="https://wa.me/5511930044411" target="_blank" rel="noopener">(11) 93004-4411</a></li>
+                        <li><a href="https://wa.me/5511930044411" target="_blank" rel="noopener">WhatsApp (11) 93004-4411</a></li>
                         <li><a href="mailto:contato@almeidaematos.com.br">contato@almeidaematos.com.br</a></li>
-                        <li>Seg a Sex — 9h às 18h</li>
+                        <li>Segunda a sexta, das 9h às 18h</li>
                         <li><a href="/blog/">Blog</a></li>
                         <li><a href="https://www.instagram.com/almeidaematosadvogados/" target="_blank" rel="noopener">Instagram</a></li>
+                        <li><a href="https://www.youtube.com/@almeidaematosadvogados" target="_blank" rel="noopener">YouTube</a></li>
                     </ul>
                 </div>
+
                 <div>
                     <h4>Onde estamos</h4>
-                    <p style="font-size:0.9rem; margin-bottom:1rem">Alameda Araguaia, 1142 · Bloco 3, 1º andar<br>Alphaville Industrial, Barueri - SP<br>CEP 06455-000</p>
+                    <p style="font-size:0.9rem; margin-bottom:1rem">Alameda Araguaia, 1142 · Bloco 3, 1º andar<br>Alphaville Industrial, Barueri (SP)<br>CEP 06455-000</p>
                     <div class="footer__map">
                         <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3658.634!2d-46.8449!3d-23.5069!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zQWxhbWVkYSBBcmFndWFpYSwgMTE0MiAtIEFscGhhdmlsbGUsIEJhcnVlcmkgLSBTUA!5e0!3m2!1spt-BR!2sbr!4v1"
+                            src="https://maps.google.com/maps?q=Alameda%20Araguaia%2C%201142%20-%20Alphaville%20Industrial%2C%20Barueri%20-%20SP&t=&z=16&ie=UTF8&iwloc=&output=embed"
                             loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-                            title="Mapa — Almeida & Matos, Alameda Araguaia 1142, Alphaville, Barueri"
+                            title="Mapa: Almeida & Matos, Alameda Araguaia 1142, Alphaville, Barueri"
                             allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
+
             <div class="footer__disclaimer">
-                <strong>Atenção — golpes em nome do escritório:</strong> o escritório Almeida e Matos não cobra taxas para liberação de valores. Em caso de dúvida ou suspeita de fraude, confirme pelo nosso WhatsApp oficial <a href="https://wa.me/5511930044411" style="color:var(--color-gold-300)">(11) 93004-4411</a>.
+                <strong>Atenção a golpes em nome do escritório:</strong> a Almeida &amp; Matos não cobra taxa para liberar valores. Em caso de dúvida, confirme pelo WhatsApp oficial <a href="https://wa.me/5511930044411">(11) 93004-4411</a>.
             </div>
+
             <div class="footer__bottom">
-                <span>© 2026 Almeida & Matos Advogados. Todos os direitos reservados.</span>
-                <span>Alameda Araguaia, 1142 — Alphaville, Barueri - SP</span>
+                <span>© 2026 Almeida &amp; Matos Advogados. Todos os direitos reservados.</span>
+                <span>Alameda Araguaia, 1142, Alphaville, Barueri (SP)</span>
             </div>
         </div>
     </footer>
