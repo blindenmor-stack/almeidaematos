@@ -120,7 +120,7 @@
 .post-hero__meta {
   display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
   margin-top: 1.5rem;
-  font-size: 0.85rem; color: var(--color-navy-300);
+  font-size: 0.85rem; color: var(--color-gray-brand);
 }
 .post-hero__meta i {
   width: 8px; height: 8px; flex: none;
@@ -212,7 +212,7 @@
   pointer-events: none;
 }
 .post-cta h3 {
-  font-family: var(--font-display); font-weight: 800; font-stretch: 112%;
+  font-family: var(--font-display); font-weight: 600;
   font-size: clamp(1.25rem, 2.4vw, 1.55rem); line-height: 1.2;
   color: #fff; margin-bottom: 0.7rem;
 }
