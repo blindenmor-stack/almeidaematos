@@ -775,9 +775,10 @@ html:not(.js) .preloader { display: none; }
 
 /* marca vazada (contorno) */
 .hero__mark {
+  /* fundo do hero: marca grande e sutil, base alinhada ao chão da seção, à direita */
   display: block; position: absolute; z-index: 0; pointer-events: none;
-  width: 140%; left: -20%; top: -3%;
-  opacity: 0.26;
+  width: 70%; left: 46%; bottom: -2%;
+  opacity: 0.2;
 }
 .hero__photo { position: relative; z-index: 1; background: none; border: 0; border-radius: 0; }
 .hero__photo::after {
@@ -822,7 +823,7 @@ html:not(.js) .preloader { display: none; }
 @media (max-width: 860px) {
   .band__grid, .split { grid-template-columns: 1fr; }
   .band__photo { max-width: 100%; }
-  .hero__mark { width: 150%; left: -25%; top: -10%; }
+  .hero__mark { width: 150%; left: -25%; top: auto; bottom: -1%; }
   .hero__mark--page { width: 80%; right: -25%; top: 0; }
   .cta-final__mark { width: 90%; right: -30%; bottom: -30%; }
   .steps-photo { max-width: 100%; }
