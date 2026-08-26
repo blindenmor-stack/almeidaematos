@@ -288,7 +288,8 @@ h1.hero__title { margin-bottom: 1.3rem; font-size: clamp(2.3rem, 4.5vw, 3.7rem);
 /* ============================================================
    PÁGINAS INTERNAS (benefícios, blog)
    ============================================================ */
-.hero--page .hero__grid { grid-template-columns: 1fr; padding-block: clamp(2.5rem, 6vh, 4.5rem) clamp(2.5rem, 6vh, 4rem); }
+.hero--page .hero__grid { grid-template-columns: 1fr; padding-block: clamp(2.5rem, 6vh, 4.5rem) clamp(1.5rem, 4vh, 2.5rem); }
+.hero--page + .section { padding-top: clamp(2.5rem, 5vw, 4rem); }
 .hero--page .hero__title { font-size: clamp(2rem, 4.2vw, 3.2rem); max-width: 20ch; }
 .hero--page .hero__sub { margin-bottom: 0; }
 
