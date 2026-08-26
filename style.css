@@ -195,6 +195,8 @@ p b, p strong, li b, li strong { font-weight: 700; color: var(--color-navy-800);
 }
 .nav__links a:not(.btn):hover::after { transform: scaleX(1); transform-origin: left; }
 .nav__links .btn { padding: 10px 18px; font-size: 0.88rem; }
+.nav__links .btn--navy { color: #fff; }
+.nav__links .btn--navy:hover { color: #fff; }
 
 /* ============================================================
    BOTÕES
@@ -419,6 +421,11 @@ h1.hero__title { margin-bottom: 1.3rem; font-size: clamp(2.3rem, 4.5vw, 3.7rem);
 }
 .card__link svg { width: 15px; height: 15px; transition: transform 0.3s var(--ease-out); }
 .card:hover .card__link svg { transform: translateX(4px); }
+
+/* último card da grade de 7: ocupa a linha inteira */
+.card--wide { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 1.5rem; }
+.card--wide .card__link { margin-top: 0; }
+@media (max-width: 860px) { .card--wide { grid-template-columns: 1fr; gap: 0; } .card--wide .card__link { margin-top: 0.9rem; } }
 
 /* legado (v2): mantido para páginas que ainda usem */
 .card--dark { background: var(--color-navy-800); border-color: rgba(210, 174, 109, 0.2); color: var(--color-navy-100); }
