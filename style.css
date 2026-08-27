@@ -830,6 +830,37 @@ html:not(.js) .preloader { display: none; }
 }
 
 /* ============================================================
+   HERO DA HOME NO MOBILE — foto sangrada com fade, título por cima
+   (variante C, 27/08/26). Só a home (.hero--home); LPs não mudam.
+   ============================================================ */
+@media (max-width: 860px) {
+  .hero--home { padding-top: var(--nav-h); }
+  .hero--home::before { z-index: 2; }               /* grão por cima da foto: sem "caixa" clara atrás do título */
+  .hero--home .hero__eyebrow { display: none; }
+  .hero--home .hero__grid { display: flex; flex-direction: column; gap: 0; padding-block: 0 2.6rem; }
+  .hero--home .hero__visual { display: contents; }  /* foto e OAB viram filhos do grid pra reordenar */
+  .hero--home .hero__photo { order: 0; margin: 0 calc(-1 * var(--gutter)); height: 92vw; padding-bottom: 0; }
+  .hero--home .hero__photo img { width: 96%; height: 100%; margin-inline: auto; object-fit: cover; object-position: 50% 0; }
+  .hero--home .hero__photo::after {
+    height: 52%;
+    background: linear-gradient(180deg, rgba(247, 245, 240, 0) 0%, rgba(247, 245, 240, 0.92) 62%, var(--color-paper) 100%);
+  }
+  .hero--home .hero__grid > div:first-child { order: 1; margin-top: -17vw; position: relative; z-index: 2; }
+  .hero--home h1.hero__title::before {               /* filete dourado (a base dourada do desktop vira detalhe aqui) */
+    content: ''; display: block; width: 44px; height: 4px; border-radius: 2px;
+    background: var(--gold-grad); margin-bottom: 0.9rem;
+  }
+  .hero--home .hero__caption { order: 2; justify-content: flex-start; margin-top: 1.1rem; font-size: 0.7rem; color: var(--color-gray-brand); gap: 2px 12px; }
+  .hero--home .hero__caption b { font-weight: 500; color: inherit; }
+  .hero--home .hero__mark { width: 120%; left: -10%; top: -6%; bottom: auto; opacity: 0.16; }
+}
+/* Android básico (≤380px): título em 2 linhas, CTA dentro da 1ª dobra */
+@media (max-width: 380px) {
+  .hero--home h1.hero__title { font-size: 2.05rem; }
+  .hero--home .hero__sub { font-size: 1rem; }
+}
+
+/* ============================================================
    REDUCED MOTION
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {
