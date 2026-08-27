@@ -55,8 +55,8 @@ PROIBIDO:
 // transitório: sem repetir, o post é publicado sem capa PARA SEMPRE (nada
 // reprocessa depois). Estes são os status que valem nova tentativa.
 const RETRYABLE = new Set([429, 500, 502, 503, 504]);
-const MAX_ATTEMPTS = 3;
-const BACKOFF_MS = [3000, 9000];
+const MAX_ATTEMPTS = 4;
+const BACKOFF_MS = [4000, 12000, 25000]; // 27/08: 503 "high demand" durou minutos; 3 tentativas curtas não bastavam
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
