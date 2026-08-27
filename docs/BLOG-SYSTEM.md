@@ -222,3 +222,9 @@ As functions usam só `fetch` global e `node:crypto`/`node:fs` (Node 18+). Nada 
 - **Log de geração:** tabela `aquisicao.blog_generation_log` (status success/error/skipped, detail, modelo, duração). Consultar no Supabase ou via SQL Editor.
 - **Logs de runtime:** Vercel → Deployments → Functions (erros de function aparecem lá com prefixo do endpoint).
 - **Custo Gemini:** `gemini-2.5-flash` gera um artigo de ~1200 palavras por fração de centavo de dólar; com 3 posts/semana o custo é irrisório.
+
+## Capas dos posts (direção de arte v5, 27/08/2026)
+
+`api/_lib/cover.js` gera a capa com o Nano Banana Pro (Gemini image) e publica no bucket `blog-covers`. Desde a v5 do site a direção de arte é **fotografia editorial de luz natural**, a mesma linguagem das imagens do motoboy e do raio-x da home: cena cotidiana brasileira ligada ao tema (capacete, moto, mesa com exames, carteira de trabalho, pasta azul-marinho), tons de papel e creme, azul-marinho e dourado só em objetos, 35mm f/2, grão fino. Proibido: texto, logo, rosto em close, ilustração/flat/3D, fundo escuro, sangue/hospital dramático, balança/martelo. `SCENES_BY_CATEGORY` sugere cenas por categoria (acidente, doença/perícia, BPC, invalidez/aposentadoria, pensão, indenização); o título decide.
+
+Para testar sem publicar: `buildCoverPrompt` é exportado; um script Node que chame o mesmo endpoint com `aspectRatio: '16:9'` e salve o `inlineData` reproduz exatamente o que o cron faz. As capas antigas (ilustração navy da v2) continuam nos posts já publicados; regenerar só com decisão explícita (custo por imagem).

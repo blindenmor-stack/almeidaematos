@@ -1,5 +1,5 @@
 // ============================================================================
-// Capa do post — gerada pelo Nano Banana Pro (Gemini image) na identidade A&M
+// Capa do post — gerada pelo Nano Banana Pro (Gemini image) na identidade v5 do site
 // e publicada no Supabase Storage (bucket público `blog-covers`).
 //
 // Best-effort por design: qualquer falha aqui NUNCA bloqueia a publicação do
@@ -9,25 +9,46 @@
 const IMAGE_MODEL = 'nano-banana-pro-preview';
 
 /**
- * Prompt de capa com direção de arte fixa da marca:
- * composição editorial abstrata, navy #354271/#141B38 + dourado #D2AE6D,
- * geometria triangular (gramática do manual), sem texto e sem pessoas reais
- * identificáveis — o tema do artigo entra como cena/metáfora central.
+ * Prompt de capa com a direção de arte do site v5 (ago/2026): fotografia
+ * editorial de luz natural, tons de papel, azul-marinho e dourado só como
+ * acento (a mesma linguagem das imagens do motoboy e do raio-x da home).
+ * Sem texto, sem logo, sem rosto em close. O tema do artigo vira uma cena
+ * cotidiana e digna, nunca drama.
  */
-function buildCoverPrompt({ title, category }) {
-    return `Crie uma imagem de capa editorial premium para um artigo de blog jurídico brasileiro.
+const SCENES_BY_CATEGORY = [
+    [/acidente/i, 'capacete de moto sobre uma mesa, luvas de trabalho, uma moto de entrega parada numa rua de São Paulo, mãos com pulso enfaixado segurando um café, botas de obra na soleira'],
+    [/doen[cç]a|incapacidade|per[ií]cia/i, 'mesa de cozinha com exames e receitas médicas organizados, uma cadeira vazia perto da janela, mãos segurando um laudo, cartela de remédios ao lado de um caderno'],
+    [/bpc|loas|idoso|defici/i, 'sala simples com luz de fim de tarde, mãos de uma pessoa idosa sobre a mesa, uma bengala apoiada na parede, quintal com roupa no varal'],
+    [/invalidez|aposentadoria/i, 'cadeira de rodas junto a uma janela aberta, muletas encostadas numa cama arrumada, varanda com luz da manhã, mãos apoiadas numa bengala de madeira'],
+    [/pens[aã]o|morte|fam[ií]lia/i, 'porta-retrato virado para a janela, aliança sobre um lenço, xícaras de café numa mesa de família, mãos entrelaçadas'],
+    [/indeniza|trabalhista|c[ií]vel|seguro|dpvat/i, 'carteira de trabalho sobre a mesa, uniforme dobrado numa cadeira, chave de carro ao lado de documentos, capacete de obra num armário'],
+];
+
+function sceneHints(category) {
+    const hit = SCENES_BY_CATEGORY.find(([re]) => re.test(category || ''));
+    return hit ? hit[1] : 'documentos do INSS organizados sobre uma mesa de madeira, uma pasta azul-marinho com papéis, mãos preenchendo um formulário, mesa de trabalho com luz de janela';
+}
+
+export function buildCoverPrompt({ title, category }) {
+    return `Fotografia editorial para a capa de um artigo de blog de um escritório de advocacia brasileiro (direito previdenciário e acidentes).
 
 TEMA DO ARTIGO: "${title}" (categoria: ${category || 'Direito Previdenciário'})
+Traduza o tema em UMA cena cotidiana brasileira, concreta e digna. Sugestões de cena para esta categoria: ${sceneHints(category)}. Escolha a que melhor representa o título.
 
-DIREÇÃO DE ARTE OBRIGATÓRIA (identidade da marca Almeida & Matos):
-- Paleta dominante: azul-marinho profundo (#141B38, #354271) com acentos em dourado (#D2AE6D)
-- Linguagem geométrica: formas triangulares, diagonais nítidas, montanhas estilizadas — nunca curvas orgânicas
-- Estilo: ilustração editorial minimalista e sofisticada, flat com profundidade sutil (camadas, luz dourada lateral)
-- Um elemento visual central que represente o TEMA do artigo de forma metafórica e digna (ex.: documentos, balança, aperto de mãos, capacete de obra, família — conforme o tema)
-- Fundo: gradiente navy escuro com textura sutil de pontos ou triângulos discretos
-- SEM texto, SEM letras, SEM logotipos, SEM rostos fotorrealistas
-- Tom emocional: seriedade acolhedora, esperança, dignidade — nunca drama ou tragédia
-- Composição horizontal 16:9, elemento central levemente à direita (espaço de respiro à esquerda)`;
+ESTILO OBRIGATÓRIO (identidade visual do site):
+- Fotografia real, editorial, câmera 35mm, abertura f/2 (fundo suavemente desfocado), enquadramento próximo do objeto principal
+- Luz natural quente de fim de tarde ou luz lateral de janela; sombras suaves; grão fino de filme
+- Paleta clara e calma: tons de papel e creme (#F7F5F0), madeira clara, cinza quente; azul-marinho (#354271) e dourado (#D2AE6D) aparecem só em objetos (uma pasta azul-marinho, um detalhe dourado), nunca como fundo
+- Cores levemente dessaturadas, contraste baixo, sensação de calma e recomeço
+- Composição horizontal 16:9, objeto principal no centro ou levemente à direita, área de respiro limpa à esquerda
+- Ambientes brasileiros reais: cozinha simples, calçada de pedra portuguesa, canteiro de obra, sala de espera, mesa de madeira
+
+PROIBIDO:
+- Texto, letras, números, logotipos, marcas d'água, selos
+- Rosto em close ou pessoa reconhecível (pessoas só de costas, de lado, fora de foco ou apenas as mãos)
+- Ilustração, 3D, flat design, ícones, gráficos, colagem, fundo escuro, gradiente azul, formas geométricas decorativas
+- Sangue, ferimento exposto, ambulância, hospital dramático, choro, tragédia
+- Balança da justiça, martelo de juiz, toga, clichês jurídicos`;
 }
 
 // O modelo de imagem devolve 503 "high demand" com alguma frequência, e é
