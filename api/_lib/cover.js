@@ -16,29 +16,92 @@ const IMAGE_MODEL = 'nano-banana-pro-preview';
  * cotidiana e digna, nunca drama.
  */
 const SCENES_BY_CATEGORY = [
-    [/acidente/i, 'capacete de moto sobre uma mesa, luvas de trabalho, uma moto de entrega parada numa rua de São Paulo, mãos com pulso enfaixado segurando um café, botas de obra na soleira'],
-    [/doen[cç]a|incapacidade|per[ií]cia/i, 'mesa de cozinha com exames e receitas médicas organizados, uma cadeira vazia perto da janela, mãos segurando um laudo, cartela de remédios ao lado de um caderno'],
-    [/bpc|loas|idoso|defici/i, 'sala simples com luz de fim de tarde, mãos de uma pessoa idosa sobre a mesa, uma bengala apoiada na parede, quintal com roupa no varal'],
-    [/invalidez|aposentadoria/i, 'cadeira de rodas junto a uma janela aberta, muletas encostadas numa cama arrumada, varanda com luz da manhã, mãos apoiadas numa bengala de madeira'],
-    [/pens[aã]o|morte|fam[ií]lia/i, 'porta-retrato virado para a janela, aliança sobre um lenço, xícaras de café numa mesa de família, mãos entrelaçadas'],
-    [/indeniza|trabalhista|c[ií]vel|seguro|dpvat/i, 'carteira de trabalho sobre a mesa, uniforme dobrado numa cadeira, chave de carro ao lado de documentos, capacete de obra num armário'],
+    [/acidente|trajeto|\bcat\b|ler|dort|fratura|sequela/i, [
+        'capacete de moto e luvas sobre o banco de uma moto de entrega parada numa rua de pedra portuguesa',
+        'botas de obra na soleira de uma casa simples',
+        'um pulso enfaixado apoiado no balcão de uma oficina, ferramentas desfocadas ao fundo',
+        'colete refletivo pendurado num gancho ao lado de um relógio de ponto',
+        'bicicleta de entrega encostada num portão de ferro, bolsa térmica no bagageiro',
+        'muletas encostadas no banco de um ponto de ônibus vazio',
+        'carteira de trabalho e um crachá de empresa sobre a mesa da cozinha',
+        'capacete de obra dentro de um armário de vestiário com a porta entreaberta',
+        'uma bota de segurança ao lado de uma cadeira de plástico numa varanda',
+    ]],
+    [/doen[cç]a|incapacidade|per[ií]cia|laudo|alta|inss|benef|acordo|atestado/i, [
+        'carta do INSS aberta sobre a mesa da cozinha, óculos de leitura ao lado',
+        'envelope pardo e uma caneta sobre um pano de prato xadrez',
+        'sala de espera de agência com cadeiras de plástico vazias e luz de janela',
+        'pilha de exames com clipe de metal sobre uma cômoda',
+        'agenda de papel com uma data circulada, ao lado de um relógio de pulso',
+        'cartela de remédios e um copo de água na mesa de cabeceira',
+        'telefone fixo antigo ao lado de um bloco de anotações com nomes de médicos',
+    ]],
+    [/bpc|loas|idoso|defici/i, [
+        'mãos de uma pessoa idosa sobre uma toalha de mesa bordada',
+        'uma bengala de madeira apoiada na parede de uma sala simples',
+        'quintal com roupa no varal e uma cadeira de balanço vazia',
+        'rádio antigo sobre a cômoda com um porta-retrato virado para a janela',
+        'chinelos ao lado de uma cadeira de rodas numa varanda',
+    ]],
+    [/invalidez|aposentadoria/i, [
+        'cadeira de rodas junto a uma janela aberta com cortina leve',
+        'muletas encostadas numa cama arrumada',
+        'mãos apoiadas numa bengala de madeira, luz da manhã',
+        'uma cadeira vazia na varanda com uma manta dobrada',
+        'óculos e um calendário de parede numa cozinha simples',
+    ]],
+    [/pens[aã]o|morte|fam[ií]lia|vi[uú]v/i, [
+        'porta-retrato virado para a janela, cortina ao vento',
+        'aliança sobre um lenço dobrado numa cômoda',
+        'duas xícaras de café numa mesa de família, uma delas vazia',
+        'mãos entrelaçadas sobre uma mesa de madeira',
+        'um casaco masculino pendurado atrás de uma porta',
+    ]],
+    [/indeniza|trabalhista|c[ií]vel|seguro|dpvat|demiss/i, [
+        'carteira de trabalho sobre a mesa ao lado de uma chave de carro',
+        'uniforme de empresa dobrado numa cadeira',
+        'capa de moto sobre uma moto estacionada na garagem de um prédio',
+        'crachá de empresa pendurado num prego na parede da cozinha',
+        'um contracheque dobrado dentro de um envelope sobre o balcão',
+    ]],
 ];
+const DEFAULT_SCENES = [
+    'documentos do INSS organizados sobre uma mesa de madeira',
+    'mãos preenchendo um formulário numa mesa de cozinha',
+    'mesa de trabalho simples com luz de janela e um bloco de anotações',
+];
+const NAVY_OBJECTS = ['uma pasta azul-marinho', 'uma camisa azul-marinho dobrada', 'uma cadeira pintada de azul-marinho', 'uma porta azul-marinho ao fundo', 'um caderno azul-marinho', 'um boné azul-marinho', 'uma caneca azul-marinho'];
+const LIGHTS = ['luz natural quente de fim de tarde', 'luz lateral de janela pela manhã', 'luz difusa de dia nublado', 'luz de janela com sombras suaves'];
 
-function sceneHints(category) {
-    const hit = SCENES_BY_CATEGORY.find(([re]) => re.test(category || ''));
-    return hit ? hit[1] : 'documentos do INSS organizados sobre uma mesa de madeira, uma pasta azul-marinho com papéis, mãos preenchendo um formulário, mesa de trabalho com luz de janela';
+/** Hash determinístico: o mesmo post sempre sorteia a mesma cena (regeneração reproduzível). */
+function hashOf(str) {
+    let h = 2166136261;
+    for (const ch of String(str)) { h ^= ch.charCodeAt(0); h = Math.imul(h, 16777619) >>> 0; }
+    return h;
 }
 
-export function buildCoverPrompt({ title, category }) {
+function pickScene({ slug, title, category }) {
+    const hit = SCENES_BY_CATEGORY.find(([re]) => re.test(`${category || ''} ${title || ''}`));
+    const scenes = hit ? hit[1] : DEFAULT_SCENES;
+    const h = hashOf(slug || title);
+    return {
+        scene: scenes[h % scenes.length],
+        navy: NAVY_OBJECTS[(h >>> 3) % NAVY_OBJECTS.length],
+        light: LIGHTS[(h >>> 7) % LIGHTS.length],
+    };
+}
+
+export function buildCoverPrompt({ slug, title, category }) {
+    const pick = pickScene({ slug, title, category });
     return `Fotografia editorial para a capa de um artigo de blog de um escritório de advocacia brasileiro (direito previdenciário e acidentes).
 
 TEMA DO ARTIGO: "${title}" (categoria: ${category || 'Direito Previdenciário'})
-Traduza o tema em UMA cena cotidiana brasileira, concreta e digna. Sugestões de cena para esta categoria: ${sceneHints(category)}. Escolha a que melhor representa o título.
+CENA (obrigatória, uma só): ${pick.scene}. Um único acento azul-marinho na cena: ${pick.navy}. Nada de caneca de café, pasta sobre a mesa ou mãos segurando caneca, a menos que a cena acima diga isso.
 
 ESTILO OBRIGATÓRIO (identidade visual do site):
 - Fotografia real, editorial, câmera 35mm, abertura f/2 (fundo suavemente desfocado), enquadramento próximo do objeto principal
-- Luz natural quente de fim de tarde ou luz lateral de janela; sombras suaves; grão fino de filme
-- Paleta clara e calma: tons de papel e creme (#F7F5F0), madeira clara, cinza quente; azul-marinho (#354271) e dourado (#D2AE6D) aparecem só em objetos (uma pasta azul-marinho, um detalhe dourado), nunca como fundo
+- ${pick.light}; sombras suaves; grão fino de filme
+- Paleta clara e calma: tons de papel e creme (#F7F5F0), madeira clara, cinza quente; azul-marinho (#354271) só no objeto indicado acima e dourado (#D2AE6D) no máximo num detalhe pequeno, nunca como fundo
 - Cores levemente dessaturadas, contraste baixo, sensação de calma e recomeço
 - Composição horizontal 16:9, objeto principal no centro ou levemente à direita, área de respiro limpa à esquerda
 - Ambientes brasileiros reais: cozinha simples, calçada de pedra portuguesa, canteiro de obra, sala de espera, mesa de madeira
@@ -60,7 +123,7 @@ const BACKOFF_MS = [4000, 12000, 25000]; // 27/08: 503 "high demand" durou minut
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-async function generateImageOnce({ title, category }) {
+async function generateImageOnce({ slug, title, category }) {
     const key = process.env.GEMINI_API_KEY;
     if (!key) throw new Error('GEMINI_API_KEY não configurada');
     const res = await fetch(
@@ -69,7 +132,7 @@ async function generateImageOnce({ title, category }) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                contents: [{ parts: [{ text: buildCoverPrompt({ title, category }) }] }],
+                contents: [{ parts: [{ text: buildCoverPrompt({ slug, title, category }) }] }],
                 generationConfig: {
                     responseModalities: ['IMAGE'],
                     imageConfig: { aspectRatio: '16:9' },
@@ -94,11 +157,11 @@ async function generateImageOnce({ title, category }) {
 }
 
 /** Tenta gerar a imagem até MAX_ATTEMPTS quando a falha é transitória. */
-async function generateImage({ title, category }) {
+async function generateImage({ slug, title, category }) {
     let lastErr;
     for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
         try {
-            return await generateImageOnce({ title, category });
+            return await generateImageOnce({ slug, title, category });
         } catch (err) {
             lastErr = err;
             const canRetry = RETRYABLE.has(err.status) && attempt < MAX_ATTEMPTS;
@@ -139,7 +202,7 @@ async function uploadToStorage({ slug, buffer, mime }) {
 export async function generateCover({ slug, title, category }) {
     try {
         const t0 = Date.now();
-        const img = await generateImage({ title, category });
+        const img = await generateImage({ slug, title, category });
         const coverUrl = await uploadToStorage({ slug, buffer: img.buffer, mime: img.mime });
         console.log(`[cover] ${slug} gerada em ${Math.round((Date.now() - t0) / 1000)}s (${Math.round(img.buffer.length / 1024)}KB)`);
         return coverUrl;
