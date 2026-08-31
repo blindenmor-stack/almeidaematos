@@ -25,10 +25,26 @@ function clarityPlugin() {
     }
 }
 
+// Manychat Pixel (conta 5454940) — coleta eventos do site pra usar como gatilho
+// em automações do Manychat. Posts servidos pela function têm cópia própria em
+// api/_lib/template.js — mudou o ID, trocar nos DOIS lugares.
+function manychatPlugin() {
+    return {
+        name: 'inject-manychat',
+        transformIndexHtml() {
+            return [
+                { tag: 'script', attrs: { src: '//widget.manychat.com/5454940_815e8.js', defer: true }, injectTo: 'head' },
+                { tag: 'script', attrs: { src: 'https://mccdn.me/assets/js/widget.js', defer: true }, injectTo: 'head' },
+            ]
+        },
+    }
+}
+
 export default defineConfig({
     plugins: [
         tailwindcss(),
         clarityPlugin(),
+        manychatPlugin(),
     ],
     build: {
         rollupOptions: {

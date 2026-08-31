@@ -33,6 +33,10 @@ c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
 t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
 y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
 })(window, document, "clarity", "script", "${CLARITY_ID}");</script>`;
+// Manychat Pixel — mesma conta do resto do site (5454940); as páginas do Vite
+// recebem por plugin (vite.config.js). Mudou o ID? Trocar nos dois lugares.
+const MANYCHAT_HEAD = `<script src="//widget.manychat.com/5454940_815e8.js" defer="defer"></script>
+<script src="https://mccdn.me/assets/js/widget.js" defer="defer"></script>`;
 // Tracking de cliques de WhatsApp — mesmo evento/formato do main.js do site.
 const WA_TRACKING = `<script>window.dataLayer=window.dataLayer||[];document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href*="wa.me"]');if(!a)return;var loc='blog_post';if(a.closest('.post-cta'))loc='blog_cta';else if(a.closest('.site-header'))loc='navbar';else if(a.closest('.site-footer'))loc='footer';window.dataLayer.push({event:'click_whatsapp',click_location:loc,page_path:window.location.pathname,page_title:document.title});});</script>`;
 
@@ -198,6 +202,7 @@ export function renderPostPage(post) {
     ${buildJsonLd(post)}
     ${GTM_HEAD}
     ${CLARITY_HEAD}
+    ${MANYCHAT_HEAD}
     <style>${BASE_CSS}</style>
 </head>
 <body>
