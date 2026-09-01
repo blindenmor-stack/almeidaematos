@@ -61,6 +61,7 @@ export default defineConfig({
                 pensaoMorte: resolve(__dirname, 'beneficios/pensao-por-morte/index.html'),
                 aposentadoriaPcd: resolve(__dirname, 'beneficios/aposentadoria-pcd/index.html'),
                 indenizacao: resolve(__dirname, 'beneficios/indenizacao-civel-trabalhista/index.html'),
+                politicaPrivacidade: resolve(__dirname, 'politica-de-privacidade/index.html'),
                 // (admin/ é estático puro — copiado no script de build, fora do bundle Vite)
             },
         },
