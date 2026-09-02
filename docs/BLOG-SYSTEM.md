@@ -192,13 +192,26 @@ As functions usam só `fetch` global e `node:crypto`/`node:fs` (Node 18+). Nada 
 
 ## 7. Regras editoriais embutidas no prompt (`api/_lib/prompt.js`)
 
-- **Persona:** advogado-educador brasileiro; simples, direto, empático; explica todo termo técnico.
+- **Persona:** advogado experiente explicando um direito para um amigo no café; leitor é trabalhador comum sem vocabulário jurídico.
 - **Compliance OAB:** sem promessa de resultado, sem urgência artificial, sem valores de honorários/casos; tom educativo.
-- **AEO/SEO:** primeiro parágrafo responde a pergunta em até 3 frases (answer-first); H2s como perguntas; listas/tabelas; seção "Perguntas frequentes" no fim (espelha o `faq` jsonb → schema FAQPage); fundamenta com legislação real (Lei 8.213/91, LC 142/2013, Lei 8.742/93…); **proibido inventar** estatísticas, decisões ou prazos.
-- **Linkagem interna:** 2-3 links contextuais pra `/beneficios/{produto}/`; menção discreta ao WhatsApp no fim (o botão real vem do template).
-- **Formato:** HTML semântico (h2, h3, p, ul, ol, table, strong), sem h1, sem style inline, sem markdown; 900–1400 palavras.
+- **AEO/SEO:** primeiro parágrafo responde a pergunta em 40-60 palavras (answer-first); H2s como perguntas reais; listas/tabelas; seção "Perguntas frequentes" no fim (espelha o `faq` jsonb → schema FAQPage); fundamenta com legislação real (Lei 8.213/91, LC 142/2013, Lei 8.742/93…); **proibido inventar** estatísticas, decisões ou prazos.
+- **Estilo sem cara de IA (`STYLE_RULES`, 02/09/2026)** — versão jurídica de `skills/copy/escrita-sem-cara-de-ia.md`: zero travessão, zero antítese "não é X, é Y" (e variantes), sem muletas ("vale lembrar", "na prática", "ou seja", "além disso"…), sem clichês ("mais comum do que parece", "muita gente acha"), sem citação inventada (`<blockquote>` da "equipe jurídica" foi abolido), título em caixa baixa normal (nunca Title Case), sem ano no título, sem "guia completo/entenda/veja", 3-6 H2 escolhidos pelo tema (sem esqueleto fixo), frases ≤ 30 palavras, parágrafos de 1-3 frases, voz ativa, 1 negrito por parágrafo, nome oficial do benefício entre parênteses na 1ª menção, 700-1.200 palavras.
+- **Linkagem interna:** 1-3 links pra `/beneficios/{produto}/` só quando o benefício faz parte do assunto (nunca menção forçada); convite discreto ao WhatsApp no fechamento (o botão real vem do template).
+- **Formato:** HTML semântico (h2, h3, p, ul, ol, table, strong, a), sem h1, sem blockquote, sem style inline, sem markdown.
 
----
+### 7.1 Lint de estilo + passe de revisão (`api/_lib/style-lint.js`, `generate.js`)
+
+Instrução no prompt não basta: o modelo continuava soltando antítese e travessão. Por isso o fluxo virou **gerar → lint → revisar → lint**:
+
+1. `lintArticle()` mede os tiques de forma determinística. **Graves** (barram publicação): travessão, antítese, blockquote, Title Case no título/meta_title, ano no título, gancho proibido no título. **Avisos**: muletas, clichês, "sem X, sem Y", frases > 32 palavras, exclamação, reticências, "pra"/"a gente", "nossa equipe" > 2×, parágrafo inteiro em negrito.
+2. Se houver grave (ou ≥ 3 avisos), `polishArticle()` chama o LLM com `buildReviewPrompt()` (mantém fatos, leis, links e seções; só corrige estilo) e re-linta. Até 2 passes, e nenhum passe novo depois de 170 s (a function tem 300 s).
+3. **Gate:** se ainda sobrar tique grave, o post entra como `draft` (não publica) e o log registra `estilo REPROVADO (...)`. Aparece no /admin pra revisão humana.
+4. `stripBlockquotes()` roda sempre como cinto de segurança (converte citação em parágrafo, remove "— Equipe jurídica").
+5. O log de geração passou a registrar `estilo ok | N revisão(ões)` ou os tiques que sobraram.
+
+### 7.2 Filtro de duplicidade de pauta (`checkDuplicateTopic`)
+
+O ContentLab importou o mesmo tema com títulos diferentes (o "pino no detector de metal" saiu 2× em uma semana). Antes de gerar, o cron pergunta ao LLM se a pauta escolhida repete algum dos 40 últimos títulos publicados. Se repetir, a pauta é **descartada com nota** `[auto YYYY-MM-DD] Descartada antes de gerar: repete "..."` e a próxima da fila é testada (até 4). O `contentlab-sync.js` também passou a deduplicar contra os títulos publicados (não só contra a fila) e a importar com prioridade **6/5** (era 8/6), abaixo das pautas curadas (manual/notion/editorial = 7).
 
 ## 8. Decisões técnicas & gotchas
 
@@ -222,6 +235,34 @@ As functions usam só `fetch` global e `node:crypto`/`node:fs` (Node 18+). Nada 
 - **Log de geração:** tabela `aquisicao.blog_generation_log` (status success/error/skipped, detail, modelo, duração). Consultar no Supabase ou via SQL Editor.
 - **Logs de runtime:** Vercel → Deployments → Functions (erros de function aparecem lá com prefixo do endpoint).
 - **Custo Gemini:** `gemini-2.5-flash` gera um artigo de ~1200 palavras por fração de centavo de dólar; com 3 posts/semana o custo é irrisório.
+
+## 10. CLI local — `scripts/blog.mjs` (02/09/2026)
+
+Roda na máquina do Bernardo com as credenciais de `~/.claude/mcp-credentials/` (Supabase CRM + Anthropic/OpenAI); nada de chave no repo.
+
+```
+node scripts/blog.mjs topics                          # fila pendente (ordem real de publicação)
+node scripts/blog.mjs topics --status all
+node scripts/blog.mjs topics add pautas.txt --dry-run # confere dedup (Jaccard vs fila + publicados)
+node scripts/blog.mjs topics add pautas.txt           # insere (source=manual, prioridade padrão 7)
+node scripts/blog.mjs topics discard <id> [<id>...]   # soft delete (restaura com `restore`)
+node scripts/blog.mjs topics priority <id> 9
+node scripts/blog.mjs topics retitle <id> "novo título"
+node scripts/blog.mjs lint --all                      # tiques de estilo em todos os publicados
+node scripts/blog.mjs preview <topic-id>              # gera + revisa localmente, salva .md, NÃO grava no banco
+node scripts/blog.mjs preview --text "pauta livre"
+node scripts/blog.mjs rewrite --slug <slug>           # dry-run: antes/depois em backups/preview/
+node scripts/blog.mjs rewrite --all --apply           # reescreve o acervo (backup em backups/*.jsonl)
+```
+
+Formato de `pautas.txt` (uma por linha, só o título é obrigatório):
+```
+Título da pauta | palavra-chave | produto-slug | prioridade | observações
+# linhas com # são ignoradas
+```
+Produtos válidos: `auxilio-acidente`, `auxilio-doenca`, `bpc-loas`, `aposentadoria-por-invalidez`, `pensao-por-morte`, `aposentadoria-pcd`, `indenizacao-civel-trabalhista`. Também aceita `.json` (array de `{topic, target_keyword, product_slug, category_slug, priority, notes}`).
+
+Outras portas de entrada da fila: painel `/admin/` → aba Pautas (formulário), `POST /api/admin/topics` e a DB "Artigos Blog" do Notion (importada uma vez em 19/07). A pasta `backups/` está no `.gitignore`.
 
 ## Capas dos posts (direção de arte v5, 27/08/2026)
 

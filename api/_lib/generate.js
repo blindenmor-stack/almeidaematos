@@ -1,24 +1,29 @@
 // ============================================================================
 // Motor de geração de post — compartilhado entre o cron e o /api/admin/generate
-// Fluxo: pauta → Gemini (JSON estruturado) → validação → insert → log
+// Fluxo: pauta (filtro de duplicidade) → LLM (JSON estruturado) → lint de estilo
+//        → passe(s) de revisão → validação → capa → insert → log
 // ============================================================================
 
 import { sbFetch, getSettings, logGeneration } from './supabase.js';
 import { callLLM } from './llm.js';
 import { generateCover } from './cover.js';
 import {
-    buildArticlePrompt, buildTopicPrompt,
-    RESPONSE_SCHEMA, TOPIC_RESPONSE_SCHEMA, CATEGORIES,
+    buildArticlePrompt, buildTopicPrompt, buildReviewPrompt, buildDuplicateCheckPrompt,
+    RESPONSE_SCHEMA, TOPIC_RESPONSE_SCHEMA, REVIEW_SCHEMA, DUPLICATE_CHECK_SCHEMA, CATEGORIES,
 } from './prompt.js';
-import { SLUG_RE, slugify, sanitizeHtml, countWords } from './util.js';
+import { SLUG_RE, slugify, sanitizeHtml, countWords, nowInSaoPaulo } from './util.js';
+import { lintArticle, stripBlockquotes } from './style-lint.js';
 import { LEGACY_SLUGS } from './legacy-slugs.js';
 
-const GEMINI_BASE = 'https://generativelanguage.googleapis.com/v1beta/models';
 const MIN_WORDS = 600;
-
-/** Chama o Gemini com saída JSON estruturada e retorna o objeto parseado. */
-// callGemini → substituído por callLLM (multi-provider: Gemini/Claude/GPT) em llm.js
-
+/** Quantos passes de revisão de estilo no máximo por artigo. */
+const MAX_REVIEWS = 2;
+/** Depois disso (ms desde o início) não inicia revisão nova — a function tem 300s. */
+const REVIEW_DEADLINE_MS = 170_000;
+/** Se sobrar tique grave após as revisões, o post entra como rascunho em vez de publicar. */
+const STYLE_GATE = true;
+/** Quantas pautas o cron testa contra duplicidade antes de desistir. */
+const MAX_TOPIC_ATTEMPTS = 4;
 
 /** Garante slug único: se colidir com posts existentes, sufixa -2, -3... */
 async function ensureUniqueSlug(slug) {
@@ -53,9 +58,9 @@ function normalizeCategory(article, topic) {
 }
 
 /** Valida e limpa o artigo retornado pela IA. Lança se inválido. */
-function validateArticle(article) {
+export function validateArticle(article) {
     if (!article.title || article.title.length < 10) throw new Error('Título inválido');
-    const contentHtml = sanitizeHtml(article.content_html);
+    const contentHtml = sanitizeHtml(stripBlockquotes(article.content_html));
     const words = countWords(contentHtml);
     if (words < MIN_WORDS) throw new Error(`Conteúdo curto demais: ${words} palavras (mínimo ${MIN_WORDS})`);
 
@@ -88,13 +93,42 @@ function extractInternalLinks(html) {
     return [...new Set(links)];
 }
 
-/** Escolhe a pauta: por id, texto livre, ou a pending de maior prioridade. */
-async function pickTopic({ topicId, topicText, settings }) {
+/** Títulos publicados recentes (pra evitar repetição de tema e de estrutura). */
+async function recentPublishedTitles(limit = 40) {
+    const rows = await sbFetch(`blog_posts?status=eq.published&order=published_at.desc&limit=${limit}&select=title`);
+    return (rows || []).map((r) => r.title).filter(Boolean);
+}
+
+/**
+ * Pergunta ao LLM se a pauta repete um artigo publicado. Falha → não é duplicata
+ * (o filtro nunca pode derrubar a geração).
+ */
+export async function checkDuplicateTopic({ topic, recentTitles, model }) {
+    if (!recentTitles?.length) return { duplicate: false };
+    try {
+        const { result } = await callLLM({
+            model,
+            prompt: buildDuplicateCheckPrompt({ topic, recentTitles }),
+            responseSchema: DUPLICATE_CHECK_SCHEMA,
+        });
+        return {
+            duplicate: result?.duplicate === true,
+            similar_title: String(result?.similar_title || ''),
+            reason: String(result?.reason || ''),
+        };
+    } catch (err) {
+        console.warn('[generate] filtro de duplicidade falhou, seguindo sem ele:', err.message);
+        return { duplicate: false };
+    }
+}
+
+/** Escolhe a pauta: por id, texto livre, ou a pending de maior prioridade (sem duplicar tema). */
+async function pickTopic({ topicId, topicText, settings, model, recentTitles }) {
     if (topicText) {
         // Pauta livre digitada no admin — cria registro pra rastreabilidade
         const rows = await sbFetch('blog_topics', {
             method: 'POST',
-            body: { topic: String(topicText).slice(0, 500), status: 'pending', priority: 10, notes: 'Pauta livre via admin' },
+            body: { topic: String(topicText).slice(0, 500), status: 'pending', priority: 10, notes: 'Pauta livre via admin', source: 'manual' },
         });
         return rows[0];
     }
@@ -103,15 +137,31 @@ async function pickTopic({ topicId, topicText, settings }) {
         if (!rows?.length) throw new Error(`Pauta ${topicId} não encontrada`);
         return rows[0];
     }
-    // Maior prioridade pendente (desempate: mais antiga)
-    const rows = await sbFetch('blog_topics?status=eq.pending&order=priority.desc,created_at.asc&limit=1');
-    if (rows?.length) return rows[0];
+
+    // Maior prioridade pendente (desempate: mais antiga), pulando as que repetem tema publicado
+    const skipped = [];
+    for (let attempt = 0; attempt < MAX_TOPIC_ATTEMPTS; attempt++) {
+        const filter = skipped.length ? `&id=not.in.(${skipped.join(',')})` : '';
+        const rows = await sbFetch(`blog_topics?status=eq.pending${filter}&order=priority.desc,created_at.asc&limit=1`);
+        if (!rows?.length) break;
+        const candidate = rows[0];
+        const dup = await checkDuplicateTopic({ topic: candidate, recentTitles, model });
+        if (!dup.duplicate) return candidate;
+
+        const { ymd } = nowInSaoPaulo();
+        const note = `[auto ${ymd}] Descartada antes de gerar: repete "${dup.similar_title}". ${dup.reason}`;
+        await sbFetch(`blog_topics?id=eq.${candidate.id}`, {
+            method: 'PATCH',
+            body: { status: 'discarded', notes: `${candidate.notes ? candidate.notes + '\n\n' : ''}${note}`.slice(0, 3000) },
+        });
+        skipped.push(candidate.id);
+        console.warn(`[generate] pauta duplicada descartada: "${candidate.topic}" ≈ "${dup.similar_title}"`);
+    }
 
     // Fila vazia → IA sugere uma pauta nova baseada na linha editorial
-    const recent = await sbFetch('blog_posts?order=created_at.desc&limit=30&select=title');
     const { result: suggestion } = await callLLM({
-        model: settings.model || 'gemini-pro-latest',
-        prompt: buildTopicPrompt({ settings, recentTitles: (recent || []).map((r) => r.title) }),
+        model,
+        prompt: buildTopicPrompt({ settings, recentTitles }),
         responseSchema: TOPIC_RESPONSE_SCHEMA,
     });
     const created = await sbFetch('blog_topics', {
@@ -125,13 +175,65 @@ async function pickTopic({ topicId, topicText, settings }) {
             priority: 5,
             status: 'pending',
             notes: 'Pauta gerada por IA (fila vazia)',
+            source: 'manual',
         },
     });
     return created[0];
 }
 
+/** Desfaz escape duplo que o modelo às vezes devolve dentro de strings de tool-use ("\\n" literal). */
+function unescapeLiteral(str) {
+    return String(str)
+        .replace(/\\r?\\n/g, '\n')
+        .replace(/\\t/g, ' ')
+        .replace(/\\"/g, '"');
+}
+
+/** Aplica os campos revisados por cima do artigo, sem perder nada que a revisão não devolveu. */
+function mergeRevision(article, revised) {
+    if (!revised) return article;
+    const out = { ...article };
+    for (const k of ['title', 'excerpt', 'meta_title', 'meta_description', 'content_html']) {
+        if (typeof revised[k] === 'string' && revised[k].trim()) out[k] = unescapeLiteral(revised[k]).trim();
+    }
+    if (Array.isArray(revised.faq) && revised.faq.length >= 3) {
+        out.faq = revised.faq.map((f) => ({ question: unescapeLiteral(f?.question || ''), answer: unescapeLiteral(f?.answer || '') }));
+    }
+    return out;
+}
+
 /**
- * Gera 1 post completo. Retorna { post, topic, words }.
+ * Lint + passes de revisão de estilo. Reutilizado pelo cron e pelo script de
+ * reescrita do acervo (scripts/blog.mjs rewrite).
+ * @returns {Promise<{article, lint, reviews, history}>}
+ */
+export async function polishArticle({ article, settings, model, started = Date.now(), maxReviews = MAX_REVIEWS, deadlineMs = REVIEW_DEADLINE_MS }) {
+    let current = { ...article, content_html: stripBlockquotes(article.content_html) };
+    let lint = lintArticle(current);
+    const history = [{ pass: 0, hard: lint.hard, soft: lint.soft, summary: lint.summary }];
+    let reviews = 0;
+
+    // 1º passe: qualquer tique grave ou 3+ avisos. Passes seguintes: só se sobrar grave.
+    const needsReview = () => (reviews === 0 ? lint.hard > 0 || lint.soft >= 3 : lint.hard > 0);
+
+    while (needsReview() && reviews < maxReviews && Date.now() - started < deadlineMs) {
+        const { result: revised } = await callLLM({
+            model,
+            prompt: buildReviewPrompt({ article: current, lint, settings }),
+            responseSchema: REVIEW_SCHEMA,
+        });
+        current = mergeRevision(current, revised);
+        current.content_html = stripBlockquotes(current.content_html);
+        reviews++;
+        lint = lintArticle(current);
+        history.push({ pass: reviews, hard: lint.hard, soft: lint.soft, summary: lint.summary, changes: String(revised?.changes_summary || '').slice(0, 300) });
+    }
+
+    return { article: current, lint, reviews, history };
+}
+
+/**
+ * Gera 1 post completo. Retorna { post, topic, words, lint }.
  * @param {object} opts - { triggerSource: 'cron'|'manual', topicId?, topicText? }
  */
 export async function generatePost({ triggerSource, topicId = null, topicText = null }) {
@@ -142,22 +244,26 @@ export async function generatePost({ triggerSource, topicId = null, topicText = 
     let postId = null;
 
     try {
-        topic = await pickTopic({ topicId, topicText, settings });
+        const recentTitles = await recentPublishedTitles(40);
+        topic = await pickTopic({ topicId, topicText, settings, model, recentTitles });
 
         // Slugs recentes pra IA evitar repetição de tema
         const recentRows = await sbFetch('blog_posts?order=created_at.desc&limit=40&select=slug');
         const existingSlugs = (recentRows || []).map((r) => r.slug);
 
-        const { result: article, modelUsed } = await callLLM({
+        const { result: draft } = await callLLM({
             model,
-            prompt: buildArticlePrompt({ topic, settings, existingSlugs }),
+            prompt: buildArticlePrompt({ topic, settings, existingSlugs, recentTitles }),
             responseSchema: RESPONSE_SCHEMA,
         });
+
+        const { article, lint, reviews } = await polishArticle({ article: draft, settings, model, started });
 
         const clean = validateArticle(article);
         const slug = await ensureUniqueSlug(article.slug || slugify(article.title));
         const category = normalizeCategory(article, topic);
-        const publishNow = settings.auto_publish !== false;
+        const styleBlocked = STYLE_GATE && lint.hard > 0;
+        const publishNow = settings.auto_publish !== false && !styleBlocked;
 
         // Capa na identidade da marca (Nano Banana Pro) — best-effort
         const coverUrl = await generateCover({ slug, title: article.title, category: category.name });
@@ -193,17 +299,20 @@ export async function generatePost({ triggerSource, topicId = null, topicText = 
             body: { status: 'used', used_at: new Date().toISOString() },
         });
 
+        const styleNote = styleBlocked
+            ? `estilo REPROVADO (${lint.summary}) → rascunho para revisão humana`
+            : `estilo ok${lint.soft ? ` (avisos: ${lint.summary})` : ''}`;
         await logGeneration({
             trigger_source: triggerSource,
             topic_id: topic.id,
             post_id: postId,
             status: 'success',
-            detail: `"${post.title}" (${clean.words} palavras, status: ${post.status})`,
+            detail: `"${post.title}" (${clean.words} palavras, status: ${post.status}) | ${styleNote} | ${reviews} revisão(ões)`,
             model,
             duration_ms: Date.now() - started,
         });
 
-        return { post, topic, words: clean.words };
+        return { post, topic, words: clean.words, lint, reviews };
     } catch (err) {
         await logGeneration({
             trigger_source: triggerSource,

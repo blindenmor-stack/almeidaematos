@@ -22,7 +22,7 @@ const EXCLUDE_RE = /bastidor|humaniza|branding|\bmatos\b|entretenimento|curiosid
 
 /** minúsculas, sem acento, tokens com 4+ letras truncados em 5 chars
  *  (truncamento ~stemming: "recebi"/"recebeu" → "receb") */
-function tokens(text) {
+export function tokens(text) {
     return new Set(
         String(text || '')
             .toLowerCase()
@@ -35,7 +35,7 @@ function tokens(text) {
     );
 }
 
-function jaccard(a, b) {
+export function jaccard(a, b) {
     if (!a.size || !b.size) return 0;
     let inter = 0;
     for (const t of a) if (b.has(t)) inter++;
@@ -101,16 +101,21 @@ function buildNotes(topic) {
 export async function syncContentLabTopics() {
     const since = new Date(Date.now() - LOOKBACK_DAYS * 86400_000).toISOString();
 
-    const [candidates, existing] = await Promise.all([
+    const [candidates, existing, publishedRows] = await Promise.all([
         sbFetch(
             `content_topics?potencial=in.(alto,medio)&created_at=gte.${encodeURIComponent(since)}` +
             `&select=id,titulo,resumo_denso,fatos,area_juridica,angulo,fonte_origem,potencial&order=created_at.desc&limit=100`
         ),
         sbFetch('blog_topics?select=topic,source_id&order=created_at.desc&limit=300'),
+        sbFetch('blog_posts?select=title&order=created_at.desc&limit=200'),
     ]);
 
     const known = new Set((existing || []).map((r) => r.source_id).filter(Boolean));
-    const existingTokens = (existing || []).map((r) => tokens(r.topic));
+    // Dedup também contra os títulos já publicados (não só contra a fila)
+    const existingTokens = [
+        ...(existing || []).map((r) => tokens(r.topic)),
+        ...(publishedRows || []).map((r) => tokens(r.title)),
+    ];
 
     let imported = 0;
     let skipped = 0;
@@ -135,7 +140,9 @@ export async function syncContentLabTopics() {
                 category: category.name,
                 category_slug: category.slug,
                 product_slug: inferProductSlug(ct),
-                priority: ct.potencial === 'alto' ? 8 : 6,
+                // Abaixo das pautas curadas (manual/notion/editorial = 7): gancho de
+                // notícia não passa na frente do que o editor escolheu.
+                priority: ct.potencial === 'alto' ? 6 : 5,
                 status: 'pending',
                 notes: buildNotes(ct),
                 source: 'contentlab',
