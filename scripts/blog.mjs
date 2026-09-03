@@ -13,11 +13,17 @@
 //   node scripts/blog.mjs lint [--all | --slug s | --limit n]
 //   node scripts/blog.mjs preview <topic-id> | --text "pauta livre" [--out dir] [--model m] [--no-review]
 //   node scripts/blog.mjs rewrite [--all | --slug s | --limit n] [--apply] [--out dir] [--concurrency 2]
+//   node scripts/blog.mjs schedule post.json [--date YYYY-MM-DD] [--draft] [--no-polish] [--cover] [--dry-run] [--force]
+//   node scripts/blog.mjs scheduled                       # posts agendados/rascunhos na fila de prontos
 //
 // Formato do arquivo de pautas (uma por linha, campos separados por " | ",
 // só o título é obrigatório; linhas com # são ignoradas):
 //   Título da pauta | palavra-chave | produto-slug | prioridade | observações
 // Ou um JSON: [{ "topic", "target_keyword", "product_slug", "category_slug", "priority", "notes" }]
+// `topics add --source estrategica` marca a origem (padrão: manual).
+//
+// post.json (schedule): { title, slug?, excerpt, meta_title, meta_description, category_slug,
+//   target_keyword, content_html, faq:[{question,answer}], topic_id? }
 // ============================================================================
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync, appendFileSync } from 'node:fs';
@@ -154,7 +160,7 @@ async function cmdTopics(lib) {
                 });
         }
         const defaultPriority = flags.priority ? parseInt(flags.priority, 10) : 7;
-        const { tokens, jaccard } = lib.contentlab;
+        const { titleTokens: tokens, jaccard } = lib.util;
         const { PRODUCT_PAGES, CATEGORIES } = lib.prompt;
         const [pending, posts] = await Promise.all([
             sbFetch('blog_topics?select=topic,status&status=in.(pending,used)&limit=500'),
@@ -183,7 +189,7 @@ async function cmdTopics(lib) {
                 priority: Number.isInteger(it.priority) ? it.priority : defaultPriority,
                 status: 'pending',
                 notes: it.notes || null,
-                source: 'manual',
+                source: flags.source || 'manual',
             };
             if (flags['dry-run']) { console.log(`· (dry-run) ${body.priority} ${body.topic}`); continue; }
             const [row] = await sbFetch('blog_topics', { method: 'POST', body });
@@ -372,6 +378,90 @@ async function cmdRewrite(lib) {
     console.log(`Antes/depois em ${out}${apply ? '' : ' (dry-run: nada gravado no banco; use --apply)'}`);
 }
 
+async function cmdScheduled(lib) {
+    const { sbFetch } = lib.supabase;
+    const rows = await sbFetch('blog_posts?status=in.(scheduled,draft)&select=id,title,slug,status,scheduled_for,created_at,origin&order=status.desc,scheduled_for.asc.nullsfirst,created_at.asc&limit=100');
+    console.log(`${rows.length} post(s) na fila de prontos (agendados + rascunhos)\n`);
+    for (const p of rows) {
+        const when = p.status === 'scheduled' ? (p.scheduled_for ? String(p.scheduled_for).slice(0, 10) : 'próximo dia útil de publicação') : 'rascunho (não publica)';
+        console.log(`- [${p.status}] ${when.padEnd(30)} ${p.title}\n    /${p.slug}/  origem=${p.origin}  id=${p.id}`);
+    }
+}
+
+async function cmdSchedule(lib) {
+    const file = sub;
+    if (!file) die('uso: schedule <post.json> [--date YYYY-MM-DD] [--draft] [--no-polish] [--cover] [--dry-run] [--force]');
+    const raw = JSON.parse(readFileSync(resolve(file), 'utf8'));
+    const { sbFetch, getSettings } = lib.supabase;
+    const { lintArticle } = lib.lint;
+    const { polishArticle, validateArticle, ensureUniqueSlug, normalizeCategory, extractInternalLinks } = lib.generate;
+    const { slugify } = lib.util;
+    if (flags.date && !/^\d{4}-\d{2}-\d{2}$/.test(flags.date)) die('--date no formato YYYY-MM-DD');
+
+    const settings = await getSettings();
+    const model = flags.model || settings.model || 'gemini-pro-latest';
+    let article = { ...raw };
+    let lint = lintArticle(article);
+    printLint('lint do arquivo', lint);
+    let reviews = 0;
+    if (!flags['no-polish'] && (lint.hard > 0 || lint.soft >= 3)) {
+        const r = await polishArticle({ article, settings, model, started: Date.now(), deadlineMs: 10 * 60_000 });
+        article = r.article; lint = r.lint; reviews = r.reviews;
+        printLint(`após ${reviews} revisão(ões)`, lint);
+    }
+    const clean = validateArticle(article);
+    const category = normalizeCategory(article, { category_slug: raw.category_slug });
+    const slug = await ensureUniqueSlug(article.slug || slugify(article.title));
+    const status = flags.draft ? 'draft' : 'scheduled';
+    const scheduledFor = flags.date ? `${flags.date}T00:00:00-03:00` : null;
+
+    const out = resolve(flags.out || DEFAULT_OUT);
+    mkdirSync(out, { recursive: true });
+    const base = join(out, `${today()}_${slug.slice(0, 60)}`);
+    writeFileSync(`${base}.final.md`, articleToMarkdown({ ...article, content_html: clean.contentHtml, faq: clean.faq }, lint));
+    writeFileSync(`${base}.final.json`, JSON.stringify({ ...article, slug, content_html: clean.contentHtml, faq: clean.faq }, null, 2));
+
+    console.log(`\n${clean.words} palavras · ${clean.readTime} · categoria ${category.name} · slug /${slug}/ · status ${status}${scheduledFor ? ` em ${flags.date}` : ' (próximo dia de publicação)'}`);
+    console.log(`Preview: ${base}.final.md`);
+    if (lint.hard > 0 && !flags.force) {
+        console.log('\n🔴 Ainda há tiques graves. Corrija o JSON (ou use --force).');
+        if (!flags['dry-run']) process.exit(2);
+    }
+    if (flags['dry-run']) { console.log('\n(dry-run: nada gravado no banco)'); return; }
+
+    let coverUrl = null;
+    if (flags.cover) {
+        coverUrl = await lib.cover.generateCover({ slug, title: article.title, category: category.name });
+        console.log(coverUrl ? `Capa: ${coverUrl}` : 'Capa: falhou (o cron tenta de novo ao publicar)');
+    }
+    const [row] = await sbFetch('blog_posts', {
+        method: 'POST',
+        body: {
+            title: String(article.title).slice(0, 300),
+            slug,
+            cover_url: coverUrl,
+            excerpt: clean.excerpt,
+            content_html: clean.contentHtml,
+            category: category.name,
+            category_slug: category.slug,
+            author: 'Equipe Almeida & Matos',
+            read_time: clean.readTime,
+            status,
+            origin: 'manual',
+            meta_title: clean.metaTitle,
+            meta_description: clean.metaDescription,
+            faq: clean.faq,
+            internal_links: extractInternalLinks(clean.contentHtml),
+            target_keyword: article.target_keyword || null,
+            scheduled_for: scheduledFor,
+        },
+    });
+    if (raw.topic_id) {
+        await sbFetch(`blog_topics?id=eq.${raw.topic_id}`, { method: 'PATCH', body: { status: 'used', used_at: new Date().toISOString() } });
+    }
+    console.log(`✔ gravado: ${row.title}  id=${row.id}  (${status}${row.scheduled_for ? ` → ${String(row.scheduled_for).slice(0, 10)}` : ''})`);
+}
+
 // ----------------------------------------------------------------- main
 (async () => {
     if (!cmd || flags.help) {
@@ -386,10 +476,11 @@ async function cmdRewrite(lib) {
         lint: await import('../api/_lib/style-lint.js'),
         llm: await import('../api/_lib/llm.js'),
         generate: await import('../api/_lib/generate.js'),
-        contentlab: await import('../api/_lib/contentlab-sync.js'),
+        util: await import('../api/_lib/util.js'),
+        cover: await import('../api/_lib/cover.js'),
     };
-    const handlers = { topics: cmdTopics, lint: cmdLint, preview: cmdPreview, rewrite: cmdRewrite };
+    const handlers = { topics: cmdTopics, lint: cmdLint, preview: cmdPreview, rewrite: cmdRewrite, schedule: cmdSchedule, scheduled: cmdScheduled };
     const fn = handlers[cmd];
-    if (!fn) die(`comando desconhecido: ${cmd} (topics | lint | preview | rewrite)`);
+    if (!fn) die(`comando desconhecido: ${cmd} (topics | lint | preview | rewrite | schedule | scheduled)`);
     await fn(lib);
 })().catch((err) => { console.error('✖', err.message); process.exit(1); });

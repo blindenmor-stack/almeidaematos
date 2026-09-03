@@ -398,7 +398,8 @@
     // Origem das pautas: de onde cada uma entrou na fila
     const SOURCE_LABEL = {
         manual: 'Manual',
-        contentlab: 'Content Lab',
+        estrategica: 'Estratégica',
+        contentlab: 'Content Lab (desativado)',
         notion: 'Notion',
         editorial: 'Linha editorial',
         ia: 'IA',

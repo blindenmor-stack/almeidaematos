@@ -91,3 +91,28 @@ export async function readJsonBody(req) {
 export function sendError(res, status, message, detail) {
     res.status(status).json({ error: message, ...(detail ? { detail: String(detail).slice(0, 500) } : {}) });
 }
+
+/**
+ * Tokens de um título pra comparação de similaridade: minúsculas, sem acento,
+ * palavras com 4+ letras truncadas em 5 chars (~stemming: "recebi"/"recebeu" → "receb").
+ */
+export function titleTokens(text) {
+    return new Set(
+        String(text || '')
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z0-9\s]/g, ' ')
+            .split(/\s+/)
+            .filter((t) => t.length >= 4)
+            .map((t) => t.slice(0, 5))
+    );
+}
+
+/** Similaridade de Jaccard entre dois Sets de tokens (0..1). */
+export function jaccard(a, b) {
+    if (!a.size || !b.size) return 0;
+    let inter = 0;
+    for (const t of a) if (b.has(t)) inter++;
+    return inter / (a.size + b.size - inter);
+}

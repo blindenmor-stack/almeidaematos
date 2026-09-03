@@ -26,7 +26,7 @@ const STYLE_GATE = true;
 const MAX_TOPIC_ATTEMPTS = 4;
 
 /** Garante slug único: se colidir com posts existentes, sufixa -2, -3... */
-async function ensureUniqueSlug(slug) {
+export async function ensureUniqueSlug(slug) {
     let base = SLUG_RE.test(slug) ? slug : slugify(slug);
     if (!base) throw new Error('Slug vazio após normalização');
     base = base.slice(0, 120);
@@ -48,7 +48,7 @@ async function ensureUniqueSlug(slug) {
 }
 
 /** Normaliza a categoria pra uma das existentes (fallback: Benefícios INSS). */
-function normalizeCategory(article, topic) {
+export function normalizeCategory(article, topic) {
     const bySlug = CATEGORIES.find((c) => c.slug === article.category_slug);
     if (bySlug) return bySlug;
     const byName = CATEGORIES.find((c) => c.name.toLowerCase() === String(article.category || '').toLowerCase());
@@ -85,7 +85,7 @@ export function validateArticle(article) {
 }
 
 /** Extrai os hrefs internos (/beneficios/...) do HTML pra auditoria em internal_links. */
-function extractInternalLinks(html) {
+export function extractInternalLinks(html) {
     const links = [];
     const re = /href\s*=\s*"(\/beneficios\/[a-z0-9-]+\/?)"/gi;
     let m;

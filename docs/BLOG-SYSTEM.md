@@ -34,7 +34,8 @@
 **Fluxo de um post automático:**
 1. Cron da Vercel chama `/api/cron/generate-post` todo dia às 10:00 UTC (7h BRT).
 2. A function checa: `enabled`? hoje é `publish_day` (fuso America/Sao_Paulo)? já gerou hoje (consulta `blog_generation_log`)?
-3. Pega a pauta `pending` de maior prioridade em `blog_topics` (fila vazia → a IA sugere uma pauta nova baseada na linha editorial e registra na fila).
+3. **Fila de prontos primeiro:** se existe post `scheduled` com `scheduled_for` vencido (ou nulo), publica ele (`api/_lib/scheduled.js`) e para aqui. São os posts escritos na sessão do Claude com os agentes especialistas (`/post-blog-am` → `scripts/blog.mjs schedule`).
+3b. Senão, pega a pauta `pending` de maior prioridade em `blog_topics`, pulando as que repetem post publicado (fila vazia → a IA sugere uma pauta nova baseada na linha editorial e registra na fila).
 4. Gera o artigo via Gemini (REST `generateContent`, `responseMimeType: application/json` + `responseSchema` — saída estruturada com title, slug, excerpt, metas, content_html, faq, read_time).
 5. Valida: slug único (colidiu → sufixa `-2`, `-3`…), mínimo 600 palavras, sanitiza HTML (remove script/iframe/handlers), normaliza categoria pras 4 existentes.
 6. Insere em `blog_posts` como `published` (ou `draft` se `auto_publish=false`) e marca a pauta como `used`.
@@ -211,7 +212,15 @@ Instrução no prompt não basta: o modelo continuava soltando antítese e trave
 
 ### 7.2 Filtro de duplicidade de pauta (`checkDuplicateTopic`)
 
-O ContentLab importou o mesmo tema com títulos diferentes (o "pino no detector de metal" saiu 2× em uma semana). Antes de gerar, o cron pergunta ao LLM se a pauta escolhida repete algum dos 40 últimos títulos publicados. Se repetir, a pauta é **descartada com nota** `[auto YYYY-MM-DD] Descartada antes de gerar: repete "..."` e a próxima da fila é testada (até 4). O `contentlab-sync.js` também passou a deduplicar contra os títulos publicados (não só contra a fila) e a importar com prioridade **6/5** (era 8/6), abaixo das pautas curadas (manual/notion/editorial = 7).
+O ContentLab importou o mesmo tema com títulos diferentes (o "pino no detector de metal" saiu 2× em uma semana). Antes de gerar, o cron pergunta ao LLM se a pauta escolhida repete algum dos 40 últimos títulos publicados. Se repetir, a pauta é **descartada com nota** `[auto YYYY-MM-DD] Descartada antes de gerar: repete "..."` e a próxima da fila é testada (até 4).
+
+### 7.3 ContentLab DESLIGADO como fonte do blog (02/09/2026)
+
+Decisão do Bernardo: os ganchos de notícia do Content Lab (perfil pessoal/Instagram) não servem de pauta institucional. `api/_lib/contentlab-sync.js` foi apagado e o cron não importa mais nada. As pautas `source=contentlab` pendentes foram descartadas. `titleTokens`/`jaccard` (dedup por título) vivem em `util.js` e são usados pelo `scripts/blog.mjs topics add`.
+
+### 7.4 Pautas estratégicas por produto × funil (`source=estrategica`)
+
+Para cada produto do escritório existem 3 pautas: **topo** (situação vivida, o leitor ainda não sabe que tem um direito), **meio** (avaliação: tenho direito? documentos, quanto paga, quanto tempo, administrativo × judicial) e **fundo** (decisão: como funciona o processo com o escritório, o que acontece depois de contratar, riscos, o que levar na primeira conversa, CTA claro sem promessa nem honorários). Entram com prioridade 13-20 (uma semana por produto, na ordem que o Bernardo definiu) e ficam na frente de qualquer pauta p7. O brief de cada uma vai em `notes` (funil, ângulo, keyword, dores do ICP, objeções, base legal). Esses posts devem ser escritos com o comando `/post-blog-am <topic-id>` (agentes + skills), não pelo gerador cego.
 
 ## 8. Decisões técnicas & gotchas
 
@@ -253,7 +262,10 @@ node scripts/blog.mjs preview <topic-id>              # gera + revisa localmente
 node scripts/blog.mjs preview --text "pauta livre"
 node scripts/blog.mjs rewrite --slug <slug>           # dry-run: antes/depois em backups/preview/
 node scripts/blog.mjs rewrite --all --apply           # reescreve o acervo (backup em backups/*.jsonl)
+node scripts/blog.mjs schedule post.json --date 2026-09-04 [--cover] [--dry-run]   # post pronto → fila de agendados
+node scripts/blog.mjs scheduled                       # o que está na fila de prontos
 ```
+`topics add --source estrategica` marca a origem. `schedule` roda lint + revisão, recusa tique grave (a menos de `--force`), gera capa com `--cover` (Gemini local) ou deixa o cron gerar ao publicar, e marca a pauta `topic_id` como usada.
 
 Formato de `pautas.txt` (uma por linha, só o título é obrigatório):
 ```

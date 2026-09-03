@@ -7,12 +7,13 @@
 //   - enabled=false           → skip
 //   - hoje ∉ publish_days     → skip (dia da semana em America/Sao_Paulo)
 //   - já gerou post hoje      → skip (consulta blog_generation_log)
+//   - há post agendado vencido → publica ele em vez de gerar
 // ============================================================================
 
 import { timingSafeEqual, createHash } from 'node:crypto';
 import { getSettings, sbFetch, logGeneration } from '../_lib/supabase.js';
 import { generatePost } from '../_lib/generate.js';
-import { syncContentLabTopics } from '../_lib/contentlab-sync.js';
+import { publishNextScheduled } from '../_lib/scheduled.js';
 import { nowInSaoPaulo, sendError } from '../_lib/util.js';
 
 // Geração via Gemini pode demorar — estende o timeout da function
@@ -49,13 +50,6 @@ export default async function handler(req, res) {
             return skip(res, 'Sistema desativado nas settings (enabled=false)');
         }
 
-        // 1b. Mantém a fila de pautas fresca com os assuntos do Content Lab.
-        //     Roda TODO dia (mesmo sem publicação) e nunca derruba a geração.
-        const sync = await syncContentLabTopics().catch((e) => {
-            console.error('contentlab-sync:', e.message);
-            return null;
-        });
-
         // 2. Hoje é dia de publicar? (fuso America/Sao_Paulo)
         const sp = nowInSaoPaulo();
         const publishDays = Array.isArray(settings.publish_days) ? settings.publish_days : [1, 3, 5];
@@ -87,7 +81,19 @@ export default async function handler(req, res) {
             return skip(res, `Limite semanal atingido (${weekRuns.length}/${postsPerWeek} posts desde ${mondayYmd})`);
         }
 
-        // 4-7. Gera (pauta → Gemini → valida → insere → marca pauta → loga)
+        // 4a. Post pronto na fila de agendados (escrito com os agentes na sessão
+        //     do Claude) tem precedência sobre a geração automática por pauta.
+        const scheduled = await publishNextScheduled({ triggerSource: 'cron' });
+        if (scheduled) {
+            return res.status(200).json({
+                ok: true,
+                scheduled: true,
+                post: { id: scheduled.post.id, title: scheduled.post.title, slug: scheduled.post.slug, status: scheduled.post.status, words: scheduled.words },
+                url: `https://almeidaematos.com.br/${scheduled.post.slug}/`,
+            });
+        }
+
+        // 4-7. Gera (pauta → LLM → lint/revisão → valida → insere → marca pauta → loga)
         const { post, topic, words } = await generatePost({ triggerSource: 'cron' });
 
         return res.status(200).json({
