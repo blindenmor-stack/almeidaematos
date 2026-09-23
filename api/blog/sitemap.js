@@ -17,6 +17,8 @@ const SITE_URL = 'https://almeidaematos.com.br';
 
 // lastmod fixo das páginas institucionais (atualizar em redesigns)
 const STATIC_LASTMOD = '2026-07-01';
+// lastmod das páginas Escritório e Contato (recriadas fora do blog)
+const INSTITUTIONAL_LASTMOD = '2026-09-23';
 
 const PRODUCT_SLUGS = [
     'auxilio-acidente', 'auxilio-doenca', 'bpc-loas', 'aposentadoria-por-invalidez',
@@ -60,6 +62,9 @@ export default async function handler(req, res) {
         for (const slug of PRODUCT_SLUGS) {
             entries.push(urlEntry(`${SITE_URL}/beneficios/${slug}/`, STATIC_LASTMOD, '0.9'));
         }
+        // Páginas institucionais (estáticas desde 09/2026; antes eram posts legados do blog)
+        entries.push(urlEntry(`${SITE_URL}/advocacia-sao-paulo/`, INSTITUTIONAL_LASTMOD, '0.8'));
+        entries.push(urlEntry(`${SITE_URL}/contato-advogado-sao-paulo/`, INSTITUTIONAL_LASTMOD, '0.8'));
 
         // 2. Posts legados (SSG) — do posts-data.json no filesystem
         const legacy = readLegacyPosts();

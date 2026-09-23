@@ -96,6 +96,8 @@ try {
 
     const mainPages = [
         ['Início', '/', 'Apresentação do escritório, áreas de atuação, como funciona o atendimento e canais de contato.'],
+        ['O escritório', '/advocacia-sao-paulo/', 'Quem é a Almeida & Matos: fundada em 2015 em Alphaville (Barueri, SP), sócios, áreas de atuação, como o atendimento funciona e fotos do escritório.'],
+        ['Contato', '/contato-advogado-sao-paulo/', 'Canais oficiais de contato: WhatsApp, e-mail e endereço do escritório em Alphaville, Barueri (SP). Atendimento em todo o Brasil.'],
         ['Benefícios (hub)', '/beneficios/', 'Central com todos os benefícios e direitos em que o escritório atua, com guia de cada um.'],
         ['Auxílio-Acidente', '/beneficios/auxilio-acidente/', 'Indenização mensal do INSS para quem ficou com sequela permanente após acidente — mesmo continuando a trabalhar.'],
         ['Auxílio-Doença', '/beneficios/auxilio-doenca/', 'Benefício por incapacidade temporária para o segurado que precisa se afastar do trabalho por doença ou acidente.'],

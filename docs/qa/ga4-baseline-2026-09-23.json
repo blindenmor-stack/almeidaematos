@@ -1,0 +1,49 @@
+{
+ "property": "404445930",
+ "extraido_em": "2026-09-23",
+ "periodo": "90daysAgo..yesterday",
+ "nota": "Evento no dataLayer é click_whatsapp (main.js); o GA4 exibe como whatsapp_click. Baseline pra comparar em D+30 (23/10/2026).",
+ "paginas": {
+  "/advocacia-sao-paulo/": {
+   "organic": {
+    "sessoes": 72,
+    "key_events": 16,
+    "engagement_rate": 0.528
+   },
+   "ai-assistant": {
+    "sessoes": 3,
+    "key_events": 2,
+    "engagement_rate": 0.667
+   },
+   "(none)": {
+    "sessoes": 1,
+    "key_events": 0,
+    "engagement_rate": 0.0
+   },
+   "referral": {
+    "sessoes": 1,
+    "key_events": 0,
+    "engagement_rate": 1.0
+   }
+  },
+  "/contato-advogado-sao-paulo/": {
+   "organic": {
+    "sessoes": 34,
+    "key_events": 12,
+    "engagement_rate": 0.559
+   },
+   "(none)": {
+    "sessoes": 4,
+    "key_events": 6,
+    "engagement_rate": 0.75
+   }
+  },
+  "/contato-advogado-sao-paulo": {
+   "(none)": {
+    "sessoes": 3,
+    "key_events": 0,
+    "engagement_rate": 0.333
+   }
+  }
+ }
+}

@@ -62,6 +62,9 @@ export default defineConfig({
                 aposentadoriaPcd: resolve(__dirname, 'beneficios/aposentadoria-pcd/index.html'),
                 indenizacao: resolve(__dirname, 'beneficios/indenizacao-civel-trabalhista/index.html'),
                 politicaPrivacidade: resolve(__dirname, 'politica-de-privacidade/index.html'),
+                // Páginas institucionais (eram posts legados do blog até 09/2026)
+                escritorio: resolve(__dirname, 'advocacia-sao-paulo/index.html'),
+                contato: resolve(__dirname, 'contato-advogado-sao-paulo/index.html'),
                 // (admin/ é estático puro — copiado no script de build, fora do bundle Vite)
             },
         },

@@ -6,3 +6,7 @@ dist
 .claude/
 
 backups/
+
+# QA visual/Lighthouse (artefatos pesados, regenerar com scripts/qa-screenshots.py)
+docs/qa/*.png
+docs/qa/lh_*.json
