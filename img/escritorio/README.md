@@ -21,3 +21,4 @@ Pipeline: HEIC/JPG → `sips` (JPEG q92, 1600 e 800 px) → `cwebp -q 78 -m 6`. 
 | `equipe-sorrindo` | IMG_1709.HEIC | Duas mulheres sorrindo com papel na mão |
 | `equipe-grupo-2025` | CONF/IMG_1793.HEIC | Foto oficial de grupo (confraternização 2025, ~70 pessoas) |
 | `equipe-grupo-2025-b` | CONF/IMG_1792.HEIC | Foto oficial de grupo, variação |
+| `sino` | IDG_20260828_173510_308.JPG | Sino dourado na parede, mesa e plantas ao fundo |
